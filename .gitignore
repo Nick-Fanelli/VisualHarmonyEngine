@@ -19,3 +19,6 @@ vcs.xml
 
 # Mac OS Stuff
 *.DS_Store
+
+# Test Specific Stuff
+Src/main/java/testGame/*
