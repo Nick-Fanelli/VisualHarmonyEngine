@@ -16,5 +16,4 @@ public class GameContext {
 
         display.cleanUp();
     }
-
 }

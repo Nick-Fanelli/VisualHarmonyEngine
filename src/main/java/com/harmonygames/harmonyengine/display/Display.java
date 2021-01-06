@@ -1,5 +1,6 @@
 package com.harmonygames.harmonyengine.display;
 
+import com.harmonygames.harmonyengine.Log;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -21,17 +22,28 @@ public class Display {
         GLFWErrorCallback.createPrint(System.err).set();
 
         // TODO: Use custom log method and assertions
-        if(!GLFW.glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
+        Log.info("Setting up GLFW...");
+        if(!GLFW.glfwInit()) {
+            Log.error("Unable to initialize GLFW");
+            System.exit(-1);
+        }
+        Log.success("Setup GLFW");
 
         // Configure GLFW
+        Log.info("Configuring GLFW...");
         GLFW.glfwDefaultWindowHints();
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+        Log.success("Configured GLFW");
 
         // Create the window pointer object
+        Log.info("Creating GLFW Window...");
         window = GLFW.glfwCreateWindow(1280, 720, "Harmony Engine", MemoryUtil.NULL, MemoryUtil.NULL);
-        // TODO: Use custom log method and assertions
-        if(window == MemoryUtil.NULL) throw new RuntimeException("Failed to create the GLFW window");
+        if(window == MemoryUtil.NULL) {
+            Log.error("Failed to create the GLFW window");
+            System.exit(-1);
+        }
+        Log.success("Created GLFW window!");
 
         // Setup callbacks/inputs
         // TODO: Remove

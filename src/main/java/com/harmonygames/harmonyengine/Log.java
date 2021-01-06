@@ -37,17 +37,22 @@ public class Log {
 
     public static void error(String message) {
         if(logLevel.ordinal() >= LogLevel.Error.ordinal())
-            System.out.println(ANSI_RED_BOLD + "[Harmony Engine Error]: " + ANSI_RED + message + ANSI_RESET);
+            System.out.println(ANSI_RED_BOLD + "[Harmony Engine - Error]: " + ANSI_RED + message + ANSI_RESET);
     }
 
     public static void warn(String message) {
         if(logLevel.ordinal() >= LogLevel.Warn.ordinal())
-            System.out.println(ANSI_YELLOW_BOLD + "[Harmony Engine Warning]: " + ANSI_YELLOW + message + ANSI_RESET);
+            System.out.println(ANSI_YELLOW_BOLD + "[Harmony Engine - Warning]: " + ANSI_YELLOW + message + ANSI_RESET);
     }
 
     public static void info(String message) {
         if(logLevel.ordinal() >= LogLevel.Info.ordinal())
             System.out.println("[Harmony Engine Info]: " + message);
+    }
+
+    public static void success(String message) {
+        if(logLevel.ordinal() >= LogLevel.Info.ordinal())
+            System.out.println(ANSI_GREEN_BOLD + "[Harmony Engine - Success]: " + ANSI_GREEN + message + ANSI_RESET);
     }
 
     public static void setLogLevel(LogLevel logLevel) { Log.logLevel = logLevel; }
