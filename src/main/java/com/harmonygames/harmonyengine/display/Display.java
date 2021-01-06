@@ -65,13 +65,14 @@ public class Display {
         GLFW.glfwSwapInterval(1);
 
         // Show the window
+        GLFW.glfwFocusWindow(window);
         GLFW.glfwShowWindow(window);
 
         GL.createCapabilities(); // Very important for OpenGL.
 
         // TODO: Make a preference
         // Clear the screen
-        GL11.glClearColor(1.0f, 0, 0, 1.0f);
+        GL11.glClearColor(0, 0, 0, 1.0f);
     }
 
     public void update() {
@@ -85,7 +86,7 @@ public class Display {
         GLFW.glfwPollEvents();
     }
 
-    private void cleanUp() {
+    public void cleanUp() {
         // Free and clean up the window
         Callbacks.glfwFreeCallbacks(window);
         GLFW.glfwDestroyWindow(window);
@@ -95,6 +96,7 @@ public class Display {
         Objects.requireNonNull(GLFW.glfwSetErrorCallback(null)).free();
     }
 
+    public boolean shouldContinueRunning() { return !GLFW.glfwWindowShouldClose(window); }
     public long getWindow() { return this.window; }
 
 }
