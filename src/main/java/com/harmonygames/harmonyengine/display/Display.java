@@ -1,0 +1,100 @@
+package com.harmonygames.harmonyengine.display;
+
+import org.lwjgl.glfw.Callbacks;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
+
+import java.nio.IntBuffer;
+import java.util.Objects;
+
+public class Display {
+
+    // Window Pointer Address
+    private long window;
+
+    public void init() {
+        GLFWErrorCallback.createPrint(System.err).set();
+
+        // TODO: Use custom log method and assertions
+        if(!GLFW.glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
+
+        // Configure GLFW
+        GLFW.glfwDefaultWindowHints();
+        GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
+        GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+
+        // Create the window pointer object
+        window = GLFW.glfwCreateWindow(1280, 720, "Harmony Engine", MemoryUtil.NULL, MemoryUtil.NULL);
+        // TODO: Use custom log method and assertions
+        if(window == MemoryUtil.NULL) throw new RuntimeException("Failed to create the GLFW window");
+
+        // Setup callbacks/inputs
+        // TODO: Remove
+        GLFW.glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+            if(key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE)
+                GLFW.glfwSetWindowShouldClose(window, true);
+        });
+
+        try(MemoryStack stack = MemoryStack.stackPush()) {
+            IntBuffer pWidth  = stack.mallocInt(1); // int pointer
+            IntBuffer pHeight = stack.mallocInt(1); // int pointer
+
+            // Get the original window size
+            GLFW.glfwGetWindowSize(window, pWidth, pHeight);
+
+            // Get the resolution of the primary monitor
+            GLFWVidMode vidMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+
+            assert vidMode != null;
+
+            // Center the window in the primary monitor
+            GLFW.glfwSetWindowPos(window,
+                    (vidMode.width() - pWidth.get(0)) / 2,
+                    (vidMode.height() - pHeight.get(0)) / 2);
+        }
+
+        // Make the OpenGL context to the current window
+        GLFW.glfwMakeContextCurrent(window);
+        // TODO: Make a preference
+        // Enable v-sync
+        GLFW.glfwSwapInterval(1);
+
+        // Show the window
+        GLFW.glfwShowWindow(window);
+
+        GL.createCapabilities(); // Very important for OpenGL.
+
+        // TODO: Make a preference
+        // Clear the screen
+        GL11.glClearColor(1.0f, 0, 0, 1.0f);
+    }
+
+    public void update() {
+        // Clear the screen
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+
+        // Swap the color buffers
+        GLFW.glfwSwapBuffers(window);
+
+        // Check poll or window events eg. input
+        GLFW.glfwPollEvents();
+    }
+
+    private void cleanUp() {
+        // Free and clean up the window
+        Callbacks.glfwFreeCallbacks(window);
+        GLFW.glfwDestroyWindow(window);
+
+        // Terminate GLFW
+        GLFW.glfwTerminate();
+        Objects.requireNonNull(GLFW.glfwSetErrorCallback(null)).free();
+    }
+
+    public long getWindow() { return this.window; }
+
+}
