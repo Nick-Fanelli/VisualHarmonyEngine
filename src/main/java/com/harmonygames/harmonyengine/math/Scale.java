@@ -10,8 +10,8 @@ public class Scale {
         this.height = height;
     }
 
-    public Scale() { this(0, 0); }
-
-    public Scale copy() { return new Scale(this.width, this.height); }
+    public Scale() {
+        this(0, 0);
+    }
 
 }

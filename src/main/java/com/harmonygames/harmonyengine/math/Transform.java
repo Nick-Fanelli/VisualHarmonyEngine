@@ -1,5 +1,6 @@
 package com.harmonygames.harmonyengine.math;
 
+import org.joml.Vector2f;
 import org.lwjgl.system.CallbackI;
 
 public class Transform {
@@ -21,14 +22,4 @@ public class Transform {
         this.position = position;
         this.scale = scale;
     }
-
-    public Transform copy() {
-        return new Transform(position.copy(), scale.copy());
-    }
-
-    public Transform copy(Transform transform) {
-        this.set(transform.position.copy(), transform.scale.copy());
-        return this;
-    }
-
 }
