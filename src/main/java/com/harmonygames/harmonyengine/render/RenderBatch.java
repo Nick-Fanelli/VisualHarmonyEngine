@@ -1,8 +1,11 @@
 package com.harmonygames.harmonyengine.render;
 
 import com.harmonygames.harmonyengine.Log;
+import com.harmonygames.harmonyengine.objects.compoonents.Renderer;
 import com.harmonygames.harmonyengine.scene.SceneManager;
 import com.harmonygames.harmonyengine.utils.Assets;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL30;
 
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ public class RenderBatch {
             Renderer renderer = renderers[i];
 
             if(renderer.shouldRedraw()) {
-                renderer.loadVertexProperties(i);
+                this.loadVertexProperties(i);
                 renderer.setDrawn();
                 rebufferData = true;
             }
@@ -96,6 +99,55 @@ public class RenderBatch {
         shader.unbind();
     }
 
+    private void loadVertexProperties(int index) {
+        Renderer renderer = this.renderers[index];
+
+        // Find offset within array
+        int offset = index * 4 * VERTEX_SIZE;
+
+        Vector4f color = renderer.getColor();
+        Vector2f[] textureCoords = renderer.getTextureCoords();
+
+        int textureID = 0;
+        if(renderer.getTexture() != null) {
+            for(int i = 0; i < textures.size(); i++) {
+                if(textures.get(i) == renderer.getTexture()) {
+                    textureID = i + 1;
+                    break;
+                }
+            }
+        }
+
+        // Add the vertices with the appropriate properties
+        float xAdd = 1.0f;
+        float yAdd = 1.0f;
+
+        for(int i = 0; i < 4; i++) {
+            if(i == 1) yAdd = 0.0f;
+            else if(i == 2) xAdd = 0.0f;
+            else if(i == 3) yAdd = 1.0f;
+
+            // Load the position
+            vertices[offset] = renderer.getGameObject().transform.position.x + (xAdd * renderer.getGameObject().transform.scale.width);
+            vertices[offset + 1] = renderer.getGameObject().transform.position.y + (yAdd * renderer.getGameObject().transform.scale.height);
+
+            // Load the color data
+            vertices[offset + 2] = color.x;
+            vertices[offset + 3] = color.y;
+            vertices[offset + 4] = color.z;
+            vertices[offset + 5] = color.w;
+
+            // Load the texture coordinates
+            vertices[offset + 6] = textureCoords[i].x;
+            vertices[offset + 7] = textureCoords[i].y;
+
+            // Load texture ids
+            vertices[offset + 8] = textureID;
+
+            offset += VERTEX_SIZE;
+        }
+    }
+
     public void addRenderer(Renderer renderer) {
         // Get index and add render object
         int index = this.numRenderers;
@@ -113,7 +165,7 @@ public class RenderBatch {
         }
 
         // Add the properties to the local vertices array
-        renderer.loadVertexProperties(index);
+        this.loadVertexProperties(index);
 
         if(numRenderers >= this.maxBatchSize) {
             this.hasRoom = false;

@@ -1,5 +1,6 @@
 package com.harmonygames.harmonyengine.objects;
 
+import com.harmonygames.harmonyengine.Log;
 import com.harmonygames.harmonyengine.math.Transform;
 import com.harmonygames.harmonyengine.objects.compoonents.Component;
 
@@ -17,12 +18,17 @@ public class GameObject {
         this.transform = transform;
     }
 
-    public void update() {
-        for(int i = 0; i < components.size(); i++) components.get(i).update();
+    public void update(float deltaTime) {
+        for(int i = 0; i < components.size(); i++) components.get(i).update(deltaTime);
     }
 
     public void addComponent(Component component) {
-        components.add(component);
+        if(component.shouldAdd(this)) {
+            component.setGameObject(this);
+            component.start();
+            components.add(component);
+        }
+        else Log.warn("Component with type '" + component.getClass().getName() + "' wasn't added because it refused!");
     }
 
     public <T extends Component> boolean containsComponent(Class<T> componentClass) {
