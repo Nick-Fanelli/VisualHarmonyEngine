@@ -1,6 +1,6 @@
 package com.harmonygames.harmonyengine.render;
 
-import com.harmonygames.harmonyengine.objects.Component;
+import com.harmonygames.harmonyengine.objects.compoonents.Component;
 
 public abstract class Renderer extends Component {
 
