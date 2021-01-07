@@ -10,4 +10,6 @@ public class Scale {
         this.height = height;
     }
 
+    public Scale() { this(0, 0); }
+
 }

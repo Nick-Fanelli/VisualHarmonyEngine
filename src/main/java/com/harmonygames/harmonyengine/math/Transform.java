@@ -10,4 +10,9 @@ public class Transform {
         this.scale = scale;
     }
 
+    public Transform() {
+        this.position = new Vector2f();
+        this.scale = new Scale();
+    }
+
 }

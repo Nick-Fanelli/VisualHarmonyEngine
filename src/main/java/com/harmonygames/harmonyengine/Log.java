@@ -35,6 +35,11 @@ public class Log {
     //  Logging Methods
     // ======================================================================
 
+    public static void fatalError(String message) {
+        Log.error(message);
+        System.exit(-1);
+    }
+
     public static void error(String message) {
         if(logLevel.ordinal() >= LogLevel.Error.ordinal())
             System.out.println(ANSI_RED_BOLD + "[Harmony Engine - Error]: " + ANSI_RED + message + ANSI_RESET);
