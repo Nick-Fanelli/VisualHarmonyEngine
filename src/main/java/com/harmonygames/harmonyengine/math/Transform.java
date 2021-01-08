@@ -1,7 +1,6 @@
 package com.harmonygames.harmonyengine.math;
 
 import org.joml.Vector2f;
-import org.lwjgl.system.CallbackI;
 
 public class Transform {
 

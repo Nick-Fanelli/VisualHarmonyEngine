@@ -1,5 +1,7 @@
 package com.harmonygames.harmonyengine.scene;
 
+import org.lwjgl.opengl.GL;
+
 public class SceneManager {
 
     private static Scene activeScene;

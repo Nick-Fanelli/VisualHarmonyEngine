@@ -1,12 +1,18 @@
 package com.harmonygames.harmonyengine.display;
 
+import com.harmonygames.harmonyengine.GameContext;
 import com.harmonygames.harmonyengine.Log;
+import com.harmonygames.harmonyengine.mesh.Mesh;
+import com.harmonygames.harmonyengine.mesh.MeshLoader;
+import com.harmonygames.harmonyengine.scene.SceneManager;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
@@ -17,6 +23,13 @@ public class Display {
 
     // Window Pointer Address
     private long window;
+
+    private final GameContext gameContext;
+    private SceneManager sceneManager;
+
+    public Display(GameContext gameContext) {
+        this.gameContext = gameContext;
+    }
 
     public void init() {
         GLFWErrorCallback.createPrint(System.err).set();
@@ -32,8 +45,15 @@ public class Display {
         // Configure GLFW
         Log.info("Configuring GLFW...");
         GLFW.glfwDefaultWindowHints();
+
+        GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MAJOR, 3);
+        GLFW.glfwWindowHint(GLFW.GLFW_CONTEXT_VERSION_MINOR, 2);
+        GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_PROFILE, GLFW.GLFW_OPENGL_CORE_PROFILE);
+        GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_FORWARD_COMPAT, GLFW.GLFW_TRUE);
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
+
+
         Log.success("Configured GLFW");
 
         // Create the window pointer object
@@ -85,6 +105,30 @@ public class Display {
         // TODO: Make a preference
         // Clear the screen
         GL11.glClearColor(0, 0, 0, 1.0f);
+
+        this.sceneManager = new SceneManager();
+    }
+
+    public void loop() {
+        float endTime, beginTime = (float) GLFW.glfwGetTime();
+        float deltaTime = -1f;
+
+        while(!GLFW.glfwWindowShouldClose(window)) {
+
+//            GL11.glClearColor(0, 0, 0, 1f);
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+
+            if(deltaTime >= 0) {
+                sceneManager.update(deltaTime);
+            }
+
+            GLFW.glfwSwapBuffers(window);
+            GLFW.glfwPollEvents();
+
+            endTime = (float) GLFW.glfwGetTime();
+            deltaTime = endTime - beginTime;
+            beginTime = endTime;
+        }
     }
 
     public void update() {
