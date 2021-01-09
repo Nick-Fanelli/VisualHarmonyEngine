@@ -10,20 +10,16 @@ import org.lwjgl.opengl.GL30;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-public class Mesh {
+public class Mesh2D {
 
     private final int vaoID;
     private final int eabID;
 
-    public Mesh(float[] vertices, float[] colors, byte[] indices) {
+    public Mesh2D(float[] vertices, byte[] indices) {
 
         FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(vertices.length);
         verticesBuffer.put(vertices);
         verticesBuffer.flip();
-
-        FloatBuffer colorsBuffer = BufferUtils.createFloatBuffer(vertices.length);
-        colorsBuffer.put(colors);
-        colorsBuffer.flip();
 
         ByteBuffer indicesBuffer = BufferUtils.createByteBuffer(indices.length);
         indicesBuffer.put(indices);
@@ -38,13 +34,8 @@ public class Mesh {
         int vboID = GL15.glGenBuffers();
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, verticesBuffer, GL15.GL_STATIC_DRAW);
-        GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 0, 0);
+        GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, 0, 0);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-
-        int vboColorID = GL15.glGenBuffers();
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboColorID);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, colorsBuffer, GL15.GL_STATIC_DRAW);
-        GL20.glVertexAttribPointer(1, 4, GL11.GL_FLOAT, false, 0, 0);
 
         // Deselect (bind to 0) the VAO
         GL30.glBindVertexArray(0);

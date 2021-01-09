@@ -1,15 +1,11 @@
 #version 400 core
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec4 color;
-
-uniform mat4 uProjection;
-uniform mat4 uView;
 
 out vec4 pass_Color;
 
 void main() {
-    pass_Color = color;
+    pass_Color = vec4(0, 0.4, 1, 1);
 
     gl_Position = vec4(position, 1.0f);
 }
