@@ -93,8 +93,8 @@ public class Display {
         GLFW.glfwSwapInterval(1);
 
         // Show the window
-        GLFW.glfwFocusWindow(window);
         GLFW.glfwShowWindow(window);
+        GLFW.glfwFocusWindow(window);
 
         GL.createCapabilities(); // Very important for OpenGL.
 

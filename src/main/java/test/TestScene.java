@@ -5,7 +5,6 @@ import com.harmonygames.harmonyengine.object.Camera;
 import com.harmonygames.harmonyengine.render.Shader;
 import com.harmonygames.harmonyengine.scene.Scene;
 import com.harmonygames.harmonyengine.utils.Assets;
-import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
