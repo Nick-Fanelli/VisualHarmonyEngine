@@ -4,6 +4,7 @@ import com.harmonygames.harmonyengine.mesh.Mesh2D;
 import com.harmonygames.harmonyengine.object.Camera;
 import com.harmonygames.harmonyengine.render.Shader;
 import com.harmonygames.harmonyengine.scene.Scene;
+import com.harmonygames.harmonyengine.utils.Assets;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
@@ -40,7 +41,7 @@ public class TestScene extends Scene {
         camera = new Camera("Main Camera");
 
         mesh2D = new Mesh2D(vertices, indices);
-        shader = new Shader();
+        shader = Assets.loadShader("resources/shaders/default");
     }
 
     @Override

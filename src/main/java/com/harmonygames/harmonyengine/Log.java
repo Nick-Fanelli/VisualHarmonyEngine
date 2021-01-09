@@ -41,8 +41,10 @@ public class Log {
     }
 
     public static void error(String message) {
-        if(logLevel.ordinal() >= LogLevel.Error.ordinal())
+        if(logLevel.ordinal() >= LogLevel.Error.ordinal()) {
+//            throw new RuntimeException(message);
             System.out.println(ANSI_RED_BOLD + "[Harmony Engine - Error]: " + ANSI_RED + message + ANSI_RESET);
+        }
     }
 
     public static void warn(String message) {

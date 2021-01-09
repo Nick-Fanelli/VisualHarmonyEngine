@@ -1,15 +1,16 @@
 package com.harmonygames.harmonyengine.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class FileUtils {
 
-    public static String readFromFile(String name) {
+    public static String readFromFile(File file) {
         StringBuilder source = new StringBuilder();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("/Users/nick227889/Dev/HarmonyEngine/src/main/resources/shaders/" + name));
+            BufferedReader reader = new BufferedReader(new FileReader(file));
 
             String line;
 
