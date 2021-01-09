@@ -2,8 +2,6 @@ package com.harmonygames.harmonyengine.display;
 
 import com.harmonygames.harmonyengine.GameContext;
 import com.harmonygames.harmonyengine.Log;
-import com.harmonygames.harmonyengine.mesh.Mesh;
-import com.harmonygames.harmonyengine.mesh.MeshLoader;
 import com.harmonygames.harmonyengine.scene.SceneManager;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
@@ -11,8 +9,6 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 
