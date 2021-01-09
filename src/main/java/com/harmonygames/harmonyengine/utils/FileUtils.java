@@ -1,29 +1,37 @@
 package com.harmonygames.harmonyengine.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import com.harmonygames.harmonyengine.Log;
+
+import java.io.*;
 
 public class FileUtils {
 
-    public static String readFromFile(File file) {
-        StringBuilder source = new StringBuilder();
+    public static String readFromFile(String location) {
+        if(!location.startsWith("/")) location = "/" + location;
+
+        InputStream inputStream = FileUtils.class.getResourceAsStream(location);
+        if(inputStream == null) {
+            Log.fatalError("Could not read from a file that doesn't exist!\n" +
+                    "\tFile Location: '" + location + "'\n" +
+                    "\tWhat was returned: null");
+            return null;
+        }
+
+        InputStreamReader streamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(streamReader);
+
+        StringBuilder builder = new StringBuilder();
+        String line;
+
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-
-            String line;
-
-            while((line = reader.readLine()) != null) {
-                source.append(line).append("\n");
+            while ((line = bufferedReader.readLine()) != null) {
+                builder.append(line).append("\n");
             }
-
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return source.toString();
+        return builder.toString();
     }
 
 }

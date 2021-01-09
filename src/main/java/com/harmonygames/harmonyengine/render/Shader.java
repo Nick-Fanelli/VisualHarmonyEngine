@@ -8,41 +8,67 @@ import org.lwjgl.opengl.GL20;
 
 import java.io.File;
 import java.nio.FloatBuffer;
+import java.util.Locale;
 
 public class Shader {
 
     private final int programID;
-    private int fragmentID = 0, vertexID = 0;
 
-    public Shader(File[] shaderFiles) {
-        this.programID = GL20.glCreateProgram();
+    public enum ShaderType {
+        Vertex(GL20.GL_VERTEX_SHADER),
+        Fragment(GL20.GL_FRAGMENT_SHADER);
 
-        for(File file : shaderFiles) {
-            String[] splits = file.getAbsolutePath().split("\\.");
-            if(splits.length >= 3) {
-                String type = splits[splits.length - 2];
+        public final int glShaderType;
 
-                // TODO: Handle geometry shaders
-                if(type.equalsIgnoreCase("vert")) vertexID = this.attachShader(file, GL20.GL_VERTEX_SHADER);
-                else if(type.equalsIgnoreCase("frag")) fragmentID = this.attachShader(file, GL20.GL_FRAGMENT_SHADER);
-            } else {
-                Log.warn("Shader, '" + file.getName() + "' does not follow the conventions of 'name.vert.glsl' or 'name.frag.glsl'");
-            }
+        ShaderType(int glShaderType) {
+            this.glShaderType = glShaderType;
         }
 
-        if(fragmentID == 0 && vertexID == 0) {
-            Log.warn("Both the fragment and vertex shaders have not been created! This will most likely result in a failure to link the shader program!" +
-                    "\n\tInstead make sure that you are referencing a directory that contains the correct shaders with the following conventions:" +
-                    "\n\t'name.vert.glsl' and 'name.frag.glsl' - Note the name does not matter just the two extensions!!!" +
-                    "\n\tThe extensions tell Harmony Engine which type of shader they are!!!");
+        public static String getAsStringArray() {
+            StringBuilder builder = new StringBuilder("{ ");
+
+            for(int i = 0; i < ShaderType.values().length; i++) {
+                builder.append(ShaderType.values()[i].name().toLowerCase(Locale.ROOT));
+                if(i < ShaderType.values().length - 1) builder.append(", ");
+            }
+
+            builder.append(" }");
+            return builder.toString();
+        }
+    }
+
+    public Shader(String shaderName, String shaderData) {
+        this.programID = GL20.glCreateProgram();
+
+        String[] shaderFiles = shaderData.split("#type");
+
+        for(String string : shaderFiles) {
+            string = string.trim();
+            if(string.startsWith("//")) continue;
+
+            boolean hasBeenAttached = false;
+
+            for(ShaderType type : ShaderType.values()) {
+                if(string.startsWith(type.name().toLowerCase(Locale.ROOT))) {
+                    attachShader(string.replaceFirst(type.name().toLowerCase(Locale.ROOT), ""), type.glShaderType);
+                    hasBeenAttached = true;
+                    break;
+                }
+            }
+
+            if(!hasBeenAttached) {
+                Log.error("Couldn't identify shader type: '" + string.split("\n")[0] + "' in shader '" + shaderName + "'\n" +
+                        "\tThe valid shader types are: " + ShaderType.getAsStringArray() + "\n" +
+                        "\tEg. '#type vertex' then followed by the vertex code\n" +
+                        "\tAfter the vertex code write '#type fragment' followed by the fragment code etc.");
+            }
+
         }
 
         this.link();
     }
 
-    public int attachShader(File file, int shaderType) {
-        String shaderSource = FileUtils.readFromFile(file);
-
+    public int attachShader(String shaderSource, int shaderType) {
         int shaderID = GL20.glCreateShader(shaderType);
         GL20.glShaderSource(shaderID, shaderSource);
 
@@ -77,12 +103,6 @@ public class Shader {
 
     public void dispose() {
         GL20.glUseProgram(0);
-
-        if(vertexID != 0) GL20.glDetachShader(programID, vertexID);
-        if(fragmentID != 0) GL20.glDetachShader(programID, fragmentID);
-
-        if(vertexID != 0) GL20.glDeleteShader(vertexID);
-        if(fragmentID != 0) GL20.glDeleteShader(fragmentID);
 
         GL20.glDeleteProgram(programID);
     }

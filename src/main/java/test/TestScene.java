@@ -40,7 +40,7 @@ public class TestScene extends Scene {
         camera = new Camera("Main Camera");
 
         mesh2D = new Mesh2D(vertices, indices);
-        shader = Assets.loadShader("resources/shaders/default");
+        shader = Assets.loadShader("/shaders/default.glsl");
     }
 
     @Override
