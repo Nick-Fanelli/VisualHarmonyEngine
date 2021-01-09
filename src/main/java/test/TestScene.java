@@ -1,8 +1,10 @@
 package test;
 
 import com.harmonygames.harmonyengine.mesh.Mesh;
+import com.harmonygames.harmonyengine.object.Camera;
 import com.harmonygames.harmonyengine.render.Shader;
 import com.harmonygames.harmonyengine.scene.Scene;
+import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
@@ -12,6 +14,7 @@ public class TestScene extends Scene {
 
     private Mesh mesh;
     private Shader shader;
+    private Camera camera;
 
     float[] vertices = {
             -0.5f, 0.5f, 0f,    // Left top         ID: 0
@@ -38,6 +41,8 @@ public class TestScene extends Scene {
     public void onCreate() {
         super.onCreate();
 
+        camera = new Camera(new Vector2f(0, 0));
+
         mesh = new Mesh(vertices, colors, indices);
         shader = new Shader();
     }
@@ -47,6 +52,8 @@ public class TestScene extends Scene {
         super.update(deltaTime);
 
         shader.bind();
+        shader.addUniformMatrix4f("uProjection", camera.getProjectionMatrix());
+        shader.addUniformMatrix4f("uView", camera.getViewMatrix());
 
         GL30.glBindVertexArray(mesh.getVaoID());
         GL20.glEnableVertexAttribArray(0);

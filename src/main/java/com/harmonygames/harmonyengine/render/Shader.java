@@ -1,7 +1,11 @@
 package com.harmonygames.harmonyengine.render;
 
 import com.harmonygames.harmonyengine.utils.FileUtils;
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
+
+import java.nio.FloatBuffer;
 
 public class Shader {
 
@@ -75,5 +79,11 @@ public class Shader {
         GL20.glDeleteProgram(programID);
     }
 
-
+    public void addUniformMatrix4f(String varName, Matrix4f matrix4f) {
+        int uniformLocation = GL20.glGetUniformLocation(programID, varName);
+        this.bind();
+        FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+        matrix4f.get(matrixBuffer);
+        GL20.glUniformMatrix4fv(uniformLocation, false, matrixBuffer);
+    }
 }
