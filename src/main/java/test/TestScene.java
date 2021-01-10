@@ -2,6 +2,8 @@ package test;
 
 import com.harmonygames.harmonyengine.mesh.Mesh2D;
 import com.harmonygames.harmonyengine.object.Camera;
+import com.harmonygames.harmonyengine.object.component.Component;
+import com.harmonygames.harmonyengine.object.component.SpriteRenderer;
 import com.harmonygames.harmonyengine.render.Shader;
 import com.harmonygames.harmonyengine.scene.Scene;
 import com.harmonygames.harmonyengine.utils.Assets;
@@ -49,9 +51,6 @@ public class TestScene extends Scene {
 
         mesh2D = new Mesh2D(vertices, indices);
         shader = Assets.loadShader("/shaders/default.glsl");
-
-        System.out.println(Byte.MAX_VALUE);
-        System.out.println(Integer.MAX_VALUE);
     }
 
     @Override
