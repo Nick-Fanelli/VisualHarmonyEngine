@@ -9,19 +9,20 @@ import org.lwjgl.opengl.GL30;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 public class Mesh2D {
 
     private final int vaoID;
     private final int eabID;
 
-    public Mesh2D(float[] vertices, byte[] indices) {
+    public Mesh2D(float[] vertices, int[] indices) {
 
         FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(vertices.length);
         verticesBuffer.put(vertices);
         verticesBuffer.flip();
 
-        ByteBuffer indicesBuffer = BufferUtils.createByteBuffer(indices.length);
+        IntBuffer indicesBuffer = BufferUtils.createIntBuffer(indices.length);
         indicesBuffer.put(indices);
         indicesBuffer.flip();
 

@@ -18,19 +18,27 @@ public class TestScene extends Scene {
     private Camera camera;
 
     float[] vertices = {
-            -0.5f, 0.5f,    // Left top         ID: 0
-            -0.5f, -0.5f,    // Left bottom      ID: 1
-            0.5f, -0.5f,     // Right bottom     ID: 2
-            0.5f, 0.5f,     // Right left       ID: 3
+            -0.8f, 0.5f,    // Left top         ID: 0
+            -0.8f, -0.5f,    // Left bottom      ID: 1
+            -0.25f, -0.5f,     // Right bottom     ID: 2
+            -0.25f, 0.5f,     // Right left       ID: 3
+
+            0.8f, 0.5f,
+            0.8f, -0.5f,
+            0.25f, -0.5f,
+            0.25f, 0.5f
     };
 
     Vector4f color = new Vector4f(1, 0, 0, 1);
 
-    byte[] indices = {
+    int[] indices = {
             // Left bottom triangle
             0, 1, 2,
             // Right top triangle
-            2, 3, 0
+            2, 3, 0,
+
+            4, 5, 6,
+            6, 7, 4
     };
 
     @Override
@@ -41,6 +49,9 @@ public class TestScene extends Scene {
 
         mesh2D = new Mesh2D(vertices, indices);
         shader = Assets.loadShader("/shaders/default.glsl");
+
+        System.out.println(Byte.MAX_VALUE);
+        System.out.println(Integer.MAX_VALUE);
     }
 
     @Override
@@ -54,7 +65,7 @@ public class TestScene extends Scene {
 
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, mesh2D.getEabID());
 
-        GL11.glDrawElements(GL11.GL_TRIANGLES, indices.length, GL11.GL_UNSIGNED_BYTE, 0);
+        GL11.glDrawElements(GL11.GL_TRIANGLES, indices.length, GL11.GL_UNSIGNED_INT, 0);
 
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
 
