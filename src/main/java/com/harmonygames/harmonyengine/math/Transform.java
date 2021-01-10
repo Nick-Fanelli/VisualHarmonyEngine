@@ -21,4 +21,15 @@ public class Transform {
     public Transform() {
         this(new Vector2f(), 0f, new Scale());
     }
+
+    public Transform copy(Transform transform) {
+        transform.position = new Vector2f(this.position);
+        transform.scale = new Scale(this.scale);
+        transform.rotation = this.rotation;
+        return transform;
+    }
+
+    public Transform copy() {
+        return new Transform(new Vector2f(position), rotation, new Scale(scale));
+    }
 }
