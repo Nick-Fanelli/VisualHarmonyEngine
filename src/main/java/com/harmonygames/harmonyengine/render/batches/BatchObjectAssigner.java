@@ -33,8 +33,13 @@ public class BatchObjectAssigner {
         }
 
         SpriteRenderBatch batch = new SpriteRenderBatch(scene, gameObject.getzIndex());
+        batch.onCreate();
         batch.addRenderComponent(renderer);
         renderBatches.add(batch);
+    }
+
+    public void render() {
+        for(int i = 0; i < renderBatches.size(); i++) renderBatches.get(i).render();
     }
 
 }

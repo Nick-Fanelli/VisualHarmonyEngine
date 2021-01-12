@@ -1,19 +1,14 @@
 package test;
 
-import com.harmonygames.harmonyengine.mesh.Mesh2D;
-import com.harmonygames.harmonyengine.object.Camera;
 import com.harmonygames.harmonyengine.object.GameObject;
 import com.harmonygames.harmonyengine.object.component.SpriteRenderer;
-import com.harmonygames.harmonyengine.render.Shader;
 import com.harmonygames.harmonyengine.render.Sprite;
 import com.harmonygames.harmonyengine.render.batches.SpriteRenderBatch;
 import com.harmonygames.harmonyengine.scene.Scene;
-import org.joml.Vector4f;
+import org.lwjgl.system.CallbackI;
 
 public class TestScene extends Scene {
 
-    private GameObject gameObject;
-    private SpriteRenderBatch spriteRenderBatch;
 
 //    float[] vertices = {
 //            -0.8f, 0.5f,    // Left top         ID: 0
@@ -46,10 +41,7 @@ public class TestScene extends Scene {
 
         super.onCreate();
 
-        spriteRenderBatch = new SpriteRenderBatch(this, 0);
-        spriteRenderBatch.onCreate();
-
-        gameObject = new GameObject("Sample Object");
+        GameObject gameObject = new GameObject("Sample Object");
         gameObject.transform.position.set(0, 0);
         gameObject.transform.scale.set(64, 64);
 
@@ -57,7 +49,16 @@ public class TestScene extends Scene {
         gameObject.addComponent(renderer);
         renderer.setSprite(new Sprite());
 
-        spriteRenderBatch.addRenderComponent(renderer);
+        GameObject object = new GameObject("Sample Object");
+        object.transform.position.set(100, 100);
+        object.transform.scale.set(128, 64);
+        SpriteRenderer renderer1 = new SpriteRenderer();
+        object.addComponent(renderer1);
+        renderer1.setSprite(new Sprite());
+
+
+        super.addGameObject(gameObject);
+        super.addGameObject(object);
 
 //        shader = Assets.loadShader("/shaders/sprite.glsl");
     }
@@ -65,9 +66,6 @@ public class TestScene extends Scene {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        gameObject.update(deltaTime);
-        spriteRenderBatch.render();
     }
 
 }
