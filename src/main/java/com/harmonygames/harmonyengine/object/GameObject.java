@@ -13,6 +13,8 @@ public class GameObject {
 
     private final ArrayList<Component> components = new ArrayList<>();
 
+    protected int zIndex = 0;
+
     public GameObject(String name) {
         this.name = name;
     }
@@ -68,5 +70,8 @@ public class GameObject {
             }
         }
     }
+
+    public int getzIndex() { return this.zIndex; }
+    public void setzIndex(int index) { this.zIndex = zIndex; }
 
 }
