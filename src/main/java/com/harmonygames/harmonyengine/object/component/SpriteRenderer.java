@@ -21,7 +21,7 @@ public class SpriteRenderer extends Component {
 
     @Override
     public void update(float deltaTime) {
-        if(!this.lastTransform.equals(this.gameObject.transform)) {
+        if(!this.lastTransform.equals(super.gameObject.transform)) {
             this.gameObject.transform.copy(this.lastTransform);
             this.shouldRedraw = true;
         }
@@ -31,6 +31,8 @@ public class SpriteRenderer extends Component {
     public Texture getTexture() { return sprite.getTexture(); }
     public Vector2f[] getTextureCoords() { return sprite.getTextureCoords(); }
     public boolean shouldRedraw() { return this.shouldRedraw; }
+
+    public void setDrawn() { this.shouldRedraw = false; }
 
     // TODO: Update so that we check to see if the sprite was actually updated.
     public void setSprite(Sprite sprite) {

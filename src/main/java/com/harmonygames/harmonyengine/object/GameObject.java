@@ -24,9 +24,11 @@ public class GameObject {
     public void addComponent(Component component) {
         if(component.isSharable()) {
             component.setGameObject(this);
+            component.onCreate();
             this.components.add(component);
         } else if(!component.isSharable() && !this.containsComponentType(component.getClass())) {
             component.setGameObject(this);
+            component.onCreate();
             this.components.add(component);
         }
     }

@@ -32,4 +32,12 @@ public class Transform {
     public Transform copy() {
         return new Transform(new Vector2f(position), rotation, new Scale(scale));
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(!(object instanceof Transform)) return false;
+        Transform other = (Transform) object;
+
+        return other.position.equals(this.position) && other.scale.equals(this.scale);
+    }
 }

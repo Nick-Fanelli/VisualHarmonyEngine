@@ -44,7 +44,7 @@ public class Shader {
 
         for(String string : shaderFiles) {
             string = string.trim();
-            if(string.startsWith("//")) continue;
+            if(string.startsWith("//") || string.isBlank()) continue;
 
             boolean hasBeenAttached = false;
 
@@ -68,7 +68,7 @@ public class Shader {
         this.link();
     }
 
-    public int attachShader(String shaderSource, int shaderType) {
+    public void attachShader(String shaderSource, int shaderType) {
         int shaderID = GL20.glCreateShader(shaderType);
         GL20.glShaderSource(shaderID, shaderSource);
 
@@ -81,7 +81,7 @@ public class Shader {
 
         GL20.glAttachShader(programID, shaderID);
 
-        return shaderID;
+//        return shaderID;
     }
 
     public void link() {
@@ -113,5 +113,11 @@ public class Shader {
         FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
         matrix4f.get(matrixBuffer);
         GL20.glUniformMatrix4fv(uniformLocation, false, matrixBuffer);
+    }
+
+    public void addUniformIntArray(String varName, int[] array) {
+        int varLocation = GL20.glGetUniformLocation(programID, varName);
+        this.bind();
+        GL20.glUniform1iv(varLocation, array);
     }
 }

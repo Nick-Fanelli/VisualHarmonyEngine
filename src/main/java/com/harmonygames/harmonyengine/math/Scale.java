@@ -19,4 +19,17 @@ public class Scale {
         this(0, 0);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if(!(object instanceof Scale)) return false;
+
+        Scale other = (Scale) object;
+
+        return other.width == this.width && other.height == this.height;
+    }
+
+    public void set(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 }
