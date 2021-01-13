@@ -2,7 +2,9 @@ package com.harmonygames.harmonyengine.display;
 
 import com.harmonygames.harmonyengine.GameContext;
 import com.harmonygames.harmonyengine.Log;
+import com.harmonygames.harmonyengine.input.StandardInput;
 import com.harmonygames.harmonyengine.scene.SceneManager;
+import org.joml.Vector2f;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -21,10 +23,15 @@ public class Display {
     private long window;
 
     private final GameContext gameContext;
+    private final StandardInput standardInput;
+
+    private static final Vector2f displaySize = new Vector2f(1280, 720);
+
     private SceneManager sceneManager;
 
     public Display(GameContext gameContext) {
         this.gameContext = gameContext;
+        this.standardInput = new StandardInput();
     }
 
     public void init() {
@@ -49,7 +56,6 @@ public class Display {
         GLFW.glfwWindowHint(GLFW.GLFW_VISIBLE, GLFW.GLFW_FALSE);
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
-
         Log.success("Configured GLFW");
 
         // Create the window pointer object
@@ -62,11 +68,16 @@ public class Display {
         Log.success("Created GLFW window!");
 
         // Setup callbacks/inputs
-        // TODO: Remove
-        GLFW.glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if(key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE)
-                GLFW.glfwSetWindowShouldClose(window, true);
-        });
+        GLFW.glfwSetCursorPosCallback(window, standardInput::mousePositionCallback);
+        GLFW.glfwSetMouseButtonCallback(window, standardInput::mouseButtonCallback);
+        GLFW.glfwSetScrollCallback(window, standardInput::mouseScrollCallback);
+        GLFW.glfwSetKeyCallback(window, standardInput::keyCallback);
+        GLFW.glfwSetWindowSizeCallback(window, (w, newWidth, newHeight) -> displaySize.set(newWidth, newHeight));
+
+//        GLFW.glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+//            if(key == GLFW.GLFW_KEY_ESCAPE && action == GLFW.GLFW_RELEASE)
+//                GLFW.glfwSetWindowShouldClose(window, true);
+//        });
 
         try(MemoryStack stack = MemoryStack.stackPush()) {
             IntBuffer pWidth  = stack.mallocInt(1); // int pointer
@@ -150,5 +161,6 @@ public class Display {
 
     public boolean shouldContinueRunning() { return !GLFW.glfwWindowShouldClose(window); }
     public long getWindow() { return this.window; }
+    public static Vector2f getWindowSize() { return displaySize; }
 
 }
