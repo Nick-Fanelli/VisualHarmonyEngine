@@ -39,8 +39,6 @@ public class Texture {
     }
 
     public void initialize() {
-        this.filepath = filepath;
-
         // Generate Texture on GPU
         this.textureID = GL15.glGenTextures();
         GL15.glBindTexture(GL15.GL_TEXTURE_2D, textureID);
