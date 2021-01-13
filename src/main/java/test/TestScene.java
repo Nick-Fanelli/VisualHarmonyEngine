@@ -5,6 +5,7 @@ import com.harmonygames.harmonyengine.input.StandardInput;
 import com.harmonygames.harmonyengine.object.GameObject;
 import com.harmonygames.harmonyengine.object.component.SpriteRenderer;
 import com.harmonygames.harmonyengine.render.Sprite;
+import com.harmonygames.harmonyengine.render.Texture;
 import com.harmonygames.harmonyengine.scene.Scene;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.system.CallbackI;
@@ -25,7 +26,9 @@ public class TestScene extends Scene {
 
         SpriteRenderer renderer = new SpriteRenderer();
         gameObject.addComponent(renderer);
-        renderer.setSprite(new Sprite());
+        Sprite sprite = new Sprite();
+        sprite.setTexture(new Texture("/grass.jpg", gameObject.transform.scale));
+        renderer.setSprite(sprite);
 
         super.addGameObject(gameObject);
         super.onCreate();
@@ -34,8 +37,6 @@ public class TestScene extends Scene {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        System.out.println(GameContext.getCurrentFps());
 
         if(StandardInput.isKeyPressed(GLFW.GLFW_KEY_UP)) {
             gameObject.transform.position.y += playerSpeed * deltaTime;

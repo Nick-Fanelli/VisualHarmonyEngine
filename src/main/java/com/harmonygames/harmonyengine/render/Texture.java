@@ -1,6 +1,7 @@
 package com.harmonygames.harmonyengine.render;
 
 import com.harmonygames.harmonyengine.Log;
+import com.harmonygames.harmonyengine.math.Scale;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.stb.STBImage;
@@ -23,9 +24,8 @@ public class Texture {
         this.height = -1;
     }
 
-    public Texture(int width, int height) {
-        // TODO: Assign a dummy texture!
-        this.filepath = "#NON_ASSIGNED#";
+    public Texture(String filepath, Scale scale) {
+        this.filepath = filepath;
 
         // Generate texture on GPU
         this.textureID = GL15.glGenTextures();

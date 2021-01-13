@@ -18,7 +18,6 @@ void main() {
     fTexCoords = aTexCoords;
     fTexID = aTexID;
 
-//    gl_Position = vec4(aPos, 1.0);
     gl_Position = uProjection * uView * vec4(aPos, 1.0);
 }
 
@@ -36,13 +35,13 @@ uniform sampler2D[8] uTextures;
 out vec4 color;
 
 void main() {
-//    if(fTexID > 0) {
-//        int id = int(fTexID);
-//        color = fColor * texture(uTextures[id], fTexCoords);
-//        //        color = vec4(fTexCoords, 0, 1);
-//    } else {
-//        color = fColor;
-//    }
+    if(fTexID > 0) {
+        int id = int(fTexID);
+        color = fColor * texture(uTextures[id], fTexCoords);
+//                color = vec4(fTexCoords, 0, 1);
+    } else {
+        color = fColor;
+    }
 
-    color = fColor;
+//    color = fColor;
 }
