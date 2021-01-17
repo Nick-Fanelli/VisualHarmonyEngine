@@ -5,3 +5,6 @@ HarmonyEngine/build/*
 
 # Binary Stuff
 *.o
+
+# VSCode Stuff
+.vscode
