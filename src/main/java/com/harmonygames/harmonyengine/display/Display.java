@@ -127,6 +127,7 @@ public class Display {
 
             if(deltaTime >= 0) {
                 sceneManager.update(deltaTime);
+                standardInput.endFrame();
             }
 
             GLFW.glfwSwapBuffers(window);

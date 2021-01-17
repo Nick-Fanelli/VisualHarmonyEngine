@@ -1,13 +1,10 @@
 package test;
 
-import com.harmonygames.harmonyengine.input.StandardInput;
 import com.harmonygames.harmonyengine.object.GameObject;
 import com.harmonygames.harmonyengine.object.component.SpriteRenderer;
 import com.harmonygames.harmonyengine.render.Sprite;
 import com.harmonygames.harmonyengine.render.Texture;
 import com.harmonygames.harmonyengine.scene.Scene;
-import org.lwjgl.glfw.GLFW;
-import org.w3c.dom.Text;
 
 public class TestScene extends Scene {
 
@@ -38,22 +35,6 @@ public class TestScene extends Scene {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        if(StandardInput.isKeyPressed(GLFW.GLFW_KEY_UP)) {
-            gameObject.transform.position.y += playerSpeed * deltaTime;
-        }
-
-        if(StandardInput.isKeyPressed(GLFW.GLFW_KEY_DOWN)) {
-            gameObject.transform.position.y -= playerSpeed * deltaTime;
-        }
-
-        if(StandardInput.isKeyPressed(GLFW.GLFW_KEY_RIGHT)) {
-            gameObject.transform.position.x += playerSpeed * deltaTime;
-        }
-
-        if(StandardInput.isKeyPressed(GLFW.GLFW_KEY_LEFT)) {
-            gameObject.transform.position.x -= playerSpeed * deltaTime;
-        }
     }
 
 }
