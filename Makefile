@@ -33,3 +33,8 @@ $(MODULES)/bin/%.o: $(MODULES)/src/%.cpp
 
 $(MODULES) : $(OBJ)
 		$(CC) $(OBJ) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(APP_PATH)
+
+clean:
+		$(RM) -rf $(OBJ_FILES)
+		$(RM) -rf $(MODULES)/src/*o
+		$(RM) -rf $(APP_PATH)
