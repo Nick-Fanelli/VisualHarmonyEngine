@@ -1,11 +1,24 @@
-#include "Display.h"
+#include "GameContext.h"
 
-static GLFWwindow* window;
+#include <iostream>
+
+// ==========================================================================================
+// Game Context Class Methods
+// ==========================================================================================
+void GameContext::Start() {
+    CreateDisplay();
+    StartGameLoop();
+}
+
+void GameContext::Stop() {
+
+}
 
 static GLuint startingWidth = 1280;
 static GLuint startingHeight = 720;
 
-void CreateDisplay() {
+void GameContext::CreateDisplay() {
+
     if(!glfwInit()) {
         // TODO: Log error
     }
@@ -17,20 +30,20 @@ void CreateDisplay() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    window = glfwCreateWindow(startingWidth, startingHeight, "HarmonyEngine", nullptr, nullptr);
+    m_Window = glfwCreateWindow(startingWidth, startingHeight, "HarmonyEngine", nullptr, nullptr);
 
     int screenWidth, screenHeight;
 
-    glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
+    glfwGetFramebufferSize(m_Window, &screenWidth, &screenHeight);
 
-    if(window == nullptr) {
+    if(m_Window == nullptr) {
         // TODO: Log Error
         glfwTerminate();
 
         return;
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(m_Window);
 
     glewExperimental = GL_TRUE;
 
@@ -44,22 +57,24 @@ void CreateDisplay() {
     // TODO: Log Success
 }
 
-void StartGameLoop() {
-    while(!glfwWindowShouldClose(window)) {
+void GameContext::StartGameLoop() {
+    while(!glfwWindowShouldClose(m_Window)) {
 
         // Handle Input
 
         glClearColor(0, 0, 0, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }
 
     CleanUp();
 }
 
-void CleanUp() {
-    glfwDestroyWindow(window);
+void GameContext::CleanUp() {
+    Stop();
+
+    glfwDestroyWindow(m_Window);
     glfwTerminate();
 }

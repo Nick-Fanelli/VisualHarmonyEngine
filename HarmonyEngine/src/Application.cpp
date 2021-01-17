@@ -1,6 +1,6 @@
 #include "HarmonyEngine.h"
 
 int main() {
-    CreateDisplay();
-    StartGameLoop();
+    GameContext context = GameContext();
+    context.Start();
 }
