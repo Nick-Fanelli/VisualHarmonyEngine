@@ -1,6 +1,6 @@
 #include "GameContext.h"
 
-#include <iostream>
+#include "Log.h"
 
 // ==========================================================================================
 // Game Context Class Methods
@@ -19,8 +19,10 @@ static GLuint startingHeight = 720;
 
 void GameContext::CreateDisplay() {
 
+    Log::Info("Creating the display...");
+
     if(!glfwInit()) {
-        // TODO: Log error
+        Log::Error("Could not initialize GLFW");
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -37,7 +39,7 @@ void GameContext::CreateDisplay() {
     glfwGetFramebufferSize(m_Window, &screenWidth, &screenHeight);
 
     if(m_Window == nullptr) {
-        // TODO: Log Error
+        Log::Error("could not create the GLFW Window");
         glfwTerminate();
 
         return;
@@ -48,16 +50,17 @@ void GameContext::CreateDisplay() {
     glewExperimental = GL_TRUE;
 
     if(glewInit() != GLEW_OK) {
-        // TODO: Log Error
+        Log::Error("Could not initialize GLEW");
         return;
     }
 
     glViewport(0, 0, screenWidth, screenHeight);
 
-    // TODO: Log Success
+    Log::Success("Created the GLFW dsiplay!");
 }
 
 void GameContext::StartGameLoop() {
+    Log::Info("Starting Game Loop");
     while(!glfwWindowShouldClose(m_Window)) {
 
         // Handle Input
@@ -73,8 +76,12 @@ void GameContext::StartGameLoop() {
 }
 
 void GameContext::CleanUp() {
+    Log::Info("Cleaning up the program...");
+
     Stop();
 
     glfwDestroyWindow(m_Window);
     glfwTerminate();
+
+    Log::Success("Progam successfully exited!");
 }
