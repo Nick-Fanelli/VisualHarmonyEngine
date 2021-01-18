@@ -69,7 +69,7 @@ static GLfloat vertices[] = {
 
 static GLfloat colors[] = {
     1, 0, 0, 1,  // Red color, for the first vertex
-    1, 1, 0, 1,  // Green color, for the second vertex
+    0, 1, 0, 1,  // Green color, for the second vertex
     0, 0, 1, 1   // Blue color, for the third vertex
 };
 

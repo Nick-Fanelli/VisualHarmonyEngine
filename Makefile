@@ -10,6 +10,7 @@ OBJ = $(subst $(MODULES)/src, $(MODULES)/bin, $(SRC:.cpp=.o))
 CC = g++
 RM = rm
 
+# TODO: Add the Windows Location
 # INCLUDE_PATHS specifies the additional include paths we'll need
 INCLUDE_PATHS = -I/usr/local/include -I/opt/X11/include
 
