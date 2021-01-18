@@ -89,11 +89,8 @@ void GameContext::StartGameLoop() {
 
     Mesh2D mesh(vertices, indices);
 
-    // Load Shader
-    std::string vertexData = FileUtils::ReadFile("HarmonyEngine/assets/default.vert.glsl");
-    std::string fragmentData = FileUtils::ReadFile("HarmonyEngine/assets/default.frag.glsl");
-
-    Shader shader = Shader(vertexData, fragmentData);
+    // Get the default mesh shader
+    Shader shader = Shader::GetDefaultMeshShader();
 
     while(!glfwWindowShouldClose(m_Window)) {
 

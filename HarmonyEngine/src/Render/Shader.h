@@ -5,6 +5,7 @@
 #include <GLUT/glut.h>
 
 #include <string>
+#include "../Core/Utils.h"
 
 class Shader {
 
@@ -15,10 +16,10 @@ class Shader {
     void Link();
 
 public:
-    Shader(const std::string& vertexSource, const std::string& fragmentSource)
+    Shader(const char* vertexFilePath, const char* fragmentFilePath)
         : m_ProgramID(glCreateProgram()) {
-        AttachVertexShader(vertexSource);
-        AttachFragmentShader(fragmentSource);
+        AttachVertexShader(FileUtils::ReadFile(vertexFilePath));
+        AttachFragmentShader(FileUtils::ReadFile(fragmentFilePath));
         Link();
     }
 
@@ -26,4 +27,8 @@ public:
     void Unbind();
     void Dispose();
 
+    static const Shader& GetDefaultMeshShader() {
+        static Shader defaultShader("HarmonyEngine/assets/shaders/mesh.vert.glsl", "HarmonyEngine/assets/shaders/mesh.frag.glsl");
+        return defaultShader;
+    }
 };
