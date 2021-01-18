@@ -1,6 +1,10 @@
 #include "HarmonyEngine.h"
 
+#include "TestScene.h"
+
 int main() {
     GameContext context = GameContext();
-    context.Start();
+    TestScene testScene = TestScene();
+
+    context.Start(&testScene);
 }

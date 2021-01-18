@@ -26,9 +26,4 @@ public:
     void Bind();
     void Unbind();
     void Dispose();
-
-    static const Shader& GetDefaultMeshShader() {
-        static Shader defaultShader("HarmonyEngine/assets/shaders/mesh.vert.glsl", "HarmonyEngine/assets/shaders/mesh.frag.glsl");
-        return defaultShader;
-    }
 };
