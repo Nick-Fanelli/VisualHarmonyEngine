@@ -3,7 +3,9 @@
 #include "Log.h"
 #include "Utils.h"
 #include "../Render/Shader.h"
+#include "../Render/Mesh.h"
 #include <string>
+#include <vector>
 
 void GameContext::Start() {
     CreateDisplay();
@@ -61,10 +63,19 @@ void GameContext::CreateDisplay(){
 
 // Test Triangle Drawing Code
 
-static GLfloat vertices[] = {
-    +0.0f, +0.8f,    // Top coordinate
-    -0.8f, -0.8f,    // Bottom-left coordinate
-    +0.8f, -0.8f     // Bottom-right coordinate
+static std::vector<float> vertices = {
+     -0.5f, 0.5f,    // Left top         ID: 0
+     -0.5f, -0.5f,   // Left bottom      ID: 1
+     0.5f, -0.5f,    // Right bottom     ID: 2
+     0.5f, 0.5f      // Right left       ID: 3
+};
+
+// std::vector<int> vect{ 10, 20, 30 };
+static std::vector<unsigned int> indices = { 
+    // Left bottom triangle
+            0, 1, 2,
+            // Right top triangle
+            2, 3, 0
 };
 
 static GLfloat colors[] = {
@@ -76,25 +87,7 @@ static GLfloat colors[] = {
 void GameContext::StartGameLoop() {
     Log::Info("Starting Game Loop");
 
-    GLuint vaoID;
-    glGenVertexArrays(1, &vaoID);
-    glBindVertexArray(vaoID);
-
-    GLuint vboID;
-    glGenBuffers(1, &vboID);
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*) 0);
-
-    GLuint vboColorID;
-    glGenBuffers(1, &vboColorID);
-    glBindBuffer(GL_ARRAY_BUFFER, vboColorID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(colors), &colors, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*) 0);
-
-    glBindVertexArray(0);
+    Mesh2D mesh(vertices, indices);
 
     // Load Shader
     std::string vertexData = FileUtils::ReadFile("HarmonyEngine/assets/default.vert.glsl");
@@ -111,14 +104,18 @@ void GameContext::StartGameLoop() {
 
         shader.Bind();
 
-        glBindVertexArray(vaoID);
+        glBindVertexArray(mesh.GetVaoID());
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        // glEnableVertexAttribArray(1);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetEboID());
+
+        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        // glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
         shader.Unbind();
