@@ -70,7 +70,6 @@ static std::vector<float> vertices = {
      0.5f, 0.5f      // Right left       ID: 3
 };
 
-// std::vector<int> vect{ 10, 20, 30 };
 static std::vector<unsigned int> indices = { 
     // Left bottom triangle
             0, 1, 2,
@@ -78,7 +77,7 @@ static std::vector<unsigned int> indices = {
             2, 3, 0
 };
 
-static GLfloat colors[] = {
+static std::vector<float> colors = {
     1, 0, 0, 1,  // Red color, for the first vertex
     0, 1, 0, 1,  // Green color, for the second vertex
     0, 0, 1, 1   // Blue color, for the third vertex
@@ -99,23 +98,23 @@ void GameContext::StartGameLoop() {
         glClearColor(0, 0, 0, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        shader.Bind();
+        // shader.Bind();
 
-        glBindVertexArray(mesh.GetVaoID());
-        glEnableVertexAttribArray(0);
-        // glEnableVertexAttribArray(1);
+        // glBindVertexArray(mesh.GetVaoID());
+        // glEnableVertexAttribArray(0);
+        // // glEnableVertexAttribArray(1);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetEboID());
+        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.GetEboID());
 
-        glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+        // glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-        glDisableVertexAttribArray(0);
-        // glDisableVertexAttribArray(1);
-        glBindVertexArray(0);
+        // glDisableVertexAttribArray(0);
+        // // glDisableVertexAttribArray(1);
+        // glBindVertexArray(0);
 
-        shader.Unbind();
+        // shader.Unbind();
 
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
