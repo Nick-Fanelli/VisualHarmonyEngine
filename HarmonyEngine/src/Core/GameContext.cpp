@@ -17,7 +17,7 @@ void GameContext::Stop() {
 static GLuint startingWidth = 1280;
 static GLuint startingHeight = 720;
 
-void GameContext::CreateDisplay() {
+void GameContext::CreateDisplay(){
 
     Log::Info("Creating the display...");
 
@@ -69,7 +69,7 @@ static GLfloat vertices[] = {
 
 static GLfloat colors[] = {
     1, 0, 0, 1,  // Red color, for the first vertex
-    0, 1, 0, 1,  // Green color, for the second vertex
+    1, 1, 0, 1,  // Green color, for the second vertex
     0, 0, 1, 1   // Blue color, for the third vertex
 };
 
@@ -83,7 +83,7 @@ void GameContext::StartGameLoop() {
     GLuint vboID;
     glGenBuffers(1, &vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW); // Might have to not use memory location
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (void*) 0);
 
