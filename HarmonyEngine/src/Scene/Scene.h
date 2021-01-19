@@ -1,7 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "GameObject.h"
+// #include "GameObject.h"
+
+class GameObject;
 
 // ======================================================================================
 // Scene
@@ -11,7 +13,7 @@ class Scene {
 
     friend class SceneManager;
 
-    std::vector<GameObject> m_GameObjects;
+    std::vector<GameObject*> m_GameObjects;
 
     void HiddenOnCreate();
     void HiddenUpdate(const float& deltaTime);
@@ -23,9 +25,9 @@ protected:
     virtual void OnDestroy();
 
 public:
-    Scene() : m_GameObjects(std::vector<GameObject>()) {}
+    Scene();
 
-    void AddGameObject(GameObject gameObject);
+    void AddGameObject(GameObject* gameObject);
 };
 
 // ======================================================================================

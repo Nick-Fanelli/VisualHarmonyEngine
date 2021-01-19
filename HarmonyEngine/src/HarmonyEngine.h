@@ -7,3 +7,4 @@
 #include "Render/Mesh.h"
 
 #include "Scene/Scene.h"
+#include "Scene/GameObject.h"

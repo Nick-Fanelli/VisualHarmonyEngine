@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Scene.h"
 
 // Virtual Override Definitions
 void GameObject::OnCreate() {}
@@ -16,5 +17,6 @@ void GameObject::HiddenUpdate(const float& deltaTime) {
 } 
 
 void GameObject::HiddenOnDestroy() {
+    m_ParentScene = nullptr;
     OnDestroy();
 }

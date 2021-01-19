@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include "../Core/Log.h"
+#include "GameObject.h"
 
 // ======================================================================================
 // Scene 
@@ -11,13 +12,15 @@ void Scene::OnCreate() {}
 void Scene::Update(const float& deltaTime) {}
 void Scene::OnDestroy() {}
 
+Scene::Scene() : m_GameObjects(std::vector<GameObject*>()) {}
+
 void Scene::HiddenOnCreate() {
     OnCreate();
 }
 
 void Scene::HiddenUpdate(const float& deltaTime) {
     for(auto& gameObject : m_GameObjects) {
-        gameObject.HiddenUpdate(deltaTime);
+        gameObject->HiddenUpdate(deltaTime);
     }
 
     Update(deltaTime);
@@ -25,14 +28,14 @@ void Scene::HiddenUpdate(const float& deltaTime) {
 
 void Scene::HiddenOnDestroy() {
     for(auto& gameObject : m_GameObjects) {
-        gameObject.OnDestroy();
+        gameObject->OnDestroy();
     }
-    
     OnDestroy();
 }
 
-void Scene::AddGameObject(GameObject gameObject) {
-    gameObject.HiddenOnCreate();
+void Scene::AddGameObject(GameObject* gameObject) {
+    gameObject->m_ParentScene = this;
+    gameObject->HiddenOnCreate();
     m_GameObjects.push_back(gameObject);
 }
 
