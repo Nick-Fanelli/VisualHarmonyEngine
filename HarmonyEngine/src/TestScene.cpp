@@ -7,8 +7,8 @@
 // Shader shader;
 // Mesh2D mesh;
 
-static Mesh2D* mesh;
-static Shader* shader;
+static std::unique_ptr<Mesh2D> mesh;
+static std::unique_ptr<Shader> shader;
 
 // Test Triangle Drawing Code
 static std::vector<float> vertices = {
@@ -34,8 +34,8 @@ static std::vector<float> colors = {
 // static GameObject* m_GameObject;
 
 void TestScene::OnCreate() {
-    mesh = new Mesh2D(vertices, indices);
-    shader = new Shader("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
+    mesh = std::make_unique<Mesh2D>(vertices, indices);
+    shader = std::make_unique<Shader>("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
 
     std::shared_ptr<GameObject> gameObject = std::make_unique<GameObject>("Example Object");
 
@@ -64,7 +64,4 @@ void TestScene::Update(const float& deltaTime) {
 
 void TestScene::OnDestroy() {
     shader->Dispose();
-
-    delete shader;
-    delete mesh;
 }

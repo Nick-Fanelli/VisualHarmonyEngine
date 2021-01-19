@@ -46,7 +46,9 @@ void Scene::AddGameObject(std::shared_ptr<GameObject> gameObjectPtr) {
 Scene* SceneManager::m_ActiveScene = nullptr;
 
 void SceneManager::Update(const float& deltaTime) {
-    if(m_ActiveScene != nullptr) m_ActiveScene->HiddenUpdate(deltaTime);
+    if(m_ActiveScene != nullptr) {
+        m_ActiveScene->HiddenUpdate(deltaTime);
+    }
 }
 
 void SceneManager::OnDestroy() {

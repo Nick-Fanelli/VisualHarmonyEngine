@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 // #include "GameObject.h"
+#include "../Core/Log.h"
 
 class GameObject;
 
@@ -27,6 +28,10 @@ protected:
 
 public:
     Scene();
+
+    ~Scene() {
+        Log::Info("Destroying scene");
+    }
 
     void AddGameObject(std::shared_ptr<GameObject> ptr);
 };
