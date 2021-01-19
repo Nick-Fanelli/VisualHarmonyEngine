@@ -1,6 +1,8 @@
 #pragma once
 
-#include "HarmonyEngine.h"
+// #include "HarmonyEngine.h"
+#include "Scene/Scene.h"
+#include "Core/Log.h"
 
 class TestScene : public Scene {
 

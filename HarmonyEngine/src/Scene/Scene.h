@@ -8,9 +8,15 @@ class Scene {
 
     friend class SceneManager;
 
+protected:
     virtual void OnCreate();
     virtual void Update(const float& deltaTime);
     virtual void OnDestroy();
+    
+private:
+    void HiddenOnCreate();
+    void HiddenUpdate(const float& deltaTime);
+    void HiddenOnDestroy();
     
 };
 
