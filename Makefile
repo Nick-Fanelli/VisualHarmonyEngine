@@ -1,5 +1,7 @@
 MODULES = HarmonyEngine
 
+ASSETS_DIR = $(MODULES)/assets
+
 SRC_FILES = $(MODULES)/src/*.cpp $(MODULES)/src/*/*.cpp
 OBJ_FILES = $(MODULES)/bin/*.o $(MODULES)/bin/*/*.o
 APP_PATH = $(MODULES)/build/$(MODULES)
@@ -9,6 +11,7 @@ OBJ = $(subst $(MODULES)/src, $(MODULES)/bin, $(SRC:.cpp=.o))
 
 CC = g++
 RM = rm
+CP = cp
 
 # TODO: Add the Windows Location
 # INCLUDE_PATHS specifies the additional include paths we'll need
@@ -33,9 +36,11 @@ $(MODULES)/bin/%.o: $(MODULES)/src/%.cpp
 	$(CC) -o $@ -c $< $(COMPILER_FLAGS)
 
 $(MODULES) : $(OBJ)
-		$(CC) $(OBJ) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(APP_PATH)
+		$(CC) $(OBJ) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(APP_PATH);
+		$(CP) -R $(ASSETS_DIR) $(MODULES)/build/
 
 clean:
 		$(RM) -rf $(OBJ_FILES)
 		$(RM) -rf $(MODULES)/src/*o
+		$(RM) -rf $(MODULES)/build/assets
 		$(RM) -rf $(APP_PATH)
