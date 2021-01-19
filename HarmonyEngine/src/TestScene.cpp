@@ -35,7 +35,6 @@ static std::vector<float> colors = {
 
 void TestScene::OnCreate() {
     std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
-    // shader = std::make_unique<Shader>("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
 
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
     std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mesh);

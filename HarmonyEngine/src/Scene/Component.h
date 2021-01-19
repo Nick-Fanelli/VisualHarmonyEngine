@@ -32,16 +32,18 @@ public:
 // ======================================================================================
 class MeshRenderer : public Component {
 
-    MeshRenderer();
+    static std::shared_ptr<Shader> s_DefaultShader;
+    std::shared_ptr<Shader> m_Shader;
 
-    std::shared_ptr<Mesh2D> m_Mesh = nullptr;
+    std::shared_ptr<Mesh2D> m_Mesh;
 
     void OnCreate() override;
     void Update(const float& deltaTime) override;
     void OnDestroy() override;
 
 public:
-    MeshRenderer(std::shared_ptr<Mesh2D> mesh) : m_Mesh(mesh) {}
+    MeshRenderer(std::shared_ptr<Mesh2D> mesh, std::shared_ptr<Shader> shader) : m_Mesh(mesh), m_Shader(shader) {}
+    MeshRenderer(std::shared_ptr<Mesh2D> mesh);
 
     const std::shared_ptr<Mesh2D>& GetMesh() const { return m_Mesh; }
 
