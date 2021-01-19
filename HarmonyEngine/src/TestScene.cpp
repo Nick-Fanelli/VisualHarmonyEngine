@@ -36,7 +36,7 @@ void TestScene::OnCreate() {
     mesh = new Mesh2D(vertices, indices);
     shader = new Shader("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
 
-    m_GameObject = new GameObject();
+    m_GameObject = new GameObject("Example Object");
 
     AddGameObject(m_GameObject);
 }
