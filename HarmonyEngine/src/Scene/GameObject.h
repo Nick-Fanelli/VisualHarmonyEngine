@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../Core/Log.h"
 
 class Scene;
 
@@ -21,6 +22,10 @@ class GameObject {
 
 public:
     GameObject(std::string name) : m_Name(name) {}
+
+    ~GameObject() {
+        Log::Info("Deleting Game Object");
+    }
 
     const Scene* GetParentScene() const { return m_ParentScene; }
     

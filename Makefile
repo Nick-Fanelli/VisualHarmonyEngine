@@ -22,7 +22,7 @@ LIBRARY_PATHS = -L/usr/local/lib -I/opt/X11/lib
 
 # COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -w -std=c++11
+COMPILER_FLAGS = -w -std=c++14
 
 ifeq ($(DEBUG),yes)
 	COMPILER_FLAGS += -g

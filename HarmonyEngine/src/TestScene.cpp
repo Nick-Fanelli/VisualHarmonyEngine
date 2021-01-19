@@ -2,6 +2,7 @@
 
 #include "HarmonyEngine.h"
 #include <iostream>
+#include <memory>
 
 // Shader shader;
 // Mesh2D mesh;
@@ -30,15 +31,15 @@ static std::vector<float> colors = {
     0, 0, 1, 1   // Blue color, for the third vertex
 };
 
-static GameObject* m_GameObject;
+// static GameObject* m_GameObject;
 
 void TestScene::OnCreate() {
     mesh = new Mesh2D(vertices, indices);
     shader = new Shader("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
 
-    m_GameObject = new GameObject("Example Object");
+    std::shared_ptr<GameObject> gameObject = std::make_unique<GameObject>("Example Object");
 
-    AddGameObject(m_GameObject);
+    AddGameObject(gameObject);
 }
 
 void TestScene::Update(const float& deltaTime) {
@@ -66,5 +67,4 @@ void TestScene::OnDestroy() {
 
     delete shader;
     delete mesh;
-    delete m_GameObject;
 }
