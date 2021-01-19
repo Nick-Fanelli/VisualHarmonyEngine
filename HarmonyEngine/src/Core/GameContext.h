@@ -9,19 +9,18 @@
 #include "Log.h"
 #include "../Scene/Scene.h"
 
+class Display;
+
 // ==========================================================================================
 // Game Context Class Methods
 // ==========================================================================================
 class GameContext {
 
-    GLFWwindow* m_Window;
+    Display* m_Display;
     SceneManager m_SceneManager;
-
-    void CreateDisplay(Scene* scene);
-    void StartGameLoop();
-    void CleanUp(); 
 
 public:
     void Start(Scene* scene);
+    void Update(const float& deltaTime);
     void Stop();
 };
