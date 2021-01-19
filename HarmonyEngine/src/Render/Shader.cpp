@@ -87,3 +87,8 @@ void Shader::Dispose() {
 
     glDeleteProgram(m_ProgramID);
 }
+
+void Shader::AddUniformVec4(const char* varName, glm::vec4 vec4) {
+    GLint location = glGetUniformLocation(m_ProgramID, varName);
+    glUniform4f(location, vec4.x, vec4.y, vec4.z, vec4.w);
+}

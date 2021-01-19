@@ -7,6 +7,8 @@
 #include <string>
 #include "../Core/Utils.h"
 
+#include <glm/glm.hpp>
+
 class Shader {
 
     GLuint m_ProgramID, m_VertexID, m_FragmentID;
@@ -22,6 +24,8 @@ public:
         AttachFragmentShader(FileUtils::ReadFile(fragmentFilePath));
         Link();
     }
+    
+    void AddUniformVec4(const char* varName, glm::vec4 vec4);
 
     void Bind();
     void Unbind();

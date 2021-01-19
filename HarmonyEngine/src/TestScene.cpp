@@ -4,12 +4,6 @@
 #include <iostream>
 #include <memory>
 
-// Shader shader;
-// Mesh2D mesh;
-
-// static std::shared_ptr<Mesh2D> mesh;
-// static std::unique_ptr<Shader> shader;
-
 // Test Triangle Drawing Code
 static std::vector<float> vertices = {
      -0.5f, 0.5f,    // Left top         ID: 0
@@ -31,13 +25,12 @@ static std::vector<float> colors = {
     0, 0, 1, 1   // Blue color, for the third vertex
 };
 
-// static GameObject* m_GameObject;
-
 void TestScene::OnCreate() {
-    std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
-
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
+
+    std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
     std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mesh);
+    meshRenderer->SetColor(glm::vec4(0, 0.5, 0.9, 1));
 
     gameObject->AddComponent(meshRenderer);
     Scene::AddGameObject(gameObject);
@@ -48,5 +41,5 @@ void TestScene::Update(const float& deltaTime) {
 }
 
 void TestScene::OnDestroy() {
-    // shader->Dispose();
+
 }

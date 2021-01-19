@@ -20,6 +20,7 @@ MeshRenderer::MeshRenderer(std::shared_ptr<Mesh2D> mesh) : m_Mesh(mesh) {
     }
 
     m_Shader = s_DefaultShader;
+    m_Color = glm::vec4(1, 1, 1, 1);
 }
 
 void MeshRenderer::OnCreate() {
@@ -28,6 +29,7 @@ void MeshRenderer::OnCreate() {
 
 void MeshRenderer::Update(const float& deltaTime) {
     m_Shader->Bind();
+    m_Shader->AddUniformVec4("color", m_Color);
 
     glBindVertexArray(GetMesh()->GetVaoID());
     glEnableVertexAttribArray(0);
