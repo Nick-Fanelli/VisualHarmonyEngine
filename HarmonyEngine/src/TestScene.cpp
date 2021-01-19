@@ -32,6 +32,7 @@ static std::vector<float> colors = {
 void TestScene::OnCreate() {
     mesh = new Mesh2D(vertices, indices);
     shader = new Shader("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
+    AddGameObject(GameObject());
 }
 
 void TestScene::Update(const float& deltaTime) {

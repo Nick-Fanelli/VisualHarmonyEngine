@@ -16,11 +16,24 @@ void Scene::HiddenOnCreate() {
 }
 
 void Scene::HiddenUpdate(const float& deltaTime) {
+    for(auto& gameObject : m_GameObjects) {
+        gameObject.HiddenUpdate(deltaTime);
+    }
+
     Update(deltaTime);
 }
 
 void Scene::HiddenOnDestroy() {
+    for(auto& gameObject : m_GameObjects) {
+        gameObject.OnDestroy();
+    }
+    
     OnDestroy();
+}
+
+void Scene::AddGameObject(GameObject gameObject) {
+    gameObject.HiddenOnCreate();
+    m_GameObjects.push_back(gameObject);
 }
 
 // ======================================================================================

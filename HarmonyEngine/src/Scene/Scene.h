@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include "GameObject.h"
+
 // ======================================================================================
 // Scene
 // ======================================================================================
@@ -8,16 +11,21 @@ class Scene {
 
     friend class SceneManager;
 
+    std::vector<GameObject> m_GameObjects;
+
+    void HiddenOnCreate();
+    void HiddenUpdate(const float& deltaTime);
+    void HiddenOnDestroy();
+
 protected:
     virtual void OnCreate();
     virtual void Update(const float& deltaTime);
     virtual void OnDestroy();
-    
-private:
-    void HiddenOnCreate();
-    void HiddenUpdate(const float& deltaTime);
-    void HiddenOnDestroy();
-    
+
+public:
+    Scene() : m_GameObjects(std::vector<GameObject>()) {}
+
+    void AddGameObject(GameObject gameObject);
 };
 
 // ======================================================================================
