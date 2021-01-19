@@ -4,7 +4,7 @@
 // Mesh2D
 // ======================================================================================
 
-Mesh2D::Mesh2D(const std::vector<float>& vertices, const std::vector<unsigned int>& indices) {
+Mesh2D::Mesh2D(const std::vector<float>& vertices, const std::vector<unsigned int>& indices) : m_IndicesCount(indices.size()) {
     // Bind the VAO
     glGenVertexArrays(1, &m_VaoID);
     glBindVertexArray(m_VaoID);

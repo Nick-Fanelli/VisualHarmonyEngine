@@ -7,8 +7,8 @@
 // Shader shader;
 // Mesh2D mesh;
 
-static std::unique_ptr<Mesh2D> mesh;
-static std::unique_ptr<Shader> shader;
+// static std::shared_ptr<Mesh2D> mesh;
+// static std::unique_ptr<Shader> shader;
 
 // Test Triangle Drawing Code
 static std::vector<float> vertices = {
@@ -34,34 +34,20 @@ static std::vector<float> colors = {
 // static GameObject* m_GameObject;
 
 void TestScene::OnCreate() {
-    mesh = std::make_unique<Mesh2D>(vertices, indices);
-    shader = std::make_unique<Shader>("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
+    std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
+    // shader = std::make_unique<Shader>("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
 
-    std::shared_ptr<GameObject> gameObject = std::make_unique<GameObject>("Example Object");
+    std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
+    std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mesh);
 
-    AddGameObject(gameObject);
+    gameObject->AddComponent(meshRenderer);
+    Scene::AddGameObject(gameObject);
 }
 
 void TestScene::Update(const float& deltaTime) {
-    shader->Bind();
-
-    glBindVertexArray(mesh->GetVaoID());
-    glEnableVertexAttribArray(0);
-    // glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->GetEboID());
-
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    glDisableVertexAttribArray(0);
-    // glDisableVertexAttribArray(1);
-    glBindVertexArray(0);
-
-    shader->Unbind();
+    
 }
 
 void TestScene::OnDestroy() {
-    shader->Dispose();
+    // shader->Dispose();
 }

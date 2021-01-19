@@ -1,13 +1,21 @@
-MODULES = HarmonyEngine
+Game = Game
+HarmonyEngine = HarmonyEngine
 
-ASSETS_DIR = $(MODULES)/assets
+ASSETS_DIR = $(HarmonyEngine)/assets
 
-SRC_FILES = $(MODULES)/src/*.cpp $(MODULES)/src/*/*.cpp
-OBJ_FILES = $(MODULES)/bin/*.o $(MODULES)/bin/*/*.o
-APP_PATH = $(MODULES)/build/$(MODULES)
+SRC_FILES = $(HarmonyEngine)/src/*.cpp $(HarmonyEngine)/src/*/*.cpp
+OBJ_FILES = $(HarmonyEngine)/bin/*.o $(HarmonyEngine)/bin/*/*.o
+APP_PATH = $(HarmonyEngine)/build/$(HarmonyEngine)
+
+GAME_SRC_FILES = $(Game)/src/*.cpp $(Game)/src/*/*.cpp
+GAME_OBJ_FILES = $(Game)/bin/*.o $(Game)/bin/*/*.o
+GAME_APP_PATH = $(Game)/build/$(Game)
 
 SRC = $(wildcard $(SRC_FILES))
-OBJ = $(subst $(MODULES)/src, $(MODULES)/bin, $(SRC:.cpp=.o))
+OBJ = $(subst $(HarmonyEngine)/src, $(HarmonyEngine)/bin, $(SRC:.cpp=.o))
+
+GAME_SRC = $(wildcard $(GAME_SRC_FILES))
+GAME_OBJ = $(subst $(Game)/src, $(Game)/bin, $(SRC:.cpp=.o))
 
 CC = g++
 RM = rm
@@ -32,15 +40,15 @@ endif
 # Cocoa, IOKit, and CoreVideo are needed for static GLFW3.
 LINKER_FLAGS = -lglfw  -lGLEW -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
 
-$(MODULES)/bin/%.o: $(MODULES)/src/%.cpp
+$(HarmonyEngine)/bin/%.o: $(HarmonyEngine)/src/%.cpp
 	$(CC) -o $@ -c $< $(COMPILER_FLAGS)
 
-$(MODULES) : $(OBJ)
+$(HarmonyEngine) : $(OBJ)
 		$(CC) $(OBJ) $(INCLUDE_PATHS) $(LIBRARY_PATHS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(APP_PATH);
-		$(CP) -R $(ASSETS_DIR) $(MODULES)/build/
-
+		$(CP) -R $(ASSETS_DIR) $(HarmonyEngine)/build/
+		
 clean:
 		$(RM) -rf $(OBJ_FILES)
-		$(RM) -rf $(MODULES)/src/*o
-		$(RM) -rf $(MODULES)/build/assets
+		$(RM) -rf $(HarmonyEngine)/src/*o
+		$(RM) -rf $(HarmonyEngine)/build/assets
 		$(RM) -rf $(APP_PATH)

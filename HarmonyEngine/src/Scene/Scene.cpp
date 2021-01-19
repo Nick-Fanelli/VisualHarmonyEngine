@@ -30,6 +30,9 @@ void Scene::HiddenOnDestroy() {
     for(auto& gameObject : m_GameObjects) {
         gameObject->OnDestroy();
     }
+
+    m_GameObjects.clear();
+
     OnDestroy();
 }
 

@@ -29,9 +29,7 @@ protected:
 public:
     Scene();
 
-    ~Scene() {
-        Log::Info("Destroying scene");
-    }
+    ~Scene() { HiddenOnDestroy(); }
 
     void AddGameObject(std::shared_ptr<GameObject> ptr);
 };

@@ -11,6 +11,7 @@
 
 class Mesh2D {
 
+    int m_IndicesCount;
     GLuint m_VaoID;
     GLuint m_EboID;
 
@@ -19,4 +20,6 @@ public:
 
     const GLuint& GetVaoID() const { return m_VaoID; }
     const GLuint& GetEboID() const { return m_EboID; }
+
+    const int& GetIndicesCount() const { return m_IndicesCount; }
 };
