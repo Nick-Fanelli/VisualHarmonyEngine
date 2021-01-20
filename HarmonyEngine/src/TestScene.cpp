@@ -30,7 +30,6 @@ void TestScene::OnCreate() {
 
     std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
     std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mesh);
-    meshRenderer->SetColor(glm::vec4(0, 0.5, 0.9, 1));
 
     gameObject->AddComponent(meshRenderer);
     Scene::AddGameObject(gameObject);
