@@ -63,6 +63,7 @@ void SceneManager::Update(const float& deltaTime) {
 }
 
 void SceneManager::OnDestroy() {
+    s_GameContext = nullptr;
     if(s_ActiveScene != nullptr) s_ActiveScene->HiddenOnDestroy();
 }
 

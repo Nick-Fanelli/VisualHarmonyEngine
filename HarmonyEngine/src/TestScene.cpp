@@ -31,9 +31,9 @@ void TestScene::OnCreate() {
 }
 
 void TestScene::Update(const float& deltaTime) {
-    
+
 }
 
 void TestScene::OnDestroy() {
-
+    
 }
