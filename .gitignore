@@ -6,9 +6,6 @@ HarmonyEngine/build/*
 # Binary Stuff
 *.o
 
-# VSCode Stuff
-.vscode/settings.json
-
 # CMake
 
 HarmonyEngine/CMakeCache.txt
