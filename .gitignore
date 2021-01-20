@@ -8,3 +8,11 @@ HarmonyEngine/build/*
 
 # VSCode Stuff
 .vscode/*
+
+# CMake
+
+HarmonyEngine/CMakeCache.txt
+HarmonyEngine/CMakeFiles/
+HarmonyEngine/HarmonyEngine
+HarmonyEngine/Makefile
+HarmonyEngine/cmake_install.cmake
