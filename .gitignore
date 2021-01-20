@@ -7,7 +7,7 @@ HarmonyEngine/build/*
 *.o
 
 # VSCode Stuff
-.vscode/*
+.vscode/settings.json
 
 # CMake
 
