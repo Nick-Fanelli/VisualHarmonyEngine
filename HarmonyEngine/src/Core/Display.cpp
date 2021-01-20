@@ -55,6 +55,10 @@ void Display::StartGameLoop() {
     float endTime, startTime = (float) glfwGetTime();
     float deltaTime = -1.0f;
 
+    double lastTime = glfwGetTime();
+    double currentTime;
+    int frameCount = 0;
+
     while(!glfwWindowShouldClose(m_Window)) {
 
         // Handle Input
@@ -69,6 +73,15 @@ void Display::StartGameLoop() {
 
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
+
+        currentTime = glfwGetTime();
+        frameCount++;
+
+        if(currentTime - lastTime >= 1.0) {
+            m_GameContext->m_CurrentFps = 1000.0 / double(frameCount);
+            frameCount = 0;
+            lastTime = glfwGetTime();
+        }
 
         endTime = (float) glfwGetTime();
         deltaTime = endTime - startTime;

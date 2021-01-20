@@ -2,6 +2,7 @@
 
 #include "../Core/Log.h"
 #include "GameObject.h"
+#include "../Core/GameContext.h"
 
 // ======================================================================================
 // Scene 
@@ -14,7 +15,8 @@ void Scene::OnDestroy() {}
 
 Scene::Scene() : m_GameObjects(std::vector<std::shared_ptr<GameObject>>()) {}
 
-void Scene::HiddenOnCreate() {
+void Scene::HiddenOnCreate(GameContext* gameContext) {
+    m_GameContext = gameContext;
     OnCreate();
 }
 
@@ -32,6 +34,7 @@ void Scene::HiddenOnDestroy() {
     }
 
     m_GameObjects.clear();
+    m_GameContext = nullptr;
 
     OnDestroy();
 }
@@ -46,21 +49,26 @@ void Scene::AddGameObject(std::shared_ptr<GameObject> gameObjectPtr) {
 // Scene Manager
 // ======================================================================================
 
-Scene* SceneManager::m_ActiveScene = nullptr;
+Scene* SceneManager::s_ActiveScene = nullptr;
+GameContext* SceneManager::s_GameContext = nullptr;
+
+SceneManager::SceneManager(GameContext* gameContext) {
+    SceneManager::s_GameContext = gameContext;
+}
 
 void SceneManager::Update(const float& deltaTime) {
-    if(m_ActiveScene != nullptr) {
-        m_ActiveScene->HiddenUpdate(deltaTime);
+    if(s_ActiveScene != nullptr) {
+        s_ActiveScene->HiddenUpdate(deltaTime);
     }
 }
 
 void SceneManager::OnDestroy() {
-    if(m_ActiveScene != nullptr) m_ActiveScene->HiddenOnDestroy();
+    if(s_ActiveScene != nullptr) s_ActiveScene->HiddenOnDestroy();
 }
 
 void SceneManager::SetActiveScene(Scene* scene) {
-    if(m_ActiveScene != nullptr) m_ActiveScene->HiddenOnDestroy();
+    if(s_ActiveScene != nullptr) s_ActiveScene->HiddenOnDestroy();
 
-    scene->HiddenOnCreate();
-    m_ActiveScene = scene;
+    scene->HiddenOnCreate(SceneManager::s_GameContext);
+    s_ActiveScene = scene;
 }

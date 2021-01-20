@@ -30,6 +30,7 @@ void MeshRenderer::OnCreate() {
 void MeshRenderer::Update(const float& deltaTime) {
     m_Shader->Bind();
     m_Shader->AddUniformVec4("color", m_Color);
+    m_Shader->AddUniformVec3("cameraOffset", glm::vec3(0, 0, 0));
 
     glBindVertexArray(GetMesh()->GetVaoID());
     glEnableVertexAttribArray(0);

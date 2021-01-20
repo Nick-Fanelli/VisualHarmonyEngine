@@ -19,17 +19,12 @@ static std::vector<unsigned int> indices = {
             2, 3, 0
 };
 
-static std::vector<float> colors = {
-    1, 0, 0, 1,  // Red color, for the first vertex
-    0, 1, 0, 1,  // Green color, for the second vertex
-    0, 0, 1, 1   // Blue color, for the third vertex
-};
-
 void TestScene::OnCreate() {
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
 
     std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
     std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mesh);
+    meshRenderer->SetColor(glm::vec4(0.0001, 0.5, 1, 1));
 
     gameObject->AddComponent(meshRenderer);
     Scene::AddGameObject(gameObject);

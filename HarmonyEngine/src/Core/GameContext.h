@@ -7,8 +7,9 @@
 #include <GLFW/glfw3.h>
 
 #include "Log.h"
-#include "../Scene/Scene.h"
 
+class SceneManager;
+class Scene;
 class Display;
 
 // ==========================================================================================
@@ -16,11 +17,18 @@ class Display;
 // ==========================================================================================
 class GameContext {
 
+    friend class Display; 
+
     Display* m_Display;
-    SceneManager m_SceneManager;
+    SceneManager* m_SceneManager;
+    int m_CurrentFps;
 
 public:
+    GameContext() {}
+
     void Start(Scene* scene);
     void Update(const float& deltaTime);
     void Stop();
+
+    const int& GetCurrentFps() const { return m_CurrentFps; }
 };
