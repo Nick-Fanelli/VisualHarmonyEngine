@@ -3,10 +3,10 @@
 #include "../Scene/Scene.h"
 
 void GameContext::Start(Scene* scene) {
-    m_Display = new Display();
+    m_Display = std::make_shared<Display>();
     m_Display->CreateDisplay(this);
 
-    m_SceneManager = new SceneManager(this);
+    m_SceneManager = std::make_shared<SceneManager>(this);
     m_SceneManager->SetActiveScene(scene);
 
     m_Display->StartGameLoop();
@@ -18,7 +18,4 @@ void GameContext::Update(const float& deltaTime) {
 
 void GameContext::Stop() {
     m_SceneManager->OnDestroy();
-
-    delete m_Display;
-    delete m_SceneManager;
 }
