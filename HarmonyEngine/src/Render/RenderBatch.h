@@ -29,14 +29,3 @@ public:
 
     const bool IsFull() const { m_Size == MAX_RENDER_BATCH_SIZE - 1; }
 };
-
-// ======================================================================================
-// Mesh2D Render Batch
-// ======================================================================================
-
-class Mesh2DRenderBatch : public RenderBatch<MeshRenderer> {
-
-    void AddRenderComponent(MeshRenderer renderComponent) override;
-    void Update(const float& deltaTime) override;
-
-};
