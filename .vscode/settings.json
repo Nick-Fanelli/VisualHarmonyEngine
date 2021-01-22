@@ -70,7 +70,8 @@
         "GLFW",
         "Lfloat",
         "Luint",
-        "OPENGL"
+        "OPENGL",
+        "stbi"
     ],
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }
