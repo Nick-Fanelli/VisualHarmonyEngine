@@ -7,6 +7,7 @@
 
 #include "Render/Shader.h"
 #include "Render/Mesh.h"
+#include "Render/RenderComponents.h"
 
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
