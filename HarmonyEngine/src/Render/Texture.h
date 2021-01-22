@@ -4,14 +4,12 @@
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 
+#include <stb_image.h>
+
 class Texture {
 
-public:
-    // static GLuint LoadGLFWTexture(const char* imagepath) {
-    //     GLuint textureID;
-    //     glGenTextures(1, &textureID);
+    
 
-    //     glBindTexture(GL_TEXTURE_2D, textureID);
-
-    // }
-}
+public: 
+    
+};
