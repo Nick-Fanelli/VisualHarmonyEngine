@@ -36,8 +36,10 @@ void Display::CreateDisplay(GameContext* gameContext) {
     }
 
     glfwMakeContextCurrent(m_Window);
-
     glewExperimental = GL_TRUE;
+
+    // Handle Input
+    m_GameContext->GetInput().StandardInput.SetupKeyInputs(this); 
 
     if(glewInit() != GLEW_OK) {
         Log::Error("Could not initialize GLEW");
@@ -47,6 +49,8 @@ void Display::CreateDisplay(GameContext* gameContext) {
     glViewport(0, 0, screenWidth, screenHeight);
 
     Log::Success("Created the GLFW dsiplay!");
+
+    glfwFocusWindow(m_Window);
 }
 
 void Display::StartGameLoop() {

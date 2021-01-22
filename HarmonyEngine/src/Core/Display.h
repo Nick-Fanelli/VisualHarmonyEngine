@@ -18,6 +18,8 @@ public:
     void CreateDisplay(GameContext* gameContext);
     void StartGameLoop();
 
+    GLFWwindow* GetWindowPointer() const { return m_Window; }
+
 private:
     void CleanUp(); 
 

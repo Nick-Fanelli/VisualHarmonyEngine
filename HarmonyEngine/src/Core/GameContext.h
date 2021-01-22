@@ -37,5 +37,5 @@ public:
     void Stop();
 
     const int& GetCurrentFps() const { return m_CurrentFps; }
-    const Input* GetInput() const { return &m_Input; }
+    Input& GetInput() { return m_Input; }
 };
