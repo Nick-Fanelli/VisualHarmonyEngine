@@ -31,8 +31,8 @@ void TestScene::OnCreate() {
 }
 
 void TestScene::Update(const float& deltaTime) {
-    if(m_GameContext->GetInput().StandardInput.IsKeyDown(GLFW_KEY_SPACE)) {
-
+    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_SPACE)) {
+        
     }
 }
 

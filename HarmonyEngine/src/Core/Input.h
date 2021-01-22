@@ -22,10 +22,10 @@ class DesktopInput {
     // TODO: Optimize by setting the bool to something like 3 if it was pressed last!
     // Will cut the amount of allocated bytes in half!!!!
     bool keys[NUM_KEYS];
-    bool keysLast[NUM_KEYS];
+    // bool keysLast[NUM_KEYS];
 
     bool mouseButtons[NUM_MOUSE_BUTTONS];
-    bool mouseButtonsLast[NUM_MOUSE_BUTTONS];
+    // bool mouseButtonsLast[NUM_MOUSE_BUTTONS];
 
     const glm::vec2 mousePosition();
     const glm::vec2 mousePostionLast();
@@ -42,12 +42,12 @@ public:
     void SetupKeyInputs(Display* display);
 
     const bool IsKey(int keycode) { return keys[keycode]; }
-    const bool IsKeyDown(int keycode) const { return keys[keycode] && !keysLast[keycode]; }
-    const bool IsKeyUp(int keycode) const { return !keys[keycode] && keysLast[keycode]; }
+    // const bool IsKeyDown(int keycode) const { return keys[keycode] && !keysLast[keycode]; }
+    // const bool IsKeyUp(int keycode) const { return !keys[keycode] && keysLast[keycode]; }
 
     const bool IsMouseButton(int button) const { return mouseButtons[button]; }
-    const bool IsMouseButtonDown(int button) const { return mouseButtons[button] && !mouseButtonsLast[button]; }
-    const bool IsMouseButtonUp(int button) const { return !mouseButtons[button] && mouseButtonsLast[button]; }
+    // const bool IsMouseButtonDown(int button) const { return mouseButtons[button] && !mouseButtonsLast[button]; }
+    // const bool IsMouseButtonUp(int button) const { return !mouseButtons[button] && mouseButtonsLast[button]; }
 };
 
 struct Input {
