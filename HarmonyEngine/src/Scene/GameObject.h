@@ -28,7 +28,7 @@ class GameObject {
 public:
     GameObject(std::string name) : m_Name(name) {}
 
-    ~GameObject() { HiddenOnDestroy(); }
+    virtual ~GameObject() { HiddenOnDestroy(); }
 
     void AddComponent(std::shared_ptr<Component> component);
 

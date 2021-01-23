@@ -1,15 +1,12 @@
 #include "Log.h"
 
-static const char* ANSI_RESET = "\033[0m";
-
-static const char* ANSI_RED = "\033[0;31m";
-static const char* ANSI_RED_BOLD = "\033[1;31m";
-
-static const char* ANSI_YELLOW = "\033[0;33m";
-static const char* ANSI_YELLOW_BOLD = "\033[1;33m";
-
-static const char* ANSI_GREEN = "\033[0;32m";
-static const char* ANSI_GREEN_BOLD = "\033[1;32m";
+const char* Log::ANSI_RESET = "\033[0m";
+const char* Log::ANSI_RED = "\033[0;31m";
+const char* Log::ANSI_RED_BOLD = "\033[1;31m";
+const char* Log::ANSI_YELLOW = "\033[0;33m";
+const char* Log::ANSI_YELLOW_BOLD = "\033[1;33m";
+const char* Log::ANSI_GREEN = "\033[0;32m";
+const char* Log::ANSI_GREEN_BOLD = "\033[1;32m";
 
 Log::LogLevel Log::s_LogLevel = Log::LogLevel::LogLevelInfo;
 

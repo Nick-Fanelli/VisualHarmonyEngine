@@ -50,10 +50,11 @@ public:
     // const bool IsMouseButtonUp(int button) const { return !mouseButtons[button] && mouseButtonsLast[button]; }
 };
 
-struct Input {
+class Input {
 
     friend class GameContext;
 
+public:
     DesktopInput StandardInput;
 
 private:

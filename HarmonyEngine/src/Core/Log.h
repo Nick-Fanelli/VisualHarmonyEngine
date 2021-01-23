@@ -5,6 +5,17 @@
 
 struct Log {
 
+    static const char* ANSI_RESET;
+
+    static const char* ANSI_RED;
+    static const char* ANSI_RED_BOLD;
+
+    static const char* ANSI_YELLOW;
+    static const char* ANSI_YELLOW_BOLD;
+
+    static const char* ANSI_GREEN;
+    static const char* ANSI_GREEN_BOLD;
+
     enum LogLevel {
         LogLevelError = 0, LogLevelWarn = 1, LogLevelInfo = 2
     };
