@@ -19,6 +19,16 @@ static std::vector<unsigned int> indices = {
             2, 3, 0
 };
 
+
+std::ostream &operator<< (std::ostream& out, const glm::vec2& vec) {
+    out << "Vector2f[ "
+        << "X: " << vec.x << ", Y: " << vec.y
+        << " ]";
+
+    return out;
+}
+
+
 void TestScene::OnCreate() {
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
 

@@ -65,14 +65,13 @@ void Display::StartGameLoop() {
 
     while(!glfwWindowShouldClose(m_Window)) {
 
-        // Handle Input
-
         glClearColor(0, 0, 0, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if(deltaTime >= 0) {
             m_GameContext->Update(deltaTime);
-            // m_SceneManager.Update(deltaTime);
+
+            m_GameContext->GetInput().Update(); // Input Last
         }
 
         glfwSwapBuffers(m_Window);
