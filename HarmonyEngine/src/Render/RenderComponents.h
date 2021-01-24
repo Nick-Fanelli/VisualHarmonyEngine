@@ -42,8 +42,8 @@ class SpriteRenderer : public Component {
 
     static std::shared_ptr<Shader> s_DefaultShader;
 
-    std::shared_ptr<Shader> m_Shader;
-    Sprite m_Sprite;
+    Shader* m_Shader;
+    Sprite* m_Sprite;
     glm::vec4 m_Color;
 
     void OnCreate() override;
@@ -51,12 +51,21 @@ class SpriteRenderer : public Component {
     void OnDestroy() override;
 
 public:
-    SpriteRenderer(Sprite sprite, std::shared_ptr<Shader> shader, glm::vec4 color) : m_Shader(shader), m_Sprite(sprite), m_Color(color) {}
-    SpriteRenderer(Sprite sprite, std::shared_ptr<Shader> shader) : m_Shader(shader), m_Sprite(sprite), m_Color(glm::vec4(1, 1, 1, 1)) {}
-    SpriteRenderer(Sprite sprite);
+    SpriteRenderer(Sprite* sprite, Shader* shader, glm::vec4 color) : m_Shader(shader), m_Sprite(sprite), m_Color(color) {}
+    SpriteRenderer(Sprite* sprite, Shader* shader) : m_Shader(shader), m_Sprite(sprite), m_Color(glm::vec4(1, 1, 1, 1)) {}
 
-    const Sprite& GetSprite() const { return m_Sprite; }
-    void SetSprite(Sprite sprite) { m_Sprite = sprite; }
+    SpriteRenderer(Sprite* sprite) : m_Sprite(sprite), m_Color(glm::vec4(1, 1, 1, 1)) {}
+
+    void Initialize() {
+        if(s_DefaultShader == nullptr) {
+            s_DefaultShader = std::make_shared<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
+        }
+
+        m_Shader = s_DefaultShader.get();
+    }
+
+    const Sprite* GetSprite() const { return m_Sprite; }
+    void SetSprite(Sprite* sprite) { m_Sprite = sprite; }
     void SetColor(glm::vec4 color) { m_Color = color; }
 
     virtual ~SpriteRenderer() {}

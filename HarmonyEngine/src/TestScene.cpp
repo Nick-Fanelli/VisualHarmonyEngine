@@ -28,17 +28,19 @@ std::ostream &operator<< (std::ostream& out, const glm::vec2& vec) {
     return out;
 }
 
+static GameObject gameObject = GameObject("Example Object");
+static Mesh2D mesh = Mesh2D(&vertices, &indices);
+static Sprite sprite = Sprite(&mesh, nullptr);
+static SpriteRenderer spriteRenderer = SpriteRenderer(&sprite);
 
 void TestScene::OnCreate() {
-    std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
+    mesh.Initialize();
+    spriteRenderer.Initialize();
 
-    std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
+    spriteRenderer.SetColor(glm::vec4(0.001, 0.5, 1, 1));
 
-    std::shared_ptr<SpriteRenderer> spriteRenderer = std::make_shared<SpriteRenderer>(Sprite(mesh, nullptr));
-    spriteRenderer->SetColor(glm::vec4(0.001, 0.5, 1, 1));
-
-    gameObject->AddComponent(spriteRenderer);
-    Scene::AddGameObject(gameObject);
+    gameObject.AddComponent(&spriteRenderer);
+    Scene::AddGameObject(&gameObject);
 }
 
 void TestScene::Update(const float& deltaTime) {

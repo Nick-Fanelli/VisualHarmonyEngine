@@ -16,7 +16,7 @@ class Scene {
 
     friend class SceneManager;
 
-    std::vector<std::shared_ptr<GameObject>> m_GameObjects;
+    std::vector<GameObject*> m_GameObjects;
 
     void HiddenOnCreate(GameContext* gameContext);
     void HiddenUpdate(const float& deltaTime);
@@ -30,11 +30,11 @@ protected:
     virtual void OnDestroy();
 
 public:
-    Scene();
-    
+    Scene() : m_GameObjects(std::vector<GameObject*>()) {}
+
     ~Scene() { HiddenOnDestroy(); }
 
-    void AddGameObject(std::shared_ptr<GameObject> ptr);
+    void AddGameObject(GameObject* ptr);
 
     const GameContext* GetGameContext() const { return m_GameContext; }
 };

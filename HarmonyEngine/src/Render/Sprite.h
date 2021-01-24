@@ -7,9 +7,9 @@
 
 struct Sprite {
 
-    std::shared_ptr<Mesh2D> m_Mesh;
-    std::shared_ptr<Texture> m_Texture;
+    Mesh2D* m_Mesh;
+    Texture* m_Texture;
 
-    Sprite(std::shared_ptr<Mesh2D> mesh, std::shared_ptr<Texture> texture) : m_Mesh(mesh), m_Texture(texture) {}
+    Sprite(Mesh2D* mesh, Texture* texture) : m_Mesh(mesh), m_Texture(texture) {}
 
 };

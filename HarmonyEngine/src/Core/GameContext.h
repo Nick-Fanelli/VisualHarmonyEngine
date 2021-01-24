@@ -7,12 +7,9 @@
 #include <GLFW/glfw3.h>
 
 #include "Log.h"
-#include <memory>
 #include "Input.h"
-
-class SceneManager;
-class Scene;
-class Display;
+#include "Display.h"
+#include "../Scene/Scene.h"
 
 // ==========================================================================================
 // Game Context Class Methods
@@ -21,8 +18,8 @@ class GameContext {
 
     friend class Display; 
 
-    std::shared_ptr<Display> m_Display;
-    std::shared_ptr<SceneManager> m_SceneManager;
+    Display m_Display;
+    SceneManager m_SceneManager;
     
     // Input m_Input;
     Input m_Input;
@@ -30,7 +27,7 @@ class GameContext {
     int m_CurrentFps;
 
 public:
-    GameContext() : m_Input(Input()) {}
+    GameContext() : m_Display(Display()), m_SceneManager(SceneManager(this)), m_Input(Input()) {}
 
     void Start(Scene* scene);
     void Update(const float& deltaTime);

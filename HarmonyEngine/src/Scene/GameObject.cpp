@@ -14,7 +14,7 @@ void GameObject::HiddenOnCreate() {
 }
 
 void GameObject::HiddenUpdate(const float& deltaTime) {
-    for(auto& component : m_Components) component->Update(deltaTime);
+    for(Component* component : m_Components) component->Update(deltaTime);
 
     Update(deltaTime);
 } 
@@ -22,7 +22,7 @@ void GameObject::HiddenUpdate(const float& deltaTime) {
 void GameObject::HiddenOnDestroy() {
     m_ParentScene = nullptr;
 
-    for(auto& component : m_Components) {
+    for(Component* component : m_Components) {
         component->OnDestroy();
     }
 
@@ -33,7 +33,7 @@ void GameObject::HiddenOnDestroy() {
 
 // Public Methods
 
-void GameObject::AddComponent(std::shared_ptr<Component> component) {
+void GameObject::AddComponent(Component* component) {
     component->SetParentObject(this);
     component->OnCreate();
     

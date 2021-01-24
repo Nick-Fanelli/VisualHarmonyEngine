@@ -13,8 +13,6 @@ void Scene::OnCreate() {}
 void Scene::Update(const float& deltaTime) {}
 void Scene::OnDestroy() {}
 
-Scene::Scene() : m_GameObjects(std::vector<std::shared_ptr<GameObject>>()) {}
-
 void Scene::HiddenOnCreate(GameContext* gameContext) {
     m_GameContext = gameContext;
     OnCreate();
@@ -39,7 +37,7 @@ void Scene::HiddenOnDestroy() {
     OnDestroy();
 }
 
-void Scene::AddGameObject(std::shared_ptr<GameObject> gameObjectPtr) {
+void Scene::AddGameObject(GameObject* gameObjectPtr) {
     gameObjectPtr->m_ParentScene = this;
     gameObjectPtr->HiddenOnCreate();
     m_GameObjects.push_back(gameObjectPtr);

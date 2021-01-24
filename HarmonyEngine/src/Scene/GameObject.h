@@ -15,7 +15,7 @@ class GameObject {
     Scene* m_ParentScene;
     std::string m_Name;
 
-    std::vector<std::shared_ptr<Component>> m_Components;
+    std::vector<Component*> m_Components;
 
     virtual void OnCreate();
     virtual void Update(const float& deltaTime);
@@ -30,7 +30,7 @@ public:
 
     virtual ~GameObject() { HiddenOnDestroy(); }
 
-    void AddComponent(std::shared_ptr<Component> component);
+    void AddComponent(Component* component);
 
     const Scene* GetParentScene() const { return m_ParentScene; }
     const std::string& GetName() const { return m_Name; }
