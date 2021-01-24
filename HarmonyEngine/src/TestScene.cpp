@@ -23,17 +23,17 @@ void TestScene::OnCreate() {
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("Example Object");
 
     std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
-    std::shared_ptr<MeshRenderer> meshRenderer = std::make_shared<MeshRenderer>(mesh);
-    meshRenderer->SetColor(glm::vec4(0.0001, 0.5, 1, 1));
 
-    gameObject->AddComponent(meshRenderer);
+    Sprite sprite = Sprite(mesh, nullptr);
+
+    std::shared_ptr<SpriteRenderer> spriteRenderer = std::make_shared<SpriteRenderer>(sprite);
+    gameObject->AddComponent(spriteRenderer);
+
     Scene::AddGameObject(gameObject);
 }
 
 void TestScene::Update(const float& deltaTime) {
-    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_SPACE)) {
-        
-    }
+    
 }
 
 void TestScene::OnDestroy() {

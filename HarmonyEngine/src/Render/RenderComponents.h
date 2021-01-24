@@ -6,6 +6,7 @@
 #include "../Scene/Component.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include "Sprite.h"
 
 // ======================================================================================
 // Mesh Renderer Component
@@ -32,4 +33,28 @@ public:
     const std::shared_ptr<Mesh2D>& GetMesh() const { return m_Mesh; }
 
     void SetColor(glm::vec4 color) { m_Color = color; }
+};
+
+// ======================================================================================
+// Sprite Renderer Component
+// ======================================================================================
+class SpriteRenderer : public Component {
+
+    static std::shared_ptr<Shader> s_DefaultShader;
+
+    std::shared_ptr<Shader> m_Shader;
+    Sprite m_Sprite;
+
+    void OnCreate() override;
+    void Update(const float& deltaTime) override;
+    void OnDestroy() override;
+
+public:
+    SpriteRenderer(Sprite sprite, std::shared_ptr<Shader> shader) : m_Shader(shader), m_Sprite(sprite) {}
+    SpriteRenderer(Sprite sprite);
+
+    const Sprite& GetSprite() const { return m_Sprite; }
+    void SetSprite(Sprite sprite) { m_Sprite = sprite; }
+
+    virtual ~SpriteRenderer() {}
 };

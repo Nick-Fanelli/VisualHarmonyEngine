@@ -41,3 +41,31 @@ void MeshRenderer::Update(const float& deltaTime) {
 void MeshRenderer::OnDestroy() {
     m_Shader->Dispose();
 }
+
+// ======================================================================================
+// Sprite Renderer Component
+// ======================================================================================
+
+std::shared_ptr<Shader> SpriteRenderer::s_DefaultShader = nullptr;
+
+SpriteRenderer::SpriteRenderer(Sprite sprite) : m_Sprite(sprite) {
+
+    if(s_DefaultShader == nullptr) {
+        s_DefaultShader = std::make_shared<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
+    }
+
+    m_Shader = s_DefaultShader;
+}
+
+void SpriteRenderer::OnCreate() {
+
+}
+
+void SpriteRenderer::Update(const float& deltaTime) {
+    m_Shader->Bind();
+    m_Shader->Unbind();
+}
+
+void SpriteRenderer::OnDestroy() {
+    m_Shader->Dispose();
+}
