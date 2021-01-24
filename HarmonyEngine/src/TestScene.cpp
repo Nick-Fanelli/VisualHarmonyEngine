@@ -19,15 +19,6 @@ static std::vector<unsigned int> indices = {
             2, 3, 0
 };
 
-
-std::ostream &operator<< (std::ostream& out, const glm::vec2& vec) {
-    out << "Vector2f[ "
-        << "X: " << vec.x << ", Y: " << vec.y
-        << " ]";
-
-    return out;
-}
-
 static GameObject gameObject = GameObject("Example Object");
 static Mesh2D mesh = Mesh2D(&vertices, &indices);
 static Sprite sprite = Sprite(&mesh, nullptr);
