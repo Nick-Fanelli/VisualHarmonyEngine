@@ -24,11 +24,10 @@ void TestScene::OnCreate() {
 
     std::shared_ptr<Mesh2D> mesh = std::make_shared<Mesh2D>(vertices, indices);
 
-    Sprite sprite = Sprite(mesh, nullptr);
+    std::shared_ptr<SpriteRenderer> spriteRenderer = std::make_shared<SpriteRenderer>(Sprite(mesh, nullptr));
+    spriteRenderer->SetColor(glm::vec4(0.001, 0.5, 1, 1));
 
-    std::shared_ptr<SpriteRenderer> spriteRenderer = std::make_shared<SpriteRenderer>(sprite);
     gameObject->AddComponent(spriteRenderer);
-
     Scene::AddGameObject(gameObject);
 }
 

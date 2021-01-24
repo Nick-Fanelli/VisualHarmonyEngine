@@ -5,13 +5,12 @@
 // ======================================================================================
 std::shared_ptr<Shader> MeshRenderer::s_DefaultShader = nullptr;
 
-MeshRenderer::MeshRenderer(std::shared_ptr<Mesh2D> mesh) : m_Mesh(mesh) {
+MeshRenderer::MeshRenderer(std::shared_ptr<Mesh2D> mesh) : m_Mesh(mesh), m_Color(glm::vec4(1, 1, 1, 1)) {
     if(s_DefaultShader == nullptr) {
         s_DefaultShader = std::make_shared<Shader>("assets/shaders/mesh.vert.glsl", "assets/shaders/mesh.frag.glsl");
     }
 
     m_Shader = s_DefaultShader;
-    m_Color = glm::vec4(1, 1, 1, 1);
 }
 
 void MeshRenderer::OnCreate() {
@@ -21,7 +20,6 @@ void MeshRenderer::OnCreate() {
 void MeshRenderer::Update(const float& deltaTime) {
     m_Shader->Bind();
     m_Shader->AddUniformVec4("color", m_Color);
-    m_Shader->AddUniformVec3("cameraOffset", glm::vec3(0, 0, 0));
 
     glBindVertexArray(GetMesh()->GetVaoID());
     glEnableVertexAttribArray(0);
@@ -48,7 +46,7 @@ void MeshRenderer::OnDestroy() {
 
 std::shared_ptr<Shader> SpriteRenderer::s_DefaultShader = nullptr;
 
-SpriteRenderer::SpriteRenderer(Sprite sprite) : m_Sprite(sprite) {
+SpriteRenderer::SpriteRenderer(Sprite sprite) : m_Sprite(sprite), m_Color(glm::vec4(1, 1, 1, 1)) {
 
     if(s_DefaultShader == nullptr) {
         s_DefaultShader = std::make_shared<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
@@ -63,6 +61,20 @@ void SpriteRenderer::OnCreate() {
 
 void SpriteRenderer::Update(const float& deltaTime) {
     m_Shader->Bind();
+    m_Shader->AddUniformVec4("color", m_Color);
+
+    glBindVertexArray(m_Sprite.m_Mesh->GetVaoID());
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Sprite.m_Mesh->GetEboID());
+
+    glDrawElements(GL_TRIANGLES, m_Sprite.m_Mesh->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    glDisableVertexAttribArray(0);
+    glBindVertexArray(0);
+
     m_Shader->Unbind();
 }
 

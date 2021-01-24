@@ -25,7 +25,7 @@ class MeshRenderer : public Component {
 
 public:
     MeshRenderer(std::shared_ptr<Mesh2D> mesh, std::shared_ptr<Shader> shader, glm::vec4 color) : m_Shader(shader), m_Mesh(mesh), m_Color(color) {}
-    MeshRenderer(std::shared_ptr<Mesh2D> mesh, std::shared_ptr<Shader> shader) : m_Shader(shader), m_Mesh(mesh) {}
+    MeshRenderer(std::shared_ptr<Mesh2D> mesh, std::shared_ptr<Shader> shader) : m_Shader(shader), m_Mesh(mesh), m_Color(glm::vec4(1, 1, 1, 1)) {}
     MeshRenderer(std::shared_ptr<Mesh2D> mesh);
 
     virtual ~MeshRenderer() {}
@@ -44,17 +44,20 @@ class SpriteRenderer : public Component {
 
     std::shared_ptr<Shader> m_Shader;
     Sprite m_Sprite;
+    glm::vec4 m_Color;
 
     void OnCreate() override;
     void Update(const float& deltaTime) override;
     void OnDestroy() override;
 
 public:
-    SpriteRenderer(Sprite sprite, std::shared_ptr<Shader> shader) : m_Shader(shader), m_Sprite(sprite) {}
+    SpriteRenderer(Sprite sprite, std::shared_ptr<Shader> shader, glm::vec4 color) : m_Shader(shader), m_Sprite(sprite), m_Color(color) {}
+    SpriteRenderer(Sprite sprite, std::shared_ptr<Shader> shader) : m_Shader(shader), m_Sprite(sprite), m_Color(glm::vec4(1, 1, 1, 1)) {}
     SpriteRenderer(Sprite sprite);
 
     const Sprite& GetSprite() const { return m_Sprite; }
     void SetSprite(Sprite sprite) { m_Sprite = sprite; }
+    void SetColor(glm::vec4 color) { m_Color = color; }
 
     virtual ~SpriteRenderer() {}
 };
