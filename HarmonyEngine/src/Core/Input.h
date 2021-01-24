@@ -46,11 +46,11 @@ public:
 
     void SetupKeyInputs(Display* display);
 
-    const bool IsKey(int keycode) const { return m_Keys[keycode]; }
+    const bool& IsKey(int keycode) const { return m_Keys[keycode]; }
     const bool IsKeyDown(int keycode) const { return m_Keys[keycode] && !m_KeysLast[keycode]; }
     const bool IsKeyUp(int keycode) const { return !m_Keys[keycode] && m_KeysLast[keycode]; }
 
-    const bool IsMouseButton(int button) const { return m_MouseButtons[button]; }
+    const bool& IsMouseButton(int button) const { return m_MouseButtons[button]; }
     const bool IsMouseButtonDown(int button) const { return m_MouseButtons[button] && !m_MouseButtonsLast[button]; }
     const bool IsMoueButtonUp(int button) const { return !m_MouseButtons[button] && m_MouseButtonsLast[button]; }
 
