@@ -16,10 +16,10 @@ class Mesh2D {
     GLuint m_EboID;
 
     std::vector<float>* m_Vertices;
-    std::vector<unsigned int>* m_Indices;
+    std::vector<uint32_t>* m_Indices;
 
 public:
-    Mesh2D(std::vector<float>* vertices, std::vector<unsigned int>* indices) 
+    Mesh2D(std::vector<float>* vertices, std::vector<uint32_t>* indices) 
         : m_IndicesCount((*indices).size()), m_VaoID(0), m_EboID(0), m_Vertices(vertices), m_Indices(indices) {
         
     }
@@ -43,7 +43,7 @@ public:
         // Bind the indices
         glGenBuffers(1, &m_EboID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EboID); // Bind Indicies Buffer
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*m_Indices).size() * sizeof(unsigned int), &((*m_Indices)[0]), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*m_Indices).size() * sizeof(uint32_t), &((*m_Indices)[0]), GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Unbind Buffer
         glBindVertexArray(0);

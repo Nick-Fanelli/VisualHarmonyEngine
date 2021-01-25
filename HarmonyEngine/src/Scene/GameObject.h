@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <glm/glm.hpp>
 #include "../Core/Log.h"
 
 class Scene;

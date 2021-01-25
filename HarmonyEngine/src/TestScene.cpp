@@ -12,7 +12,7 @@ static std::vector<float> vertices = {
      0.5f, 0.5f      // Right left       ID: 3
 };
 
-static std::vector<unsigned int> indices = { 
+static std::vector<uint32_t> indices = { 
     // Left bottom triangle
             0, 1, 2,
             // Right top triangle
