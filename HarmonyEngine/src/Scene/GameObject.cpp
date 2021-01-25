@@ -2,13 +2,7 @@
 #include "Scene.h"
 #include "Component.h"
 
-// Virtual Override Definitions
-void GameObject::OnCreate() {}
-void GameObject::Update(const float& deltaTime) {}
-void GameObject::OnDestroy() {}
-
 // Hidden Denfinitions
-
 void GameObject::HiddenOnCreate() {
     OnCreate();
 }
