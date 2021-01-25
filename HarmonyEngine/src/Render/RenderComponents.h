@@ -7,6 +7,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "Sprite.h"
+#include "../Scene/OrthographicCamera.h"
 
 // ======================================================================================
 // Mesh Renderer Component
@@ -45,6 +46,7 @@ class SpriteRenderer : public Component {
     Shader* m_Shader;
     Sprite* m_Sprite;
     glm::vec4 m_Color;
+    OrthographicCamera* m_Camera; 
 
     void OnCreate() override;
     void Update(const float& deltaTime) override;
@@ -56,11 +58,12 @@ public:
 
     SpriteRenderer(Sprite* sprite) : m_Sprite(sprite), m_Color(glm::vec4(1, 1, 1, 1)) {}
 
-    void Initialize() {
+    void Initialize(OrthographicCamera* camera) {
         if(s_DefaultShader == nullptr) {
             s_DefaultShader = std::make_shared<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
         }
 
+        m_Camera = camera;
         m_Shader = s_DefaultShader.get();
     }
 

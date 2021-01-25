@@ -27,6 +27,7 @@ public:
     
     void AddUniformVec4(const char* varName, glm::vec4 vec4);
     void AddUniformVec3(const char* varName, glm::vec3 vec3);
+    void AddUniformMat4(const char* varName, glm::mat4 mat4);
 
     void Bind();
     void Unbind();

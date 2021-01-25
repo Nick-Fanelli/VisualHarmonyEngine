@@ -97,3 +97,8 @@ void Shader::AddUniformVec3(const char* varName, glm::vec3 vec3) {
     GLint location = glGetUniformLocation(m_ProgramID, varName);
     glUniform3f(location, vec3.x, vec3.y, vec3.z);
 }
+
+void Shader::AddUniformMat4(const char* varName, glm::mat4 mat4) {
+    GLint location = glGetUniformLocation(m_ProgramID, varName);
+    glUniformMatrix4fv(location, 1, GL_FALSE, &mat4[0][0]);
+}

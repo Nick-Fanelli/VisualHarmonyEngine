@@ -13,3 +13,4 @@
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
 #include "Scene/Component.h"
+#include "Scene/OrthographicCamera.h"

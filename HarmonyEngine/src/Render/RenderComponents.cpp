@@ -53,6 +53,7 @@ void SpriteRenderer::OnCreate() {
 void SpriteRenderer::Update(const float& deltaTime) {
     m_Shader->Bind();
     m_Shader->AddUniformVec4("color", m_Color);
+    m_Shader->AddUniformMat4("cameraOffset", m_Camera->GetViewProjectionMatrix());
 
     glBindVertexArray(m_Sprite->m_Mesh->GetVaoID());
     glEnableVertexAttribArray(0);
