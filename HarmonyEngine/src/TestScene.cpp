@@ -19,9 +19,9 @@ static std::vector<uint32_t> indices = {
             2, 3, 0
 };
 
-static float cameraAspectRation = 16.0f / 9.0f;
+static float cameraAspectRatio = 1280.0f / 720.0f;
 static float cameraZoomLevel = 1.0f;
-static OrthographicCamera camera = OrthographicCamera(-cameraAspectRation * cameraZoomLevel, cameraAspectRation * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
+static OrthographicCamera camera = OrthographicCamera(-cameraAspectRatio * cameraZoomLevel, cameraAspectRatio * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
 
 static GameObject gameObject = GameObject("Example Object");
 static Mesh2D mesh = Mesh2D(&vertices, &indices);
@@ -40,7 +40,7 @@ void TestScene::OnCreate() {
 }
 
 void TestScene::Update(const float& deltaTime) {
-    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_A)) {
+    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_LEFT)) {
         glm::vec3 cameraPos = camera.GetPosition();
 
         cameraPos.x -= cos(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
@@ -49,7 +49,7 @@ void TestScene::Update(const float& deltaTime) {
         camera.SetPosition(cameraPos);
     }
 
-    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_D)) {
+    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_RIGHT)) {
         glm::vec3 cameraPos = camera.GetPosition();
 
         cameraPos.x += cos(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
@@ -58,7 +58,7 @@ void TestScene::Update(const float& deltaTime) {
         camera.SetPosition(cameraPos);
     }
 
-    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_W)) {
+    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_UP)) {
         glm::vec3 cameraPos = camera.GetPosition();
 
         cameraPos.x += -sin(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
@@ -67,7 +67,7 @@ void TestScene::Update(const float& deltaTime) {
         camera.SetPosition(cameraPos);
     }
 
-    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_S)) {
+    if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_DOWN)) {
         glm::vec3 cameraPos = camera.GetPosition();
 
         cameraPos.x -= -sin(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
@@ -78,7 +78,7 @@ void TestScene::Update(const float& deltaTime) {
 
     cameraZoomLevel -= m_GameContext->GetInput().StandardInput.GetScrollPosition().y * 0.25f;
     cameraZoomLevel = std::max(cameraZoomLevel, 0.25f);
-    camera.SetProjection(-cameraAspectRation * cameraZoomLevel, cameraAspectRation * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
+    camera.SetProjection(-cameraAspectRatio * cameraZoomLevel, cameraAspectRatio * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
 }
 
 void TestScene::OnDestroy() {

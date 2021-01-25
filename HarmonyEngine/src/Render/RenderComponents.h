@@ -7,7 +7,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "Sprite.h"
-#include "../Scene/OrthographicCamera.h"
+#include "../Scene/Camera.h"
 
 // ======================================================================================
 // Mesh Renderer Component
