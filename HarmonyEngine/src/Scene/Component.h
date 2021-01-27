@@ -23,5 +23,5 @@ protected:
     virtual void OnDestroy();
 
 public:
-    const GameObject* GetParentGameObject() const { return m_ParentObject; }
+    GameObject* GetParentGameObject();
 };
