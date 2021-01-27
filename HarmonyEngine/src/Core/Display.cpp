@@ -48,6 +48,8 @@ void Display::CreateDisplay(GameContext* gameContext) {
 
     glViewport(0, 0, screenWidth, screenHeight);
 
+    // glDebugMessageCallback(GL_DEBUG_CALLBACK_FUNCTION, )
+
     Log::Success("Created the GLFW dsiplay!");
 
     glfwFocusWindow(m_Window);

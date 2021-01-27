@@ -5,11 +5,6 @@
 #include <memory>
 #include <vector>
 
-static std::vector<uint32_t> indices = { 
-    0, 1, 2,
-    2, 3, 0,
-};
-
 // static float cameraAspectRatio = 1280.0f / 720.0f;
 // static float cameraZoomLevel = 1.0f;
 // static OrthographicCamera camera = OrthographicCamera(-cameraAspectRatio * cameraZoomLevel, cameraAspectRatio * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
@@ -34,26 +29,32 @@ std::vector<Vertex> CreateQuad(float x, float y) {
     return { v0, v1, v2, v3 };
 }
 
-static RenderBatch batch;
+static std::unique_ptr<Renderer> s_Renderer;
 
-static GameObject gameObject = GameObject("Example Object");
-static std::vector<Vertex> vertices = CreateQuad(0, 0);
-static Mesh2D mesh = Mesh2D(&vertices, &indices);
-static Sprite sprite = Sprite(&mesh, nullptr);
-static SpriteRenderer renderer = SpriteRenderer(&sprite);
+// static RenderBatch batch;
+
+// static GameObject gameObject = GameObject("Example Object");
+// static std::vector<Vertex> vertices = CreateQuad(0, 0);
+// static Mesh2D mesh = Mesh2D(&vertices, &indices);
+// static Sprite sprite = Sprite(&mesh, nullptr);
+// static SpriteRenderer renderer = SpriteRenderer(&sprite);
 
 void TestScene::OnCreate() {
 
-    gameObject.AddComponent(&renderer);
-    batch = RenderBatch();
-    batch.OnCreate();
-    batch.AddRenderComponent(&renderer);
+    s_Renderer = std::make_unique<Renderer>();
+    s_Renderer->OnCreate();
+
+    // gameObject.AddComponent(&renderer);
+    // batch = RenderBatch();
+    // batch.OnCreate();
+    // batch.AddRenderComponent(&renderer);
 
     // Scene::AddGameObject(&gameObject);
 }
 
 void TestScene::Update(const float& deltaTime) {
-    batch.Render();
+    s_Renderer->Update(deltaTime);
+    // batch.Render();
     // if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_A)) {
     //     glm::vec3 cameraPos = camera.GetPosition();
 
@@ -96,5 +97,5 @@ void TestScene::Update(const float& deltaTime) {
 }
 
 void TestScene::OnDestroy() {
-    
+    s_Renderer->OnDestroy();
 }

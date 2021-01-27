@@ -9,7 +9,7 @@
 #include "Render/Mesh.h"
 #include "Render/RenderComponents.h"
 #include "Render/Texture.h"
-#include "Render/RenderBatch.h"
+#include "Render/Renderer.h"
 
 #include "Scene/Scene.h"
 #include "Scene/GameObject.h"
