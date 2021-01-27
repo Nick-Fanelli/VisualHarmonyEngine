@@ -5,97 +5,61 @@
 #include <memory>
 #include <vector>
 
-// static float cameraAspectRatio = 1280.0f / 720.0f;
-// static float cameraZoomLevel = 1.0f;
-// static OrthographicCamera camera = OrthographicCamera(-cameraAspectRatio * cameraZoomLevel, cameraAspectRatio * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
+static std::vector<float> vertices = {
+    -0.5f, -0.5f,
+     0.5f, -0.5f,
+     0.0f,  0.5f
+};
 
-std::vector<Vertex> CreateQuad(float x, float y) {
-    Vertex v0;
-    v0.Position = glm::vec2(-0.5f + x, 0.5f + y);
-    v0.Color = glm::vec4(1, 0, 0, 1);
+static std::vector<unsigned int> indices = {
+    0, 1, 2
+};
 
-    Vertex v1;
-    v1.Position = glm::vec2(-0.5f + x, -0.5f + y);
-    v1.Color = glm::vec4(0, 1, 0, 1);
+static GLuint s_VaoID;
+static GLuint s_EboID;
 
-    Vertex v2;
-    v2.Position = glm::vec2(0.5f + x, -0.5f + y);
-    v2.Color = glm::vec4(0, 0, 1, 1);
-
-    Vertex v3;
-    v3.Position = glm::vec2(0.5f + x, 0.5f + y);
-    v3.Color = glm::vec4(1, 0, 1, 1);
-
-    return { v0, v1, v2, v3 };
-}
-
-static std::unique_ptr<Renderer> s_Renderer;
-
-// static RenderBatch batch;
-
-// static GameObject gameObject = GameObject("Example Object");
-// static std::vector<Vertex> vertices = CreateQuad(0, 0);
-// static Mesh2D mesh = Mesh2D(&vertices, &indices);
-// static Sprite sprite = Sprite(&mesh, nullptr);
-// static SpriteRenderer renderer = SpriteRenderer(&sprite);
+static std::unique_ptr<Shader> m_Shader;
 
 void TestScene::OnCreate() {
+    glGenVertexArrays(1, &s_VaoID);
+    glBindVertexArray(s_VaoID);
 
-    s_Renderer = std::make_unique<Renderer>();
-    s_Renderer->OnCreate();
+    GLuint vboID;
+    glGenBuffers(1, &vboID);
+    glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-    // gameObject.AddComponent(&renderer);
-    // batch = RenderBatch();
-    // batch.OnCreate();
-    // batch.AddRenderComponent(&renderer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &vertices[0], vboID);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * sizeof(float), (void*) 0);
 
-    // Scene::AddGameObject(&gameObject);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glGenBuffers(1, &s_EboID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_EboID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() & sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
 }
 
 void TestScene::Update(const float& deltaTime) {
-    s_Renderer->Update(deltaTime);
-    // batch.Render();
-    // if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_A)) {
-    //     glm::vec3 cameraPos = camera.GetPosition();
+    m_Shader->Bind();
 
-    //     cameraPos.x -= cos(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
-    //     cameraPos.y -= sin(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
+    glBindVertexArray(s_VaoID);
+    glEnableVertexAttribArray(0);
 
-    //     camera.SetPosition(cameraPos);
-    // }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_EboID);
 
-    // if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_D)) {
-    //     glm::vec3 cameraPos = camera.GetPosition();
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
-    //     cameraPos.x += cos(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
-    //     cameraPos.y += sin(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-    //     camera.SetPosition(cameraPos);
-    // }
+    glDisableVertexAttribArray(0);
+    glBindVertexArray(0);
 
-    // if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_W)) {
-    //     glm::vec3 cameraPos = camera.GetPosition();
-
-    //     cameraPos.x += -sin(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
-    //     cameraPos.y += cos(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
-
-    //     camera.SetPosition(cameraPos);
-    // }
-
-    // if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_S)) {
-    //     glm::vec3 cameraPos = camera.GetPosition();
-
-    //     cameraPos.x -= -sin(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
-    //     cameraPos.y -= cos(glm::radians(camera.GetRotation())) * 5.0f * deltaTime;
-
-    //     camera.SetPosition(cameraPos);
-    // }
-
-    // cameraZoomLevel -= m_GameContext->GetInput().StandardInput.GetScrollPosition().y * 0.25f;
-    // cameraZoomLevel = std::max(cameraZoomLevel, 0.25f);
-    // camera.SetProjection(-cameraAspectRatio * cameraZoomLevel, cameraAspectRatio * cameraZoomLevel, -cameraZoomLevel, cameraZoomLevel);
+    m_Shader->Unbind();
 }
 
 void TestScene::OnDestroy() {
-    s_Renderer->OnDestroy();
+
 }

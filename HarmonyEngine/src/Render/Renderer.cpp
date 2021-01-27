@@ -47,14 +47,13 @@ void Renderer::OnCreate() {
 
 void Renderer::Update(const float& deltaTime) {
     m_Shader->Bind();
-    m_Shader->AddUniformVec4("color", m_Color);
 
-    glBindVertexArray(m_Sprite.m_Mesh->GetVaoID());
+    glBindVertexArray(s_VaoID);
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Sprite.m_Mesh->GetEboID());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_EboID);
 
-    glDrawElements(GL_TRIANGLES, m_Sprite.m_Mesh->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
