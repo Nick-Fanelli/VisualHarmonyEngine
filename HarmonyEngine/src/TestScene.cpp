@@ -4,16 +4,15 @@
 #include <iostream>
 #include <memory>
 
-static Renderer s_Renderer = Renderer();
-
 void TestScene::OnCreate() {
-    s_Renderer.OnCreate();
+    m_Renderer = Renderer(this);
+    m_Renderer.OnCreate();
 }
 
 void TestScene::Update(const float& deltaTime) {
-    s_Renderer.Update(deltaTime);
+    m_Renderer.Update(deltaTime);
 }
 
 void TestScene::OnDestroy() {
-    s_Renderer.OnDestroy();
+    m_Renderer.OnDestroy();
 }

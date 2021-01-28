@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include "../Scene/Scene.h"
+
 // static const int MaxQuadCount = 1000;
 // static const int MaxVertexCount = MaxQuadCount * 4; // 4 vertices per quad
 // static const int MaxIndexCount = MaxQuadCount * 6; // 6 indices per quad
@@ -16,11 +18,11 @@ static Vertex vertices[] {
     { { -0.5f, 0.5f }, { 1, 0, 0, 1 } },
     { { -0.5f, -0.5f }, { 0, 1, 0, 1 } },
     { { 0.5f, -0.5f }, { 0, 0, 1, 1 } },
-    { { 0.5f, 0.5f }, { 1, 0, 1, 1 } }
+    { { 0.5f, 0.5f }, { 1, 0, 1, 1 } },
 };
 
 static uint32_t indices[] = { 
-    0, 1, 2, 2, 3, 0,
+    0, 1, 2, 2, 3, 0
 };
 
 struct RenderData {
@@ -64,6 +66,7 @@ void Renderer::OnCreate() {
 }
 
 void Renderer::Update(const float& deltaTime) {
+    std::cout << m_Scene << std::endl;
     m_Shader->Bind();
 
     glBindVertexArray(s_Data.VaoID);
