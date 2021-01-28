@@ -5,7 +5,6 @@
 
 #include "../Scene/Component.h"
 #include "Shader.h"
-#include "Mesh.h"
 #include "Sprite.h"
 
 // ======================================================================================

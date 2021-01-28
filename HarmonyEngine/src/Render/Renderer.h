@@ -12,7 +12,6 @@ class Renderer {
 
 public:
     Renderer() {}
-    ~Renderer();
 
     void OnCreate();
     void Update(const float& deltaTime);

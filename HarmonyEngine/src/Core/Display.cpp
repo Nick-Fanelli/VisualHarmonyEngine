@@ -67,7 +67,7 @@ void Display::StartGameLoop() {
 
     while(!glfwWindowShouldClose(m_Window)) {
 
-        glClearColor(0, 0, 0, 1.0f);
+        glClearColor(0.1, 0.1, 0.1, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if(deltaTime >= 0) {

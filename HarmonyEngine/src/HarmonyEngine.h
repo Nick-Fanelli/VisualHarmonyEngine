@@ -6,7 +6,6 @@
 #include "Core/GameContext.h"
 
 #include "Render/Shader.h"
-#include "Render/Mesh.h"
 #include "Render/RenderComponents.h"
 #include "Render/Texture.h"
 #include "Render/Renderer.h"
