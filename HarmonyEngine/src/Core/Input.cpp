@@ -1,6 +1,7 @@
 #include "Input.h"
 #include <iostream>
 #include <stdio.h>
+#include <iostream>
 
 Input::Input() : StandardInput(DesktopInput()) {
 
@@ -31,7 +32,7 @@ void DesktopInput::Update() {
 
 void DesktopInput::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     for(DesktopInput* desktopInput : s_Instances) {
-        desktopInput->m_Keys[key] = action == GLFW_PRESS;
+        desktopInput->m_Keys[key] = (action == GLFW_PRESS) || (action == GLFW_REPEAT);
     }
 }
 

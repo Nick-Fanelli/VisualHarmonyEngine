@@ -4,6 +4,7 @@
 #include <memory>
 // #include "GameObject.h"
 #include "../Core/Log.h"
+#include "Camera.h"
 
 class GameObject;
 class GameContext;
@@ -11,6 +12,9 @@ class GameContext;
 // ======================================================================================
 // Scene
 // ======================================================================================
+
+static const float CameraAspectRatio = 1280.0f / 720.0f;
+static const float CameraZoomLevel = 1.0f;
 
 class Scene {
 
@@ -24,13 +28,20 @@ class Scene {
 
 protected:
     GameContext* m_GameContext = nullptr;
+    OrthographicCamera m_Camera;
 
     virtual void OnCreate();
     virtual void Update(const float& deltaTime);
     virtual void OnDestroy();
 
 public:
-    Scene() : m_GameObjects(std::vector<GameObject*>()) {}
+    Scene() 
+    : m_GameObjects(std::vector<GameObject*>()), 
+    m_Camera(OrthographicCamera(-CameraAspectRatio * CameraZoomLevel, 
+                                 CameraAspectRatio * CameraZoomLevel, 
+                                -CameraZoomLevel, CameraZoomLevel)) {
+
+    }
 
     ~Scene() { HiddenOnDestroy(); }
 

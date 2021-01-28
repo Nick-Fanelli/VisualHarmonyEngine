@@ -1,10 +1,12 @@
 #include "Renderer.h"
 
+#include <iostream>
+
 #include "../Scene/Scene.h"
 
-// static const int MaxQuadCount = 1000;
-// static const int MaxVertexCount = MaxQuadCount * 4; // 4 vertices per quad
-// static const int MaxIndexCount = MaxQuadCount * 6; // 6 indices per quad
+static const size_t MaxQuadCount = 1000;
+static const size_t MaxVertexCount = MaxQuadCount * 4;
+static const size_t MaxIndexCount = MaxQuadCount * 6;
 
 struct Vertex {
 
@@ -15,29 +17,47 @@ struct Vertex {
 
 // Test Triangle Drawing Code
 static Vertex vertices[] {
-    { { -0.5f, 0.5f }, { 1, 0, 0, 1 } },
-    { { -0.5f, -0.5f }, { 0, 1, 0, 1 } },
+    { { -1.5f, 0.5f }, { 1, 0, 0, 1 } },
+    { { -1.5f, -0.5f }, { 0, 1, 0, 1 } },
+    { { -0.5f, -0.5f }, { 0, 0, 1, 1 } },
+    { { -0.5f, 0.5f }, { 1, 0, 1, 1 } },
+
+    { { 1.5f, 0.5f }, { 0, 1, 0, 1 } },
+    { { 1.5f, -0.5f }, { 1, 0, 0, 1 } },
     { { 0.5f, -0.5f }, { 0, 0, 1, 1 } },
-    { { 0.5f, 0.5f }, { 1, 0, 1, 1 } },
+    { { 0.5f, 0.5f }, { 0, 1, 1, 1 } },
 };
 
-static uint32_t indices[] = { 
-    0, 1, 2, 2, 3, 0
-};
+// static uint32_t indices[] = { 
+//     0, 1, 2, 2, 3, 0,
+//     4, 5, 6, 6, 7, 4
+// };
 
 struct RenderData {
 
-    GLuint VaoID;
-    GLuint VboID;
-    GLuint EboID;
+    GLuint VaoID = 0;
+    GLuint VboID = 0;
+    GLuint EboID = 0;
+
+    uint32_t IndexCount = 0;
+
+    Vertex* Vertices = nullptr;
+    Vertex* VertexPtr = nullptr;
 
 };
 
 static RenderData s_Data;
 
-void Renderer::OnCreate() {
+void Renderer::OnCreate(OrthographicCamera* camera) {
+    if(s_Data.Vertices != nullptr) {
+        Log::Error("Vertices array was not nullptr, exiting Renderer::OnCreate()");
+        return;
+    }
+    
     s_Data = RenderData();
+    s_Data.IndexCount = 12;
 
+    m_Camera = camera;
     m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
 
     // Bind the VAO
@@ -49,12 +69,29 @@ void Renderer::OnCreate() {
     glBindBuffer(GL_ARRAY_BUFFER, s_Data.VboID); // Bind Vertex Buffer
 
     // Push the data
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * MaxVertexCount, nullptr, GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(Vertex), (void*) offsetof(Vertex, Position));
     glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(Vertex), (void*) offsetof(Vertex, Color));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0); // Unbind Buffer
+
+    uint32_t indices[MaxIndexCount];
+    uint32_t offset = 0;
+
+    for(size_t i = 0; i < MaxIndexCount; i += 6) {
+        // First Triangle
+        indices[i]     = offset;
+        indices[i + 1] = offset + 1;
+        indices[i + 2] = offset + 2;
+
+        // Second Triangle
+        indices[i + 3] = offset + 2;
+        indices[i + 4] = offset + 3;
+        indices[i + 5] = offset;
+
+        offset += 4;
+    }
 
     // Bind the indices
     glGenBuffers(1, &s_Data.EboID);
@@ -65,9 +102,12 @@ void Renderer::OnCreate() {
     glBindVertexArray(0);
 }
 
-void Renderer::Update(const float& deltaTime) {
-    std::cout << m_Scene << std::endl;
+void Renderer::Render() {
+    glBindBuffer(GL_ARRAY_BUFFER, s_Data.VboID);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), &vertices);
+
     m_Shader->Bind();
+    m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
 
     glBindVertexArray(s_Data.VaoID);
     glEnableVertexAttribArray(0);
@@ -75,7 +115,7 @@ void Renderer::Update(const float& deltaTime) {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_Data.EboID);
 
-    glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(indices[0]), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, s_Data.IndexCount, GL_UNSIGNED_INT, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
@@ -87,5 +127,15 @@ void Renderer::Update(const float& deltaTime) {
 }
 
 void Renderer::OnDestroy() {
+    if(s_Data.Vertices != nullptr) {
+        Log::Warn("Vertices array was not nullptr, exiting Renderer::OnDestroy()");
+        return;
+    }
 
+    glDeleteVertexArrays(1, &s_Data.VaoID);
+    glDeleteBuffers(1, &s_Data.VboID);
+    glDeleteBuffers(1, &s_Data.EboID);
+
+    delete[] s_Data.Vertices;
+    s_Data.Vertices = nullptr; // Keep track of if it is created or not
 }

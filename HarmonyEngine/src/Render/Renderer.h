@@ -1,22 +1,20 @@
 #pragma once
 
-#include <array>
-#include <vector>
 #include <memory>
+
 #include "RenderComponents.h"
-#include <iostream>
+#include "../Scene/Camera.h"
 
 class Scene;
 
 class Renderer {
 
-    Scene* m_Scene;
+    OrthographicCamera* m_Camera = nullptr;
+
     std::unique_ptr<Shader> m_Shader;
-
+    
 public:
-    Renderer(Scene* scene) : m_Scene(scene) {}
-
-    void OnCreate();
-    void Update(const float& deltaTime);
+    void OnCreate(OrthographicCamera* camera);
+    void Render();
     void OnDestroy();
 };

@@ -12,6 +12,8 @@ public:
     const glm::vec3& GetPosition() const { return m_Position; }
     void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
 
+    void Move(const glm::vec3& position) { m_Position += position; RecalculateViewMatrix(); }
+
     const float& GetRotation() const { return m_Rotation; }
     void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
 
