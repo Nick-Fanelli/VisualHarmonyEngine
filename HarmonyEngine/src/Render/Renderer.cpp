@@ -8,25 +8,18 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
-struct Vertex {
-
-    glm::vec2 Position;
-    glm::vec4 Color;
-    
-};
-
 // Test Triangle Drawing Code
-static Vertex vertices[] {
-    { { -1.5f, 0.5f }, { 1, 0, 0, 1 } },
-    { { -1.5f, -0.5f }, { 0, 1, 0, 1 } },
-    { { -0.5f, -0.5f }, { 0, 0, 1, 1 } },
-    { { -0.5f, 0.5f }, { 1, 0, 1, 1 } },
+// static Vertex vertices[] {
+//     { { -1.5f, 0.5f }, { 1, 0, 0, 1 } },
+//     { { -1.5f, -0.5f }, { 0, 1, 0, 1 } },
+//     { { -0.5f, -0.5f }, { 0, 0, 1, 1 } },
+//     { { -0.5f, 0.5f }, { 1, 0, 1, 1 } },
 
-    { { 1.5f, 0.5f }, { 0, 1, 0, 1 } },
-    { { 1.5f, -0.5f }, { 1, 0, 0, 1 } },
-    { { 0.5f, -0.5f }, { 0, 0, 1, 1 } },
-    { { 0.5f, 0.5f }, { 0, 1, 1, 1 } },
-};
+//     { { 1.5f, 0.5f }, { 0, 1, 0, 1 } },
+//     { { 1.5f, -0.5f }, { 1, 0, 0, 1 } },
+//     { { 0.5f, -0.5f }, { 0, 0, 1, 1 } },
+//     { { 0.5f, 0.5f }, { 0, 1, 1, 1 } },
+// };
 
 // static uint32_t indices[] = { 
 //     0, 1, 2, 2, 3, 0,
@@ -53,9 +46,17 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
         Log::Error("Vertices array was not nullptr, exiting Renderer::OnCreate()");
         return;
     }
-    
+
     s_Data = RenderData();
-    s_Data.IndexCount = 12;
+    s_Data.Vertices = new Vertex[MaxVertexCount];
+    s_Data.VertexPtr = s_Data.Vertices;
+
+    // s_Data.Vertices[0] = vertices[0];
+    // s_Data.Vertices[1] = vertices[1];
+    // s_Data.Vertices[2] = vertices[2];
+    // s_Data.Vertices[3] = vertices[3];
+
+    // s_Data.IndexCount = 6;
 
     m_Camera = camera;
     m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
@@ -102,10 +103,26 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     glBindVertexArray(0);
 }
 
-void Renderer::Render() {
-    glBindBuffer(GL_ARRAY_BUFFER, s_Data.VboID);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), &vertices);
+void Renderer::Update(const float& deltaTime) {
 
+    if(m_ShouldUpdateVertexData) {
+        Renderer::UpdateBatchVertexData();
+        m_ShouldUpdateVertexData = false;
+    }
+
+    Renderer::Render();
+}
+
+void Renderer::UpdateBatchVertexData() {
+    Log::Info("Updating Batch Vertex Data");
+
+    GLsizeiptr size = (uint8_t*) s_Data.VertexPtr - (uint8_t*) s_Data.Vertices;
+
+    glBindBuffer(GL_ARRAY_BUFFER, s_Data.VboID);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, size, s_Data.Vertices);
+}
+
+void Renderer::Render() {
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
 
@@ -127,8 +144,8 @@ void Renderer::Render() {
 }
 
 void Renderer::OnDestroy() {
-    if(s_Data.Vertices != nullptr) {
-        Log::Warn("Vertices array was not nullptr, exiting Renderer::OnDestroy()");
+    if(s_Data.Vertices == nullptr) {
+        Log::Warn("Vertices array was already nullptr, exiting Renderer::OnDestroy()");
         return;
     }
 
@@ -138,4 +155,25 @@ void Renderer::OnDestroy() {
 
     delete[] s_Data.Vertices;
     s_Data.Vertices = nullptr; // Keep track of if it is created or not
+}
+
+Quad* Renderer::AddQuad(const Quad& quad) {
+    Quad* returnPnt = (Quad*) (s_Data.VertexPtr);
+
+    (*s_Data.VertexPtr) = quad.V0;
+    s_Data.VertexPtr++;
+
+    (*s_Data.VertexPtr) = quad.V1;
+    s_Data.VertexPtr++;
+
+    (*s_Data.VertexPtr) = quad.V2;
+    s_Data.VertexPtr++;
+
+    (*s_Data.VertexPtr) = quad.V3;
+    s_Data.VertexPtr++;
+
+    s_Data.IndexCount += 6; 
+    m_ShouldUpdateVertexData = true;
+
+    return returnPnt;
 }
