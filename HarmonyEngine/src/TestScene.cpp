@@ -7,6 +7,7 @@
 
 static Renderer s_Renderer = Renderer();
 static Quad* quadPtr;
+static Quad* quad2Ptr;
 
 void TestScene::OnCreate() {
     s_Renderer.OnCreate(&m_Camera);
@@ -16,9 +17,17 @@ void TestScene::OnCreate() {
         glm::vec4( 0, 1, 0, 1),
         glm::vec4( 0, 0, 1, 1 ),
         glm::vec4( 1, 0, 1, 1 )
-    });
+    }, 0.0f);
+
+    Quad quad2 = Quad(glm::vec2(-1, -1), 1, std::array<glm::vec4, 4> {
+        glm::vec4( 0, 1, 0, 1 ),
+        glm::vec4( 1, 0, 0, 1),
+        glm::vec4( 0, 0, 1, 1 ),
+        glm::vec4( 0, 1, 1, 1 )
+    }, 1.0f);
 
     quadPtr = s_Renderer.AddQuad(quad);
+    quad2Ptr = s_Renderer.AddQuad(quad2);
 }
 
 void TestScene::Update(const float& deltaTime) {
