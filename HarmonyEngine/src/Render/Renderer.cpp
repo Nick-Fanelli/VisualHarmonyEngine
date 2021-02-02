@@ -9,8 +9,6 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
-static const size_t MaxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots();
-
 struct RenderBatch {
 
     GLuint VaoID = 0;
@@ -22,6 +20,8 @@ struct RenderBatch {
 
     Vertex* Vertices = nullptr;
     Vertex* VertexPtr = nullptr;
+    Texture* Textures = nullptr;
+
 };
 
 static RenderBatch s_Batch;
@@ -34,6 +34,11 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
 
     s_Batch = RenderBatch();
     s_Batch.Vertices = new Vertex[MaxVertexCount];
+
+    Texture texture = Texture();
+
+    // s_Batch.Textures = new Texture[5];
+    // s_Batch.Textures = new Texture[OpenGLUtils::GetGPUMaxTextureSlots()];
     s_Batch.VertexPtr = s_Batch.Vertices;
 
     m_Camera = camera;
@@ -138,6 +143,7 @@ void Renderer::OnDestroy() {
     glDeleteBuffers(1, &s_Batch.EboID);
 
     delete[] s_Batch.Vertices;
+    // delete[] s_Batch.Textures;
     s_Batch.Vertices = nullptr; // Keep track of if it is created or not
 }
 

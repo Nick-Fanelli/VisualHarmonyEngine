@@ -3,6 +3,7 @@
 #include <memory>
 #include <array>
 
+#include "Texture.h"
 #include "RenderComponents.h"
 #include "../Scene/Camera.h"
 
