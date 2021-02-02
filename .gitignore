@@ -2,6 +2,7 @@
 
 # Build Stuff
 HarmonyEngine/build/*
+build/
 
 # Binary Stuff
 *.o

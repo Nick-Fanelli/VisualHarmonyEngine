@@ -21,6 +21,9 @@ struct RenderBatch {
     Vertex* Vertices = nullptr;
     Vertex* VertexPtr = nullptr;
 
+    Texture* Textures = nullptr;
+    Texture* TexturePtr = nullptr;
+
 };
 
 static RenderBatch s_Batch;
@@ -32,9 +35,11 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     }
 
     s_Batch = RenderBatch();
-    s_Batch.Vertices = new Vertex[MaxVertexCount];
 
+    s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
+    
+    s_Batch.Textures = new Texture[OpenGLUtils::GetGPUMaxTextureSlots()];
 
     m_Camera = camera;
     m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");

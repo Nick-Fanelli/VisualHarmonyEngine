@@ -21,10 +21,12 @@ class Texture {
     int m_Width, m_Height;
 
 public: 
-    Texture(const char* filepath, int width, int height) 
-        : m_Filepath(filepath), m_Width(width), m_Height(height) {}
+    void Initialize(const char* filepath, int width, int height) {
 
-    void Initialize() {
+        m_Filepath = filepath;
+        m_Width = width;
+        m_Height = height;
+
         // Generate Texture on GPU
         glGenTextures(1, &m_TextureID);
         glBindTexture(GL_TEXTURE_2D, m_TextureID);
