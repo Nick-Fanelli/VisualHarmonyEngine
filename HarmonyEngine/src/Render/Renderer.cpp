@@ -24,7 +24,6 @@ struct RenderBatch {
 };
 
 static RenderBatch s_Batch;
-static std::unique_ptr<Texture> s_Texture; 
 
 void Renderer::OnCreate(OrthographicCamera* camera) {
     if(s_Batch.Vertices != nullptr) {
@@ -33,8 +32,6 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     }
 
     s_Batch = RenderBatch();
-    s_Texture = std::make_unique<Texture>("assets/textures/image.png", 256, 256);
-    s_Texture->Initialize();
 
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
@@ -108,7 +105,7 @@ void Renderer::UpdateBatchVertexData() {
 void Renderer::Render() {
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
+    // m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
 
     glBindVertexArray(s_Batch.VaoID);
     glEnableVertexAttribArray(0);
