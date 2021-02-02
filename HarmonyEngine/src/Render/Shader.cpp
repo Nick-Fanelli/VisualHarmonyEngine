@@ -89,17 +89,22 @@ void Shader::Dispose() {
     glDeleteProgram(m_ProgramID);
 }
 
-void Shader::AddUniformVec4(const char* varName, glm::vec4 vec4) {
+void Shader::AddUniformVec4(const char* varName, const glm::vec4& vec4) {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform4f(location, vec4.x, vec4.y, vec4.z, vec4.w);
 }
 
-void Shader::AddUniformVec3(const char* varName, glm::vec3 vec3) {
+void Shader::AddUniformVec3(const char* varName, const glm::vec3& vec3) {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform3f(location, vec3.x, vec3.y, vec3.z);
 }
 
-void Shader::AddUniformMat4(const char* varName, glm::mat4 mat4) {
+void Shader::AddUniformMat4(const char* varName, const glm::mat4& mat4) {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat4));
+}
+
+void Shader::AddUnformInt(const char* varName, const int& integer) {
+    auto location = glGetUniformLocation(m_ProgramID, varName);
+    glUniform1i(location, integer);
 }

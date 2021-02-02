@@ -25,9 +25,10 @@ public:
         Link();
     }
     
-    void AddUniformVec4(const char* varName, glm::vec4 vec4);
-    void AddUniformVec3(const char* varName, glm::vec3 vec3);
-    void AddUniformMat4(const char* varName, glm::mat4 mat4);
+    void AddUniformVec4(const char* varName, const glm::vec4& vec4);
+    void AddUniformVec3(const char* varName, const glm::vec3& vec3);
+    void AddUniformMat4(const char* varName, const glm::mat4& mat4);
+    void AddUnformInt(const char* varName, const int& integer);
 
     void Bind();
     void Unbind();
