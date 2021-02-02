@@ -7,5 +7,7 @@ in float vTextureID;
 out vec4 out_Color;
 
 void main() {
+    vTextureCoord;
+    vTextureID;
     out_Color = vColor;
 }

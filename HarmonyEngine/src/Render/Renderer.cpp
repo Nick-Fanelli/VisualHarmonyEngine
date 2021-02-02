@@ -20,7 +20,6 @@ struct RenderBatch {
 
     Vertex* Vertices = nullptr;
     Vertex* VertexPtr = nullptr;
-    Texture* Textures = nullptr;
 
 };
 
@@ -35,8 +34,6 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     s_Batch = RenderBatch();
     s_Batch.Vertices = new Vertex[MaxVertexCount];
 
-    // s_Batch.Textures = new Texture[5];
-    // s_Batch.Textures = new Texture[OpenGLUtils::GetGPUMaxTextureSlots()];
     s_Batch.VertexPtr = s_Batch.Vertices;
 
     m_Camera = camera;
@@ -141,11 +138,16 @@ void Renderer::OnDestroy() {
     glDeleteBuffers(1, &s_Batch.EboID);
 
     delete[] s_Batch.Vertices;
-    // delete[] s_Batch.Textures;
     s_Batch.Vertices = nullptr; // Keep track of if it is created or not
 }
 
 Quad* Renderer::AddQuad(const Quad& quad) {
+    // TODO: Start new batch
+    if(s_Batch.VertexPtr - s_Batch.Vertices >= MaxVertexCount) {
+        Log::Warn("Hit the max vertex count!!!! Returning!");
+        return nullptr;
+    }
+
     Quad* returnPnt = (Quad*) (s_Batch.VertexPtr);
 
     (*s_Batch.VertexPtr) = quad.V0;
