@@ -9,7 +9,7 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
-// static const size_t MaxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots();
+static const size_t MaxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots();
 
 struct RenderBatch {
 
