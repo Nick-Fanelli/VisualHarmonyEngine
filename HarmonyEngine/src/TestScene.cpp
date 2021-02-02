@@ -14,7 +14,7 @@ std::unique_ptr<Texture> texture;
 void TestScene::OnCreate() {
     s_Renderer.OnCreate(&m_Camera);
 
-    texture = std::make_unique<Texture>();
+    texture = std::make_unique<Texture>("assets/textures/image.png", 64, 64);
 
     Quad quad = Quad(glm::vec2(0, 0), 1, std::array<glm::vec4, 4> {
         glm::vec4( 1, 0, 0, 1 ),
