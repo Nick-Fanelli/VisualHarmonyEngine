@@ -35,8 +35,6 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     s_Batch = RenderBatch();
     s_Batch.Vertices = new Vertex[MaxVertexCount];
 
-    Texture texture = Texture();
-
     // s_Batch.Textures = new Texture[5];
     // s_Batch.Textures = new Texture[OpenGLUtils::GetGPUMaxTextureSlots()];
     s_Batch.VertexPtr = s_Batch.Vertices;
