@@ -110,10 +110,10 @@ void Renderer::Render() {
 
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
+    // m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, s_Texture->GetTextureID());
+    // glActiveTexture(GL_TEXTURE0);
+    // glBindTexture(GL_TEXTURE_2D, s_Texture->GetTextureID());
 
     glBindVertexArray(s_Batch.VaoID);
     glEnableVertexAttribArray(0);
