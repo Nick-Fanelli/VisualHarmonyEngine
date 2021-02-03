@@ -8,8 +8,6 @@ set(GCC_COVERAGE_LINK_FLAGS    "-lglfw -lGLEW -framework Cocoa -framework OpenGL
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
-set(CMAKE_LIBRARY_PATH includes)
-
 file(GLOB_RECURSE SRC_FILES
     "src/*.h"
     "src/*.cpp"
