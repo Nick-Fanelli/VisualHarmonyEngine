@@ -4,7 +4,7 @@
         {
             "label": "Run",
             "type": "shell",
-            "command": "cd ~/Dev/HarmonyEngine/HarmonyEngine; rm HarmonyEngine; clear; make; ./HarmonyEngine",
+            "command": "cd ${workspaceFolder}/HarmonyEngine; rm HarmonyEngine; printf \"\\33c\\e[3J\"; make; ./HarmonyEngine",
             "group": {
                 "kind": "build",
                 "isDefault": true
