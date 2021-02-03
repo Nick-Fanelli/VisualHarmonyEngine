@@ -3,7 +3,7 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/HarmonyEngine/includes/stb_image"
+                "${workspaceFolder}/HarmonyEngine/include"
             ],
             "defines": [],
             "macFrameworkPath": [
