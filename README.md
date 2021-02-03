@@ -6,6 +6,8 @@
 1. [Windows Instructions](#getting-started-with-windows)
 1. [Linux Instructions](#getting-started-with-linux)
 
+---
+
 ### Getting Started with Mac
 
 **1. Clone the Repository:** 
@@ -42,11 +44,13 @@ git clone https://github.com/Nick-Fanelli/HarmonyEngine
     ```shell
     ./HarmonyEngine
     ```
-
+---
 
 ### Getting Started with Windows
 
 Windows getting started support to come soon.
+
+---
 
 ### Getting Started with Linux
 
