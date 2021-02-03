@@ -4,6 +4,7 @@
 
 #include "../Scene/Scene.h"
 #include "../Core/Utils.h"
+#include "../Render/Texture.h"
 
 static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
@@ -24,6 +25,7 @@ struct RenderBatch {
 };
 
 static RenderBatch s_Batch;
+static std::unique_ptr<Texture> s_Texture;
 
 void Renderer::OnCreate(OrthographicCamera* camera) {
     if(s_Batch.Vertices != nullptr) {
@@ -32,6 +34,8 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     }
 
     s_Batch = RenderBatch();
+    s_Texture = std::make_unique<Texture>("assets/textures/image.png", 640, 640);
+    s_Texture->Initialize();
 
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
@@ -46,7 +50,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     // Bind the Verticies
     glGenBuffers(1, &s_Batch.VboID);
     glBindBuffer(GL_ARRAY_BUFFER, s_Batch.VboID); // Bind Vertex Buffer
-
+    
     // Push the data
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * MaxVertexCount, nullptr, GL_DYNAMIC_DRAW);
 
@@ -103,9 +107,13 @@ void Renderer::UpdateBatchVertexData() {
 }
 
 void Renderer::Render() {
+
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    // m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
+    m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, s_Texture->GetTextureID());
 
     glBindVertexArray(s_Batch.VaoID);
     glEnableVertexAttribArray(0);

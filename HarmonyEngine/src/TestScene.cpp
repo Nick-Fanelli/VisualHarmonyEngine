@@ -6,13 +6,11 @@
 #include <array>
 
 static Renderer s_Renderer = Renderer();
-static Texture s_Texture = Texture("assets/textures/image.png", 128, 128);
 static Quad* quadPtr;
 static Quad* quad2Ptr;
 
 void TestScene::OnCreate() {
     s_Renderer.OnCreate(&m_Camera);
-    s_Texture.Initialize();
 
     Quad quad = Quad(glm::vec2(0.5, -0.5), { 1, 1}, { 1, 1, 0, 1 });
     Quad quad2 = Quad(glm::vec2(-1.5, -0.5), { 1, 1 }, { 0, 1, 1, 1 });

@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 
+#include <iostream>
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -30,8 +32,8 @@ void Texture::Initialize() {
         } else if(channels == 4) { // RBGA Channels
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
         } else {
-            std::stringstream errorMessage;
-            errorMessage << "Could not load image " << m_Filepath << ", with unknown number of channels : " << channels;
+            // std::stringstream errorMessage;
+            std::cout << "Could not load image " << m_Filepath << ", with unknown number of channels : " << channels << std::endl;
             // Log::Error(errorMessage);
         }
 
