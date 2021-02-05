@@ -41,7 +41,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     s_Batch.VertexPtr = s_Batch.Vertices;
     
     m_Camera = camera;
-    m_Shader = std::make_unique<Shader>("shaders/default.vert.glsl", "shaders/default.frag.glsl");
+    m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
 
     // Bind the VAO
     glGenVertexArrays(1, &s_Batch.VaoID);
