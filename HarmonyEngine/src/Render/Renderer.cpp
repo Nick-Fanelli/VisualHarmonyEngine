@@ -37,6 +37,8 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     s_Texture = std::make_unique<Texture>("assets/textures/image.png", 640, 640);
     s_Texture->Initialize();
 
+    std::cout << s_Texture->GetTextureID() << std::endl;
+
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
     
@@ -110,10 +112,10 @@ void Renderer::Render() {
 
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    // m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
+    m_Shader->AddUnformInt("uTexture", s_Texture->GetTextureID());
 
-    // glActiveTexture(GL_TEXTURE0);
-    // glBindTexture(GL_TEXTURE_2D, s_Texture->GetTextureID());
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, s_Texture->GetTextureID());
 
     glBindVertexArray(s_Batch.VaoID);
     glEnableVertexAttribArray(0);
