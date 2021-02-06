@@ -11,7 +11,7 @@ static const int MAG_FILTER = GL_LINEAR;
 
 class Texture {
 
-    GLuint m_TextureID;
+    GLuint m_TextureID = -1;
 
     const char* m_Filepath = nullptr;
     int m_Width, m_Height;

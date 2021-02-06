@@ -12,8 +12,17 @@ static Quad* quad2Ptr;
 void TestScene::OnCreate() {
     s_Renderer.OnCreate(&m_Camera);
 
+    // Texture texture = Texture("assets/textures/image.png", 128, 128);
+    // texture.Initialize();
+
+    // Texture texture2 = Texture("assets/textures/image.png", 128, 128);
+    // texture2.Initialize();
+
+    // int* texturePtr = s_Renderer.AddTexture(texture);
+    // int* texture2Ptr = s_Renderer.AddTexture(texture2);
+
     Quad quad = Quad(glm::vec2(0.5, -0.5), { 1, 1}, { 1, 1, 0, 1 });
-    Quad quad2 = Quad(glm::vec2(-1.5, -0.5), { 1, 1 }, { 0, 1, 1, 1 });
+    Quad quad2 = Quad(glm::vec2(-1.5, -0.5), { 1, 1 }, { 1, 1, 1, 1 });
 
     quadPtr = s_Renderer.AddQuad(quad);
     quad2Ptr = s_Renderer.AddQuad(quad2);
