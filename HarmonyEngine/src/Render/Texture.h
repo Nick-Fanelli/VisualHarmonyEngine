@@ -13,14 +13,17 @@ class Texture {
 
     GLuint m_TextureID;
 
-    const char* m_Filepath;
+    const char* m_Filepath = nullptr;
     int m_Width, m_Height;
 
 public: 
     Texture(const char* filepath, int width, int height) 
         : m_Filepath(filepath), m_Width(width), m_Height(height) {}
 
+    Texture() {}
+
     void Initialize();
+    void Initialize(const char* filepath, int width, int height);
     void Bind();
     void Unbind();
 

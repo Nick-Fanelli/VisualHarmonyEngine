@@ -9,6 +9,11 @@
 #include "stb_image.h"
 
 void Texture::Initialize() {
+    if(m_Filepath == nullptr) {
+        Log::Warn("Can not create a texture without parameters!");
+        return;
+    }
+
     // Generate Texture on GPU
     glGenTextures(1, &m_TextureID);
     glBindTexture(GL_TEXTURE_2D, m_TextureID);
@@ -41,6 +46,13 @@ void Texture::Initialize() {
     }
 
     Unbind();
+}
+
+void Texture::Initialize(const char* filepath, int width, int height) {
+    m_Filepath = filepath;
+    m_Width = width;
+    m_Height = height;
+    Texture::Initialize();
 }
 
 void Texture::Bind() {
