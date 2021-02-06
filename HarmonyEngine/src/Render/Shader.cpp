@@ -104,7 +104,17 @@ void Shader::AddUniformMat4(const char* varName, const glm::mat4& mat4) {
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat4));
 }
 
-void Shader::AddUnformInt(const char* varName, const int& integer) {
+void Shader::AddUniformInt(const char* varName, const int& integer) {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform1i(location, integer);
 }
+
+void Shader::AddUniformIntArray(const char* varName, const int& size, const int* array) {
+    auto location = glGetUniformLocation(m_ProgramID, varName);
+    glUniform1iv(location, size, array);
+}
+
+// void Shader::AddUniformIntArray(const char* varName, const int* array) {
+//     auto location = glGetUniformLocation(m_ProgramID, varName);
+//     glUniform1iv(location, sizeof(*array) / sizeof(int), array);
+// }
