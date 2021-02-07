@@ -90,7 +90,7 @@ class Renderer {
     
 public:
     Quad* AddQuad(const Quad& quad);
-    int* AddTexture(const Texture& texture);
+    const int& AddTexture(const Texture& texture);
 
     void OnCreate(OrthographicCamera* camera);
     void Update(const float& deltaTime);

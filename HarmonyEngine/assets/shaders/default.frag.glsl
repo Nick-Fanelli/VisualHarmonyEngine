@@ -9,11 +9,11 @@ uniform sampler2D[16] uTextures;
 out vec4 out_Color;
 
 void main() {
-    int samplerIndex = int(vTextureID);
+    int textureIndex = int(vTextureID);
 
-    if(samplerIndex == 0) {
+    if(textureIndex == 0) {
         out_Color = vColor;
     } else {
-        out_Color = vColor * texture(uTextures[samplerIndex], vTextureCoord);
+        out_Color = vColor * texture(uTextures[textureIndex], vTextureCoord);
     }
 }

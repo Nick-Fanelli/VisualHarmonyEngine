@@ -17,13 +17,12 @@ struct RenderBatch {
     GLuint EboID = 0;
 
     uint32_t IndexCount = 0;
-    uint32_t TextureCount = 0;
+    size_t TextureCount = 0;
 
     Vertex* Vertices = nullptr;
     Vertex* VertexPtr = nullptr;
 
-    int* Textures = nullptr;
-
+    int Textures[16];
 };
 
 static RenderBatch s_Batch;
@@ -39,8 +38,8 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
 
-    s_Batch.Textures = new int[16];
-    
+    // s_Batch.Textures = new int[16];
+
     m_Camera = camera;
     m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
 
@@ -111,10 +110,12 @@ void Renderer::Render() {
 
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    m_Shader->AddUniformIntArray("uTextures", s_Batch.TextureCount, s_Batch.Textures);
+    m_Shader->AddUniformIntArray("uTextures", 16, s_Batch.Textures);
 
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, s_Batch.Textures[0]);
+    for(int i = 0; i < s_Batch.TextureCount; i++) {
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, s_Batch.Textures[i]);
+    }
 
     glBindVertexArray(s_Batch.VaoID);
     glEnableVertexAttribArray(0);
@@ -148,9 +149,10 @@ void Renderer::OnDestroy() {
     glDeleteBuffers(1, &s_Batch.EboID);
 
     delete[] s_Batch.Vertices;
-    delete[] s_Batch.Textures;
 
-    s_Batch.Vertices = nullptr; // Keep track of if it is created or not
+    // Keep track of if it is created or not
+    s_Batch.Vertices = nullptr;
+    // s_Batch.Textures = nullptr;
 }
 
 Quad* Renderer::AddQuad(const Quad& quad) {
@@ -180,16 +182,16 @@ Quad* Renderer::AddQuad(const Quad& quad) {
     return returnPnt;
 }
 
-int* Renderer::AddTexture(const Texture& texture) {
+static const int NullTextureValue = -1;
+
+const int& Renderer::AddTexture(const Texture& texture) {
     if(texture.GetTextureID() == -1) {
         Log::Error("Texture : " + std::string(texture.GetFilepath()) + " has not been initialized and can not be added to the render batch!");
-        return 0;
+        return NullTextureValue;
     }
 
     s_Batch.Textures[s_Batch.TextureCount] = texture.GetTextureID();
-    std::cout << texture.GetTextureID() << std::endl;
-
     s_Batch.TextureCount++;
 
-    return &(s_Batch).Textures[s_Batch.TextureCount - 1];
+    return s_Batch.Textures[s_Batch.TextureCount - 1];
 }
