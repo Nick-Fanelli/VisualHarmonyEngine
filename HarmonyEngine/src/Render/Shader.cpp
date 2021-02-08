@@ -1,10 +1,19 @@
 #include "Shader.h"
 
 #include <vector>
+#include <string> 
+#include <regex>
 #include <glm/gtc/type_ptr.hpp>
 #include "../Core/Log.h"
 
-void Shader::AttachVertexShader(const std::string& source) {
+void Shader::AttachVertexShader(std::string& source) {
+    if(m_Replacements != nullptr) {
+        for(auto replacement : *m_Replacements) {
+            std::regex regex = std::regex("\\$" + replacement.first + "\\$");
+            source = std::regex_replace(source, regex, replacement.second);
+        }
+    }
+
     GLint Result = GL_FALSE;
     int InfoLogLength;
 
@@ -28,7 +37,14 @@ void Shader::AttachVertexShader(const std::string& source) {
     Log::Success("Attached Vertex Shader!");
 }
 
-void Shader::AttachFragmentShader(const std::string& source) {
+void Shader::AttachFragmentShader(std::string& source) {
+    if(m_Replacements != nullptr) {
+        for(auto replacement : *m_Replacements) {
+            std::regex regex = std::regex("\\$" + replacement.first + "\\$");
+            source = std::regex_replace(source, regex, replacement.second);
+        }
+    }
+
     GLint Result = GL_FALSE;
     int InfoLogLength;
 

@@ -41,7 +41,11 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     // s_Batch.Textures = new int[16];
 
     m_Camera = camera;
-    m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl");
+
+    std::unordered_map<std::string, std::string> replacements;
+    replacements["MAX_SUPPORTED_TEXTURES"] = "16";
+
+    m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl", &replacements);
 
     // Bind the VAO
     glGenVertexArrays(1, &s_Batch.VaoID);

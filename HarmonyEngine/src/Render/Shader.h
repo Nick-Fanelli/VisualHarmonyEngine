@@ -5,6 +5,7 @@
 #include <GLUT/glut.h>
 
 #include <string>
+#include <unordered_map>
 #include "../Core/Utils.h"
 
 #include <glm/glm.hpp>
@@ -12,16 +13,21 @@
 class Shader {
 
     GLuint m_ProgramID, m_VertexID, m_FragmentID;
+    std::unordered_map<std::string, std::string>* m_Replacements;
 
-    void AttachVertexShader(const std::string& source);
-    void AttachFragmentShader(const std::string& source);
+    void AttachVertexShader(std::string& source);
+    void AttachFragmentShader(std::string& source);
     void Link();
 
 public:
-    Shader(const char* vertexFilePath, const char* fragmentFilePath)
-        : m_ProgramID(glCreateProgram()) {
-        AttachVertexShader(FileUtils::ReadFile(vertexFilePath));
-        AttachFragmentShader(FileUtils::ReadFile(fragmentFilePath));
+    Shader(const char* vertexFilePath, const char* fragmentFilePath, std::unordered_map<std::string, std::string>* replacements = nullptr)
+    : m_ProgramID(glCreateProgram()), m_Replacements(replacements) {
+
+        std::string vertexSource = FileUtils::ReadFile(vertexFilePath);
+        std::string fragmentSource = FileUtils::ReadFile(fragmentFilePath);
+
+        AttachVertexShader(vertexSource);
+        AttachFragmentShader(fragmentSource);
         Link();
     }
     
