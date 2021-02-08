@@ -10,6 +10,50 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
+Quad::Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const std::array<glm::vec4, 4> colorArray = DefaultWhiteColor, const float& textureID = 0) {
+    V0.Position = position;
+    V0.Color = colorArray[0];
+    V0.TextureCoord = { 0, 0 };
+    V0.TextureID = textureID;
+
+    V1.Position = glm::vec2(position.x, position.y + 1 * scale.y);
+    V1.Color = colorArray[1];
+    V1.TextureCoord = { 0, 1 };
+    V1.TextureID = textureID;
+
+    V2.Position = glm::vec2(position.x + 1 * scale.x, position.y + 1 * scale.y);
+    V2.Color = colorArray[2];
+    V2.TextureCoord = { 1, 1 };
+    V2.TextureID = textureID;
+
+    V3.Position = glm::vec2(position.x + 1 * scale.x, position.y);
+    V3.Color = colorArray[3];
+    V3.TextureCoord = { 1, 0 };
+    V3.TextureID = textureID;
+}
+
+Quad::Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const glm::vec4 color = { 1, 1, 1, 1 }, const float& textureID = 0) {
+    V0.Position = position;
+    V0.Color = color;
+    V0.TextureCoord = { 0, 0 };
+    V0.TextureID = textureID;
+
+    V1.Position = glm::vec2(position.x, position.y + 1 * scale.y);
+    V1.Color = color;
+    V1.TextureCoord = { 0, 1 };
+    V1.TextureID = textureID;
+
+    V2.Position = glm::vec2(position.x + 1 * scale.x, position.y + 1 * scale.y);
+    V2.Color = color;
+    V2.TextureCoord = { 1, 1 };
+    V2.TextureID = textureID;
+
+    V3.Position = glm::vec2(position.x + 1 * scale.x, position.y);
+    V3.Color = color;
+    V3.TextureCoord = { 1, 0 };
+    V3.TextureID = textureID;
+}
+
 struct RenderBatch {
 
     GLuint VaoID = 0;
