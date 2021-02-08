@@ -10,8 +10,6 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
-static int s_MaxTextureCount;
-
 struct RenderBatch {
 
     GLuint VaoID = 0;
@@ -24,30 +22,30 @@ struct RenderBatch {
     Vertex* Vertices = nullptr;
     Vertex* VertexPtr = nullptr;
 
-    int Textures[16];
+    int* Textures = nullptr;
 };
 
 static RenderBatch s_Batch;
 
 void Renderer::OnCreate(OrthographicCamera* camera) {
+    // Check to make sure that the OnCreate method wasn't already called!
     if(s_Batch.Vertices != nullptr) {
         Log::Error("Vertices array was not nullptr, exiting Renderer::OnCreate()");
         return;
     }
 
-    s_MaxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots();
+    m_Camera = camera; // Hold a pointer the main camera in the scene
+    auto maxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots(); // Get the max texture count allowed by the GPU
 
+    // Setup the static render batch
     s_Batch = RenderBatch();
-
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
+    s_Batch.Textures = new int[maxTextureCount];
 
-    m_Camera = camera;
-
+    // Setup and create the shader with a replacement that points to the max texture count
     std::unordered_map<std::string, std::string> replacements;
-
-    replacements["MAX_SUPPORTED_TEXTURES"] = std::to_string(s_MaxTextureCount);
-
+    replacements["MAX_SUPPORTED_TEXTURES"] = std::to_string(maxTextureCount);
     m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl", &replacements);
 
     // Bind the VAO
@@ -117,7 +115,7 @@ void Renderer::Render() {
 
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    m_Shader->AddUniformIntArray("uTextures", s_MaxTextureCount, s_Batch.Textures);
+    m_Shader->AddUniformIntArray("uTextures", s_Batch.TextureCount, s_Batch.Textures);
 
     for(int i = 0; i < s_Batch.TextureCount; i++) {
         glActiveTexture(GL_TEXTURE0 + i);
@@ -156,10 +154,11 @@ void Renderer::OnDestroy() {
     glDeleteBuffers(1, &s_Batch.EboID);
 
     delete[] s_Batch.Vertices;
+    delete[] s_Batch.Textures;
 
     // Keep track of if it is created or not
     s_Batch.Vertices = nullptr;
-    // s_Batch.Textures = nullptr;
+    s_Batch.Textures = nullptr;
 }
 
 Quad* Renderer::AddQuad(const Quad& quad) {
