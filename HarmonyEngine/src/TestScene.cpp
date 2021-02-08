@@ -6,8 +6,8 @@
 #include <array>
 
 static Renderer s_Renderer = Renderer();
-static Quad* quadPtr;
-static Quad* quad2Ptr;
+// static Quad s_Quad = Quad({0, 0}, {1, 1}, {1, 1, 1, 1});
+static int s_TextureID;
 
 void TestScene::OnCreate() {
     s_Renderer.OnCreate(&m_Camera);
@@ -18,17 +18,13 @@ void TestScene::OnCreate() {
     Texture texture2 = Texture("assets/textures/image2.png", 128, 128);
     texture2.Initialize();
 
-    const int& texturePtr = s_Renderer.AddTexture(texture);
-    const int& texture2Ptr = s_Renderer.AddTexture(texture2);
-
-    Quad quad = Quad(glm::vec2(0.5, -0.5), { 1, 1}, { 1, 1, 1, 1 }, texturePtr);
-    Quad quad2 = Quad(glm::vec2(-1.5, -0.5), { 1, 1 }, { 1, 1, 1, 1 }, texture2Ptr);
-
-    quadPtr = s_Renderer.AddQuad(quad);
-    quad2Ptr = s_Renderer.AddQuad(quad2);
+    s_TextureID = s_Renderer.AddTexture(texture);
+    s_Renderer.AddTexture(texture2);
 }
 
 void TestScene::Update(const float& deltaTime) {
+    s_Renderer.StartBatch();
+
     if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_D)) {
         m_Camera.Move(glm::vec3(4 * deltaTime, 0, 0));
     }
@@ -42,7 +38,9 @@ void TestScene::Update(const float& deltaTime) {
         m_Camera.Move(glm::vec3(0, -4 * deltaTime, 0));
     }
 
-    s_Renderer.Update(deltaTime);
+    s_Renderer.DrawQuad({0, 0}, {1, 1}, { 0, 1, 1, 1 }, s_TextureID);
+
+    s_Renderer.EndBatch();
 }
 
 void TestScene::OnDestroy() {

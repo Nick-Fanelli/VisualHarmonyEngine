@@ -92,19 +92,17 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     glBindVertexArray(0);
 }
 
-void Renderer::Update(const float& deltaTime) {
+void Renderer::StartBatch() {
+    s_Batch.IndexCount = 0;
+    s_Batch.VertexPtr = s_Batch.Vertices;
+}
 
-    if(m_ShouldUpdateVertexData) {
-        Renderer::UpdateBatchVertexData();
-        m_ShouldUpdateVertexData = false;
-    }
-
+void Renderer::EndBatch() {
+    Renderer::UpdateBatchVertexData();
     Renderer::Render();
 }
 
 void Renderer::UpdateBatchVertexData() {
-    Log::Info("Updating Batch Vertex Data");
-
     GLsizeiptr size = (uint8_t*) s_Batch.VertexPtr - (uint8_t*) s_Batch.Vertices;
 
     glBindBuffer(GL_ARRAY_BUFFER, s_Batch.VboID);
@@ -161,33 +159,6 @@ void Renderer::OnDestroy() {
     s_Batch.Textures = nullptr;
 }
 
-Quad* Renderer::AddQuad(const Quad& quad) {
-    // TODO: Start new batch
-    if(s_Batch.VertexPtr - s_Batch.Vertices >= MaxVertexCount) {
-        Log::Warn("Hit the max vertex count!!!! Returning!");
-        return nullptr;
-    }
-
-    Quad* returnPnt = (Quad*) (s_Batch.VertexPtr);
-
-    (*s_Batch.VertexPtr) = quad.V0;
-    s_Batch.VertexPtr++;
-
-    (*s_Batch.VertexPtr) = quad.V1;
-    s_Batch.VertexPtr++;
-
-    (*s_Batch.VertexPtr) = quad.V2;
-    s_Batch.VertexPtr++;
-
-    (*s_Batch.VertexPtr) = quad.V3;
-    s_Batch.VertexPtr++;
-
-    s_Batch.IndexCount += 6; 
-    m_ShouldUpdateVertexData = true;
-
-    return returnPnt;
-}
-
 static const int NullTextureValue = -1;
 
 const int& Renderer::AddTexture(const Texture& texture) {
@@ -201,4 +172,102 @@ const int& Renderer::AddTexture(const Texture& texture) {
     s_Batch.TextureCount++;
 
     return s_Batch.Textures[s_Batch.TextureCount - 1];
+}
+
+void Renderer::DrawQuad(const Quad& quad) {
+    (*s_Batch.VertexPtr) = quad.V0;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = quad.V1;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = quad.V2;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = quad.V3;
+    s_Batch.VertexPtr++;
+
+    s_Batch.IndexCount += 6;
+}
+
+void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& color, const float& textureID) {
+    Vertex v0;
+    Vertex v1;
+    Vertex v2;
+    Vertex v3;
+
+    v0.Position = position;
+    v0.Color = color;
+    v0.TextureCoord = { 0, 0 };
+    v0.TextureID = textureID;
+
+    v1.Position = glm::vec2(position.x, position.y + 1 * scale.y);
+    v1.Color = color;
+    v1.TextureCoord = { 0, 1 };
+    v1.TextureID = textureID;
+
+    v2.Position = glm::vec2(position.x + 1 * scale.x, position.y + 1 * scale.y);
+    v2.Color = color;
+    v2.TextureCoord = { 1, 1 };
+    v2.TextureID = textureID;
+
+    v3.Position = glm::vec2(position.x + 1 * scale.x, position.y);
+    v3.Color = color;
+    v3.TextureCoord = { 1, 0 };
+    v3.TextureID = textureID;
+
+    (*s_Batch.VertexPtr) = v0;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v1;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v2;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v3;
+    s_Batch.VertexPtr++;
+
+    s_Batch.IndexCount += 6;
+}
+
+void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const std::array<glm::vec4, 4>& colorArray, const float& textureID) {
+    Vertex v0;
+    Vertex v1;
+    Vertex v2;
+    Vertex v3;
+
+    v0.Position = position;
+    v0.Color = colorArray[0];
+    v0.TextureCoord = { 0, 0 };
+    v0.TextureID = textureID;
+
+    v1.Position = glm::vec2(position.x, position.y + 1 * scale.y);
+    v1.Color = colorArray[1];
+    v1.TextureCoord = { 0, 1 };
+    v1.TextureID = textureID;
+
+    v2.Position = glm::vec2(position.x + 1 * scale.x, position.y + 1 * scale.y);
+    v2.Color = colorArray[2];
+    v2.TextureCoord = { 1, 1 };
+    v2.TextureID = textureID;
+
+    v3.Position = glm::vec2(position.x + 1 * scale.x, position.y);
+    v3.Color = colorArray[3];
+    v3.TextureCoord = { 1, 0 };
+    v3.TextureID = textureID;
+
+    (*s_Batch.VertexPtr) = v0;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v1;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v2;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v3;
+    s_Batch.VertexPtr++;
+
+    s_Batch.IndexCount += 6;
 }

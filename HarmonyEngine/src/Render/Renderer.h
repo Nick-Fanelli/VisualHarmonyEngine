@@ -83,18 +83,19 @@ class Renderer {
     OrthographicCamera* m_Camera = nullptr;
 
     std::unique_ptr<Shader> m_Shader;
-    bool m_ShouldUpdateVertexData = true;
     
     void Render();
     void UpdateBatchVertexData();
     
 public:
-    Quad* AddQuad(const Quad& quad);
     const int& AddTexture(const Texture& texture);
 
     void OnCreate(OrthographicCamera* camera);
-    void Update(const float& deltaTime);
+    void StartBatch();
+    void EndBatch();
     void OnDestroy();
 
-    void UpdateVertexData() { m_ShouldUpdateVertexData = true; }
+    void DrawQuad(const Quad& quad);
+    void DrawQuad(const glm::vec2& position = { 0, 0 }, const glm::vec2& scale = { 1, 1 }, const glm::vec4& color = { 1, 1, 1, 1 }, const float& textureID = 0);
+    void DrawQuad(const glm::vec2& position = { 0, 0 }, const glm::vec2& scale = { 1, 1 }, const std::array<glm::vec4, 4>& colorArray = DefaultWhiteColor, const float& textureID = 0);
 };
