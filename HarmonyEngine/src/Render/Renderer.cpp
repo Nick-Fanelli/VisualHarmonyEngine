@@ -10,7 +10,7 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
-Quad::Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const std::array<glm::vec4, 4> colorArray = DefaultWhiteColor, const float& textureID = 0) {
+Quad::Quad(const glm::vec2& position, const glm::vec2& scale, const std::array<glm::vec4, 4> colorArray , const float& textureID) {
     V0.Position = position;
     V0.Color = colorArray[0];
     V0.TextureCoord = { 0, 0 };
@@ -32,7 +32,7 @@ Quad::Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const s
     V3.TextureID = textureID;
 }
 
-Quad::Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const glm::vec4 color = { 1, 1, 1, 1 }, const float& textureID = 0) {
+Quad::Quad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4 color, const float& textureID) {
     V0.Position = position;
     V0.Color = color;
     V0.TextureCoord = { 0, 0 };
@@ -218,7 +218,18 @@ const int& Renderer::AddTexture(const Texture& texture) {
     return s_Batch.Textures[s_Batch.TextureCount - 1];
 }
 
+void Renderer::AllocateVertices(const int& amount) {
+    uint32_t vertexCount = s_Batch.VertexPtr - s_Batch.Vertices;
+    
+    if(vertexCount + amount >= MaxVertexCount) {
+        Renderer::EndBatch();
+        Renderer::StartBatch();
+    }
+}
+
 void Renderer::DrawQuad(const Quad& quad) {
+    AllocateVertices(4);
+
     (*s_Batch.VertexPtr) = quad.V0;
     s_Batch.VertexPtr++;
 
@@ -235,6 +246,8 @@ void Renderer::DrawQuad(const Quad& quad) {
 }
 
 void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& color, const float& textureID) {
+    AllocateVertices(4);
+
     Vertex v0;
     Vertex v1;
     Vertex v2;
@@ -276,6 +289,8 @@ void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const
 }
 
 void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const std::array<glm::vec4, 4>& colorArray, const float& textureID) {
+    AllocateVertices(4);
+
     Vertex v0;
     Vertex v1;
     Vertex v2;

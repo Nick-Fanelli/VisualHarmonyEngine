@@ -39,6 +39,7 @@ void TestScene::Update(const float& deltaTime) {
     }
 
     s_Renderer.DrawQuad({0, 0}, {1, 1}, { 0, 1, 1, 1 }, s_TextureID);
+    s_Renderer.DrawQuad({0, 0}, {1, 1}, { 0, 1, 1, 1 }, s_TextureID);
 
     s_Renderer.EndBatch();
 }

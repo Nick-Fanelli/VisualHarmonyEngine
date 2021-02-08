@@ -44,7 +44,8 @@ class Renderer {
     
     void Render();
     void UpdateBatchVertexData();
-    
+    void AllocateVertices(const int& amount);
+
 public:
     const int& AddTexture(const Texture& texture);
 
