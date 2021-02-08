@@ -4,7 +4,7 @@ in vec4 vColor;
 in vec2 vTextureCoord;
 in float vTextureID;
 
-// The $KEYWORD$ means that somethign will be replaced at runtime!
+// The $KEYWORD$ means that something will be replaced at runtime!
 uniform sampler2D[$MAX_SUPPORTED_TEXTURES$] uTextures;
 
 out vec4 out_Color;

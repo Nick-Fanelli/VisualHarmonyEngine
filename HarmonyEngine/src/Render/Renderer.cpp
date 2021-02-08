@@ -191,6 +191,7 @@ Quad* Renderer::AddQuad(const Quad& quad) {
 static const int NullTextureValue = -1;
 
 const int& Renderer::AddTexture(const Texture& texture) {
+    // TODO: Check to make sure that we aren't exceeding max texture amount
     if(texture.GetTextureID() == -1) {
         Log::Error("Texture : " + std::string(texture.GetFilepath()) + " has not been initialized and can not be added to the render batch!");
         return NullTextureValue;
