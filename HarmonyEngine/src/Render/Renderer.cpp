@@ -10,6 +10,8 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
+static int s_MaxTextureCount;
+
 struct RenderBatch {
 
     GLuint VaoID = 0;
@@ -33,17 +35,18 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
         return;
     }
 
+    s_MaxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots();
+
     s_Batch = RenderBatch();
 
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
 
-    // s_Batch.Textures = new int[16];
-
     m_Camera = camera;
 
     std::unordered_map<std::string, std::string> replacements;
-    replacements["MAX_SUPPORTED_TEXTURES"] = "16";
+
+    replacements["MAX_SUPPORTED_TEXTURES"] = std::to_string(s_MaxTextureCount);
 
     m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl", &replacements);
 
@@ -114,7 +117,7 @@ void Renderer::Render() {
 
     m_Shader->Bind();
     m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    m_Shader->AddUniformIntArray("uTextures", 16, s_Batch.Textures);
+    m_Shader->AddUniformIntArray("uTextures", s_MaxTextureCount, s_Batch.Textures);
 
     for(int i = 0; i < s_Batch.TextureCount; i++) {
         glActiveTexture(GL_TEXTURE0 + i);
