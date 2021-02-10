@@ -1,6 +1,5 @@
 #include "GameObject.h"
 #include "Scene.h"
-#include "Component.h"
 
 // Hidden Denfinitions
 void GameObject::HiddenOnCreate() {
@@ -8,7 +7,7 @@ void GameObject::HiddenOnCreate() {
 }
 
 void GameObject::HiddenUpdate(const float& deltaTime) {
-    for(Component* component : m_Components) component->Update(deltaTime);
+    for(Component& component : m_Components) component.Update(deltaTime);
 
     Update(deltaTime);
 } 
@@ -16,20 +15,11 @@ void GameObject::HiddenUpdate(const float& deltaTime) {
 void GameObject::HiddenOnDestroy() {
     m_ParentScene = nullptr;
 
-    for(Component* component : m_Components) {
-        component->OnDestroy();
+    for(Component& component : m_Components) {
+        component.OnDestroy();
     }
 
     m_Components.clear();
 
     OnDestroy();
-}
-
-// Public Methods
-
-void GameObject::AddComponent(Component* component) {
-    component->SetParentObject(this);
-    component->OnCreate();
-    
-    m_Components.push_back(component);
 }

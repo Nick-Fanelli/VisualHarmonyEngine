@@ -5,9 +5,9 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "../Core/Log.h"
+#include "Component.h"
 
 class Scene;
-class Component;
 
 class GameObject {
 
@@ -16,7 +16,7 @@ class GameObject {
     Scene* m_ParentScene;
 
     std::string m_Name;
-    std::vector<Component*> m_Components;
+    std::vector<Component> m_Components;
 
     glm::vec2 m_Position;
 
@@ -33,12 +33,16 @@ public:
 
     virtual ~GameObject() { HiddenOnDestroy(); }
 
-    void AddComponent(Component* component);
-
     const Scene* GetParentScene() const { return m_ParentScene; }
 
     const std::string& GetName() const { return m_Name; }
     const glm::vec2& GetPosition() const { return m_Position; }
     
     const void SetPosition(const glm::vec2& position) { m_Position = position; }
+
+    template <typename T, typename... Args>
+    T& AddComponent(Args&&... args) {
+        m_Components.push_back(T(std::forward<Args>(args)...));
+        return *static_cast<T*>(&m_Components.at(m_Components.size() - 1));g
+    }
 };
