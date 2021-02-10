@@ -24,4 +24,10 @@ protected:
 
 public:
     GameObject* GetParentGameObject();
+
+    virtual ~Component() {}
+};
+
+class QuadRenderer : public Component {
+
 };
