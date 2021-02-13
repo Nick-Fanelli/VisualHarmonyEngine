@@ -8,8 +8,14 @@
 // Scene 
 // ======================================================================================
 
+Scene::Scene() : m_GameObjects(std::vector<GameObject*>()), m_Camera(OrthographicCamera(-CameraAspectRatio * CameraZoomLevel, CameraAspectRatio * CameraZoomLevel, -CameraZoomLevel, CameraZoomLevel)) {
+}
+
 // Definition for Override Methods
-void Scene::OnCreate() {}
+void Scene::OnCreate() {
+    // m_Renderer.OnCreate(&m_Camera);
+}
+
 void Scene::Update(const float& deltaTime) {}
 void Scene::OnDestroy() {}
 

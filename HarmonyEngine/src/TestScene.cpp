@@ -5,16 +5,14 @@
 #include <memory>
 #include <array>
 
-static Renderer s_Renderer = Renderer();
 static GameObject s_GameObject = GameObject("Player");
 
 void TestScene::OnCreate() {
-    s_Renderer.OnCreate(&m_Camera);
-
+    Renderer::OnCreate(&m_Camera);
     // Texture texture = Texture("assets/textures/image.png", 128, 128);
     // texture.Initialize();
 
-    s_GameObject.AddComponent<QuadRenderer>();
+    s_GameObject.AddComponent<QuadRenderer>(Quad(glm::vec2(0, 0), glm::vec2(1, 1), glm::vec4(1, 1, 1, 1)));
 }
 
 void TestScene::Update(const float& deltaTime) {
@@ -31,11 +29,16 @@ void TestScene::Update(const float& deltaTime) {
         m_Camera.Move(glm::vec3(0, -4 * deltaTime, 0));
     }
 
-    s_Renderer.StartBatch();
+    Renderer::StartBatch();
 
-    s_Renderer.EndBatch();
+    Renderer::DrawQuad({0, 0}, { 1, 1 }, {1, 1, 1, 1});
+
+    Renderer::EndBatch();
+
+    // m_Renderer.StartBatch();
+
+    // m_Renderer.EndBatch();
 }
 
 void TestScene::OnDestroy() {
-    s_Renderer.OnDestroy();
 }

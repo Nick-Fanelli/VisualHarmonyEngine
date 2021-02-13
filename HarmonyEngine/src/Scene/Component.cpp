@@ -10,3 +10,10 @@ void Component::Update(const float& deltaTime) {}
 void Component::OnDestroy() {}
 
 GameObject* Component::GetParentGameObject() { return m_ParentObject; }
+
+// ======================================================================================
+// Quad Renderer Componet
+// ======================================================================================
+void QuadRenderer::OnCreate() {}
+void QuadRenderer::Update(const float& deltaTime) {}
+void QuadRenderer::OnDestroy() {}

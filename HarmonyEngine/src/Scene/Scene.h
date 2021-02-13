@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <memory>
-// #include "GameObject.h"
+#include "../Render/Renderer.h"
 #include "../Core/Log.h"
 #include "Camera.h"
 
@@ -35,13 +35,7 @@ protected:
     virtual void OnDestroy();
 
 public:
-    Scene() 
-    : m_GameObjects(std::vector<GameObject*>()), 
-    m_Camera(OrthographicCamera(-CameraAspectRatio * CameraZoomLevel, 
-                                 CameraAspectRatio * CameraZoomLevel, 
-                                -CameraZoomLevel, CameraZoomLevel)) {
-
-    }
+    Scene();
 
     ~Scene() { HiddenOnDestroy(); }
 

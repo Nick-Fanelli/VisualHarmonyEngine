@@ -43,6 +43,8 @@ public:
     template <typename T, typename... Args>
     T& AddComponent(Args&&... args) {
         m_Components.push_back(T(std::forward<Args>(args)...));
-        return *static_cast<T*>(&m_Components.at(m_Components.size() - 1));
+        T& component = *static_cast<T*>(&m_Components.at(m_Components.size() - 1));
+        component.SetParentObject(this);
+        return component;
     }
 };

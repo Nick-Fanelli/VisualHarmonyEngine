@@ -10,6 +10,9 @@ static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
+static OrthographicCamera* s_Camera = nullptr;
+static std::unique_ptr<Shader> s_Shader = nullptr;
+
 Quad::Quad(const glm::vec2& position, const glm::vec2& scale, const std::array<glm::vec4, 4> colorArray , const float& textureID) {
     V0.Position = position;
     V0.Color = colorArray[0];
@@ -78,7 +81,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
         return;
     }
 
-    m_Camera = camera; // Hold a pointer the main camera in the scene
+    s_Camera = camera; // Hold a pointer the main camera in the scene
     auto maxTextureCount = OpenGLUtils::GetGPUMaxTextureSlots(); // Get the max texture count allowed by the GPU
 
     // Setup the static render batch
@@ -90,7 +93,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     // Setup and create the shader with a replacement that points to the max texture count
     std::unordered_map<std::string, std::string> replacements;
     replacements["MAX_SUPPORTED_TEXTURES"] = std::to_string(maxTextureCount);
-    m_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl", &replacements);
+    s_Shader = std::make_unique<Shader>("assets/shaders/default.vert.glsl", "assets/shaders/default.frag.glsl", &replacements);
 
     // Bind the VAO
     glGenVertexArrays(1, &s_Batch.VaoID);
@@ -155,9 +158,9 @@ void Renderer::UpdateBatchVertexData() {
 
 void Renderer::Render() {
 
-    m_Shader->Bind();
-    m_Shader->AddUniformMat4("cameraViewProjectionMatrix", m_Camera->GetViewProjectionMatrix());
-    m_Shader->AddUniformIntArray("uTextures", s_Batch.TextureCount, s_Batch.Textures);
+    s_Shader->Bind();
+    s_Shader->AddUniformMat4("cameraViewProjectionMatrix", s_Camera->GetViewProjectionMatrix());
+    s_Shader->AddUniformIntArray("uTextures", s_Batch.TextureCount, s_Batch.Textures);
 
     for(int i = 0; i < s_Batch.TextureCount; i++) {
         glActiveTexture(GL_TEXTURE0 + i);
@@ -182,7 +185,7 @@ void Renderer::Render() {
     glDisableVertexAttribArray(3);
     glBindVertexArray(0);
 
-    m_Shader->Unbind();
+    s_Shader->Unbind();
 }
 
 void Renderer::OnDestroy() {

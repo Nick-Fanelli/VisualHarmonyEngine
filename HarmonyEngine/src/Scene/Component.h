@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <memory>
+#include "../Render/Renderer.h"
 
 class GameObject;
 
@@ -28,6 +29,21 @@ public:
     virtual ~Component() {}
 };
 
+// ======================================================================================
+// Quad Renderer Componet
+// ======================================================================================
 class QuadRenderer : public Component {
+
+    Quad m_Quad;
+
+protected:
+    void OnCreate() override;
+    void Update(const float& deltaTime) override;
+    void OnDestroy() override;
+
+public:
+    QuadRenderer(const Quad& quad) : m_Quad(quad) {
+
+    }
 
 };
