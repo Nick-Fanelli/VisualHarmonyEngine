@@ -7,7 +7,9 @@
 
 static GameObject s_GameObject = GameObject("Player");
 
-void TestScene::OnCreate() {
+void TestScene::OnCreate(GameContext* gameContextPtr) {
+    m_GameContext = gameContextPtr;
+
     Renderer::OnCreate(&m_Camera);
     // Texture texture = Texture("assets/textures/image.png", 128, 128);
     // texture.Initialize();
@@ -31,7 +33,7 @@ void TestScene::Update(const float& deltaTime) {
 
     Renderer::StartBatch();
 
-    Renderer::DrawQuad({0, 0}, { 1, 1 }, {1, 1, 1, 1});
+    s_GameObject.Update(deltaTime);
 
     Renderer::EndBatch();
 

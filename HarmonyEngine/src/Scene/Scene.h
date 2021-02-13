@@ -22,22 +22,18 @@ class Scene {
 
     std::vector<GameObject*> m_GameObjects;
 
-    void HiddenOnCreate(GameContext* gameContext);
-    void HiddenUpdate(const float& deltaTime);
-    void HiddenOnDestroy();
-
 protected:
     GameContext* m_GameContext = nullptr;
     OrthographicCamera m_Camera;
 
-    virtual void OnCreate();
+    virtual void OnCreate(GameContext* gameContext);
     virtual void Update(const float& deltaTime);
     virtual void OnDestroy();
 
 public:
     Scene();
 
-    ~Scene() { HiddenOnDestroy(); }
+    ~Scene() { OnDestroy(); }
 
     void AddGameObject(GameObject* ptr);
 

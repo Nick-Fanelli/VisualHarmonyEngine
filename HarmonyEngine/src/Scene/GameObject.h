@@ -11,8 +11,6 @@ class Scene;
 
 class GameObject {
 
-    friend class Scene;
-
     Scene* m_ParentScene;
 
     std::string m_Name;
@@ -20,18 +18,14 @@ class GameObject {
 
     glm::vec2 m_Position;
 
-    virtual void OnCreate() {}
-    virtual void Update(const float& deltaTime) {}
-    virtual void OnDestroy() {}
-
-    void HiddenOnCreate();
-    void HiddenUpdate(const float& deltaTime);
-    void HiddenOnDestroy();
-
 public:
     GameObject(std::string name) : m_Name(name), m_Position(glm::vec2()) {}
 
-    virtual ~GameObject() { HiddenOnDestroy(); }
+    virtual ~GameObject() { OnDestroy(); }
+
+    virtual void OnCreate();
+    virtual void Update(const float& deltaTime);
+    virtual void OnDestroy();
 
     const Scene* GetParentScene() const { return m_ParentScene; }
 
@@ -40,10 +34,13 @@ public:
     
     const void SetPosition(const glm::vec2& position) { m_Position = position; }
 
+    void SetParentScene(Scene* scene) { m_ParentScene = scene; }
+
     template <typename T, typename... Args>
     T& AddComponent(Args&&... args) {
         m_Components.push_back(T(std::forward<Args>(args)...));
         T& component = *static_cast<T*>(&m_Components.at(m_Components.size() - 1));
+        component.OnCreate();
         component.SetParentObject(this);
         return component;
     }
