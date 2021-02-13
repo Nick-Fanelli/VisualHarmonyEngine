@@ -7,6 +7,8 @@
 #include "../Core/Log.h"
 #include "Component.h"
 
+#include <entt.hpp>
+
 class Scene;
 
 class GameObject {
@@ -14,7 +16,6 @@ class GameObject {
     Scene* m_ParentScene;
 
     std::string m_Name;
-    std::vector<Component> m_Components;
 
     glm::vec2 m_Position;
 
@@ -37,11 +38,6 @@ public:
     void SetParentScene(Scene* scene) { m_ParentScene = scene; }
 
     template <typename T, typename... Args>
-    T& AddComponent(Args&&... args) {
-        m_Components.push_back(T(std::forward<Args>(args)...));
-        T& component = *static_cast<T*>(&m_Components.at(m_Components.size() - 1));
-        component.OnCreate();
-        component.SetParentObject(this);
-        return component;
+    void AddComponent(Args&&... args) {
     }
 };

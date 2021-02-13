@@ -15,5 +15,10 @@ GameObject* Component::GetParentGameObject() { return m_ParentObject; }
 // Quad Renderer Componet
 // ======================================================================================
 void QuadRenderer::OnCreate() {}
-void QuadRenderer::Update(const float& deltaTime) {}
+
+void QuadRenderer::Update(const float& deltaTime) {
+    Log::Info("Hello World!");
+    Renderer::DrawQuad(m_Quad);
+}
+
 void QuadRenderer::OnDestroy() {}
