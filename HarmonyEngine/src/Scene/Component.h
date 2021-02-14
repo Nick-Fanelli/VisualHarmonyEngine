@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../Render/Sprite.h"
-
 // ======================================================================================
 // Transform Component
 // ======================================================================================
@@ -23,19 +21,7 @@ struct QuadRenderer {
 
     Quad quad;
 
+    QuadRenderer() = default;
     QuadRenderer(const QuadRenderer&) = default;
     QuadRenderer(const Quad& quad) : quad(quad) {}
-};
-
-// ======================================================================================
-// Sprite Renderer Component
-// ======================================================================================
-struct SpriteRenderer {
-
-    Sprite sprite;
-
-    SpriteRenderer(const SpriteRenderer&) = default;
-    SpriteRenderer(const Sprite& sprite) : sprite(sprite) {}
-
-    // operator const Sprite&() const { return sprite; }
 };

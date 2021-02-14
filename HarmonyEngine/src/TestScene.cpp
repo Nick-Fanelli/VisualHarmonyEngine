@@ -2,8 +2,6 @@
 
 #include "HarmonyEngine.h"
 #include <iostream>
-#include <memory>
-#include <array>
 
 static GameObject s_GameObject = GameObject("Player");
 
@@ -11,17 +9,16 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     m_GameContext = gameContextPtr;
 
     Renderer::OnCreate(&m_Camera);
-    Texture texture = Texture("assets/textures/image.png", 128, 128);
-    texture.Initialize();
+
+//    Texture texture = Texture("assets/textures/image.png", 128, 128);
+//    texture.Initialize();
 
 //    const int& textureID = Renderer::AddTexture(texture);
 
     AddGameObject(&s_GameObject);
 
-//    const Sprite sprite = Sprite(Quad({-0.5f, -0.5f}, {1, 1}, {0, 1, 1, 1}), textureID);
-
     s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
-//    s_GameObject.AddComponent<SpriteRenderer>(sprite);
+    s_GameObject.AddComponent<QuadRenderer>(Quad({-0.5f, -0.5f}, {1, 1}, {0, 1, 1, 1}));
 }
 
 void TestScene::Update(const float& deltaTime) {
@@ -40,9 +37,9 @@ void TestScene::Update(const float& deltaTime) {
 
     Renderer::StartBatch();
 
-    auto group = m_Registry.group<QuadRenderer>(entt::get<Transform>);
-    for(auto object : group) {
-        auto[renderer, transform] = group.get<QuadRenderer, Transform>(object);
+    auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
+    for(auto entity : quadRendererGroup) {
+        auto[renderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);
         Renderer::DrawQuad(transform.Position, renderer.quad);
     }
 
@@ -51,3 +48,4 @@ void TestScene::Update(const float& deltaTime) {
 
 void TestScene::OnDestroy() {
 }
+
