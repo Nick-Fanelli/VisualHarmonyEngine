@@ -17,7 +17,7 @@ struct RenderBatch {
     GLuint VboID = 0;
     GLuint EboID = 0;
 
-    uint32_t IndexCount = 0;
+    size_t IndexCount = 0;
     size_t TextureIndex = 1;
 
     Vertex* Vertices = nullptr;

@@ -12,16 +12,12 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     Texture texture = Texture("assets/textures/image.png", 128, 128);
     texture.Initialize();
 
-    Texture texture2 = Texture("assets/textures/image2.png", 128, 128);
-    texture2.Initialize();
-
     const int& textureID = Renderer::AddTexture(texture);
-    const int& texture2ID = Renderer::AddTexture(texture2);
 
     AddGameObject(&s_GameObject);
 
     s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
-    s_GameObject.AddComponent<QuadRenderer>(Quad({-0.5f, -0.5f}, {1, 1}, {1, 1, 1, 1}, texture2ID));
+    s_GameObject.AddComponent<QuadRenderer>(Quad({-0.5f, -0.5f}, {1, 1}, {1, 1, 1, 1}, textureID));
 }
 
 void TestScene::Update(const float& deltaTime) {
