@@ -18,7 +18,7 @@ struct RenderBatch {
     GLuint EboID = 0;
 
     uint32_t IndexCount = 0;
-    size_t TextureCount = 0;
+    size_t TextureIndex = 1;
 
     Vertex* Vertices = nullptr;
     Vertex* VertexPtr = nullptr;
@@ -42,6 +42,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
     s_Batch = RenderBatch();
     s_Batch.Vertices = new Vertex[MaxVertexCount];
     s_Batch.VertexPtr = s_Batch.Vertices;
+
     s_Batch.Textures = new int[maxTextureCount];
 
     // Setup and create the shader with a replacement that points to the max texture count
@@ -95,6 +96,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
 
 void Renderer::StartBatch() {
     s_Batch.IndexCount = 0;
+
     s_Batch.VertexPtr = s_Batch.Vertices;
 }
 
@@ -114,9 +116,9 @@ void Renderer::Render() {
 
     s_Shader->Bind();
     s_Shader->AddUniformMat4("cameraViewProjectionMatrix", s_Camera->GetViewProjectionMatrix());
-    s_Shader->AddUniformIntArray("uTextures", s_Batch.TextureCount, s_Batch.Textures);
+    s_Shader->AddUniformIntArray("uTextures", s_Batch.TextureIndex, s_Batch.Textures);
 
-    for(int i = 0; i < s_Batch.TextureCount; i++) {
+    for(int i = 0; i < s_Batch.TextureIndex; i++) {
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D, s_Batch.Textures[i]);
     }
@@ -169,10 +171,10 @@ const int& Renderer::AddTexture(const Texture& texture) {
         return NullTextureValue;
     }
 
-    s_Batch.Textures[s_Batch.TextureCount] = texture.GetTextureID();
-    s_Batch.TextureCount++;
+    s_Batch.Textures[s_Batch.TextureIndex] = texture.GetTextureID();
+    s_Batch.TextureIndex++;
 
-    return s_Batch.Textures[s_Batch.TextureCount - 1];
+    return s_Batch.Textures[s_Batch.TextureIndex - 1];
 }
 
 void Renderer::AllocateVertices(const int& amount) {
