@@ -6,6 +6,8 @@
 #include "../Core/Log.h"
 #include "Camera.h"
 
+#include <entt/entt.hpp>
+
 class GameObject;
 class GameContext;
 
@@ -20,19 +22,18 @@ class Scene {
 
     friend class SceneManager;
 
-    std::vector<GameObject*> m_GameObjects;
-
 protected:
     GameContext* m_GameContext = nullptr;
     OrthographicCamera m_Camera;
-
+    
     virtual void OnCreate(GameContext* gameContext);
     virtual void Update(const float& deltaTime);
     virtual void OnDestroy();
 
 public:
-    Scene();
+    entt::registry m_Registry;
 
+    Scene();
     ~Scene() { OnDestroy(); }
 
     void AddGameObject(GameObject* ptr);

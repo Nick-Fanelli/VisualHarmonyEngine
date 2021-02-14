@@ -73,11 +73,13 @@
         "Luint",
         "OPENGL",
         "Programiv",
+        "entt",
         "stbi"
     ],
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "cmake.sourceDirectory": "${workspaceFolder}/HarmonyEngine",
     "C_Cpp.loggingLevel": "Debug",
     "C_Cpp.default.cppStandard": "c++14",
-    "C_Cpp.default.intelliSenseMode": "macos-gcc-x64"
+    "C_Cpp.default.intelliSenseMode": "macos-gcc-x64",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

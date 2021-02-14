@@ -14,6 +14,7 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     // Texture texture = Texture("assets/textures/image.png", 128, 128);
     // texture.Initialize();
 
+    AddGameObject(&s_GameObject);
     s_GameObject.AddComponent<QuadRenderer>(Quad(glm::vec2(0, 0), glm::vec2(1, 1), glm::vec4(1, 1, 1, 1)));
 }
 
@@ -33,7 +34,11 @@ void TestScene::Update(const float& deltaTime) {
 
     Renderer::StartBatch();
 
-    s_GameObject.Update(deltaTime);
+    auto view = m_Registry.view<QuadRenderer>();
+    for(auto object : view) {
+        QuadRenderer& quadRenderer = view.get<QuadRenderer>(object);
+        Renderer::DrawQuad(quadRenderer.quad);
+    }
 
     Renderer::EndBatch();
 

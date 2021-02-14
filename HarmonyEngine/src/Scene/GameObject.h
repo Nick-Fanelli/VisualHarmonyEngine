@@ -5,26 +5,24 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "../Core/Log.h"
+#include "Scene.h"
 #include "Component.h"
 
 #include <entt/entt.hpp>
 
-class Scene;
-
 class GameObject {
 
     Scene* m_ParentScene;
-
     std::string m_Name;
-
     glm::vec2 m_Position;
+    entt::entity m_EntityID;
 
 public:
     GameObject(std::string name) : m_Name(name), m_Position(glm::vec2()) {}
 
     virtual ~GameObject() { OnDestroy(); }
 
-    virtual void OnCreate();
+    virtual void OnCreate(const entt::entity& entityID);
     virtual void Update(const float& deltaTime);
     virtual void OnDestroy();
 
@@ -37,7 +35,32 @@ public:
 
     void SetParentScene(Scene* scene) { m_ParentScene = scene; }
 
-    template <typename T, typename... Args>
-    void AddComponent(Args&&... args) {
+    template<typename T, typename... Args>
+    T& AddComponent(Args&&... args) {
+        return m_ParentScene->m_Registry.emplace<T>(m_EntityID, std::forward<Args>(args)...);
+    }
+
+    template<typename T>
+    T& GetComponent() {
+        if(!ContainsComponent<T>()) {
+            Log::Error("Entity does not contain component!");
+            exit(-1);
+        }
+
+        return m_ParentScene->m_Registry.get<T>(m_EntityID);
+    }
+
+    template<typename T>
+    bool ContainsComponent() {
+        return m_ParentScene->m_Registry.has<T>(m_EntityID);
+    }
+
+    template<typename T>
+    void RemoveComponent() {
+        if(!ContainsComponent<T>()) {
+            Log::Error("Entity does not contain component!");
+            exit(-1);
+        }
+        m_ParentScene->m_Registry.remove<T>(m_EntityID);
     }
 };

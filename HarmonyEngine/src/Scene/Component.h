@@ -1,47 +1,13 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <memory>
-#include "../Render/Renderer.h"
-
-class GameObject;
-
 // ======================================================================================
-// Component Class
+// Quad Renderer Component
 // ======================================================================================
-class Component {
+struct QuadRenderer {
 
-    friend class GameObject;
+    Quad quad;
 
-    GameObject* m_ParentObject = nullptr;
-
-private:
-    void SetParentObject(GameObject* parent) { m_ParentObject = parent; }
-
-public:
-    GameObject* GetParentGameObject();
-
-    virtual void OnCreate();
-    virtual void Update(const float& deltaTime);
-    virtual void OnDestroy();
-
-    virtual ~Component() {}
-};
-
-// ======================================================================================
-// Quad Renderer Componet
-// ======================================================================================
-class QuadRenderer : public Component {
-
-    Quad m_Quad;
-
-public:
-    QuadRenderer(const Quad& quad) : m_Quad(quad) {
-
-    }
-
-    void OnCreate() override;
-    void Update(const float& deltaTime) override;
-    void OnDestroy() override;
-
+    // QuadRenderer() = default;
+    // QuadRenderer(const QuadRenderer&) = default;
+    QuadRenderer(const Quad& quad) : quad(quad) {}
 };

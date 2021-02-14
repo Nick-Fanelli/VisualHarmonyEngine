@@ -8,7 +8,7 @@
 // Scene 
 // ======================================================================================
 
-Scene::Scene() : m_GameObjects(std::vector<GameObject*>()), m_Camera(OrthographicCamera(-CameraAspectRatio * CameraZoomLevel, CameraAspectRatio * CameraZoomLevel, -CameraZoomLevel, CameraZoomLevel)) {
+Scene::Scene() : m_Camera(OrthographicCamera(-CameraAspectRatio * CameraZoomLevel, CameraAspectRatio * CameraZoomLevel, -CameraZoomLevel, CameraZoomLevel)) {
 }
 
 // Definition for Override Methods
@@ -20,9 +20,10 @@ void Scene::Update(const float& deltaTime) {}
 void Scene::OnDestroy() {}
 
 void Scene::AddGameObject(GameObject* gameObjectPtr) {
+    entt::entity entityID = m_Registry.create();
+
     gameObjectPtr->SetParentScene(this);
-    gameObjectPtr->OnCreate();
-    m_GameObjects.push_back(gameObjectPtr);
+    gameObjectPtr->OnCreate(entityID);
 }
 
 // ======================================================================================

@@ -1,8 +1,9 @@
 #include "GameObject.h"
-#include "Scene.h"
 
-void GameObject::OnCreate() {
+#include <entt/entt.hpp>
 
+void GameObject::OnCreate(const entt::entity& entityID) {
+    m_EntityID = entityID;
 }
 
 void GameObject::Update(const float& deltaTime) {
