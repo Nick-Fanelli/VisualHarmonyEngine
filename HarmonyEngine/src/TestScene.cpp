@@ -48,10 +48,6 @@ void TestScene::Update(const float& deltaTime) {
     }
 
     Renderer::EndBatch();
-
-    // m_Renderer.StartBatch();
-
-    // m_Renderer.EndBatch();
 }
 
 void TestScene::OnDestroy() {
