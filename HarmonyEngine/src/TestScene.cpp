@@ -15,6 +15,8 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     // texture.Initialize();
 
     AddGameObject(&s_GameObject);
+
+    s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
     s_GameObject.AddComponent<QuadRenderer>(Quad(glm::vec2(0, 0), glm::vec2(1, 1), glm::vec4(1, 1, 1, 1)));
 }
 
@@ -34,10 +36,10 @@ void TestScene::Update(const float& deltaTime) {
 
     Renderer::StartBatch();
 
-    auto view = m_Registry.view<QuadRenderer>();
-    for(auto object : view) {
-        QuadRenderer& quadRenderer = view.get<QuadRenderer>(object);
-        Renderer::DrawQuad(quadRenderer.quad);
+    auto group = m_Registry.group<Transform>(entt::get<QuadRenderer>);
+    for(auto object : group) {
+        auto[transform, renderer] = group.get<Transform, QuadRenderer>(object);
+        Renderer::DrawQuad(transform.Position, renderer.quad);
     }
 
     Renderer::EndBatch();

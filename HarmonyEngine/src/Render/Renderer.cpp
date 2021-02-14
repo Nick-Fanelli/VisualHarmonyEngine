@@ -248,6 +248,34 @@ void Renderer::DrawQuad(const Quad& quad) {
     s_Batch.IndexCount += 6;
 }
 
+void Renderer::DrawQuad(const glm::vec2& positionOffset, const Quad& quad) {
+    AllocateVertices(4);
+
+    Vertex v0 = quad.V0;
+    Vertex v1 = quad.V1;
+    Vertex v2 = quad.V2;
+    Vertex v3 = quad.V3;
+
+    v0.Position += positionOffset;
+    v1.Position += positionOffset;
+    v2.Position += positionOffset;
+    v3.Position += positionOffset;
+
+    (*s_Batch.VertexPtr) = v0;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v1;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v2;
+    s_Batch.VertexPtr++;
+
+    (*s_Batch.VertexPtr) = v3;
+    s_Batch.VertexPtr++;
+
+    s_Batch.IndexCount += 6;
+}
+
 void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& color, const float& textureID) {
     AllocateVertices(4);
 
