@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-#include "../Core/Log.h"
 #include "GameObject.h"
 #include "../Core/GameContext.h"
 
@@ -17,7 +16,10 @@ void Scene::OnCreate(GameContext* gameContext) {
 }
 
 void Scene::Update(const float& deltaTime) {}
-void Scene::OnDestroy() {}
+
+void Scene::OnDestroy() {
+    m_Registry.clear<>();
+}
 
 void Scene::AddGameObject(GameObject* gameObjectPtr) {
     entt::entity entityID = m_Registry.create();

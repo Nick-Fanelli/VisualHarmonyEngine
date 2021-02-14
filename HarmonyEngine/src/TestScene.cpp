@@ -1,7 +1,6 @@
 #include "TestScene.h"
 
 #include "HarmonyEngine.h"
-#include <iostream>
 
 static GameObject s_GameObject = GameObject("Player");
 
@@ -47,5 +46,6 @@ void TestScene::Update(const float& deltaTime) {
 }
 
 void TestScene::OnDestroy() {
+    m_Registry.clear<>();
 }
 
