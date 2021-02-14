@@ -7,7 +7,7 @@
 #include "../Core/Log.h"
 #include "Component.h"
 
-#include <entt.hpp>
+#include <entt/entt.hpp>
 
 class Scene;
 
