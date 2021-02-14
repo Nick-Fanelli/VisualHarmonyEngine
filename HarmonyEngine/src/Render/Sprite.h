@@ -7,10 +7,9 @@
 struct Sprite {
 
     Quad quad;
-    Texture texture;
+    const int& textureID;
 
-    Sprite() = default;
     Sprite(const Sprite&) = default;
-    Sprite(const Quad& quad, const Texture& texture) : quad(quad), texture(texture) {}
+    Sprite(const Quad& quad, const int& texture) : quad(quad), textureID(texture) {}
 
 };
