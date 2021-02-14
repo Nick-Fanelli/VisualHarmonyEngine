@@ -87,7 +87,7 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
 
     // Bind the indices
     glGenBuffers(1, &s_Batch.EboID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_Batch.EboID); // Bind Indicies Buffer
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_Batch.EboID); // Bind Indices Buffer
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // Unbind Buffer
