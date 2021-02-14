@@ -6,6 +6,7 @@
 #include <array>
 
 static GameObject s_GameObject = GameObject("Player");
+static GameObject s_GameObject2 = GameObject("Object");
 
 void TestScene::OnCreate(GameContext* gameContextPtr) {
     m_GameContext = gameContextPtr;
@@ -15,9 +16,13 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     // texture.Initialize();
 
     AddGameObject(&s_GameObject);
+    AddGameObject(&s_GameObject2);
 
     s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
+    s_GameObject2.AddComponent<Transform>(glm::vec2(0.0f, 0.0f));
+
     s_GameObject.AddComponent<QuadRenderer>(Quad(glm::vec2(0, 0), glm::vec2(1, 1), glm::vec4(1, 1, 1, 1)));
+    s_GameObject2.AddComponent<QuadRenderer>(Quad(glm::vec2(0, 0), glm::vec2(1, 1), glm::vec4(1, 1, 1, 1)));
 }
 
 void TestScene::Update(const float& deltaTime) {
@@ -36,9 +41,9 @@ void TestScene::Update(const float& deltaTime) {
 
     Renderer::StartBatch();
 
-    auto group = m_Registry.group<Transform>(entt::get<QuadRenderer>);
+    auto group = m_Registry.group<QuadRenderer>(entt::get<Transform>);
     for(auto object : group) {
-        auto[transform, renderer] = group.get<Transform, QuadRenderer>(object);
+        auto[renderer, transform] = group.get<QuadRenderer, Transform>(object);
         Renderer::DrawQuad(transform.Position, renderer.quad);
     }
 
