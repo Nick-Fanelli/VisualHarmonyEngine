@@ -3,8 +3,6 @@
 #include <iostream>
 
 #include "../Scene/Scene.h"
-#include "../Core/Utils.h"
-#include "../Render/Texture.h"
 
 static const size_t MaxQuadCount = 1000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
@@ -236,10 +234,10 @@ void Renderer::DrawQuad(const glm::vec2& positionOffset, const Quad& quad) {
 void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& color, const float& textureID) {
     AllocateVertices(4);
 
-    Vertex v0;
-    Vertex v1;
-    Vertex v2;
-    Vertex v3;
+    Vertex v0 = Vertex();
+    Vertex v1 = Vertex();
+    Vertex v2 = Vertex();
+    Vertex v3 = Vertex();
 
     v0.Position = position;
     v0.Color = color;
@@ -279,10 +277,10 @@ void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const
 void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const std::array<glm::vec4, 4>& colorArray, const float& textureID) {
     AllocateVertices(4);
 
-    Vertex v0;
-    Vertex v1;
-    Vertex v2;
-    Vertex v3;
+    Vertex v0 = Vertex();
+    Vertex v1 = Vertex();
+    Vertex v2 = Vertex();
+    Vertex v3 = Vertex();
 
     v0.Position = position;
     v0.Color = colorArray[0];

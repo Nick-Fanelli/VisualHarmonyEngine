@@ -1,6 +1,5 @@
 #pragma once
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 
@@ -20,6 +19,10 @@ class Shader {
     void Link();
 
 public:
+    static void Unbind();
+
+    Shader() = default;
+    Shader(const Shader&) = default;
     Shader(const char* vertexFilePath, const char* fragmentFilePath, std::unordered_map<std::string, std::string>* replacements = nullptr)
     : m_ProgramID(glCreateProgram()), m_Replacements(replacements) {
 
@@ -30,14 +33,13 @@ public:
         AttachFragmentShader(fragmentSource);
         Link();
     }
-    
-    void AddUniformVec4(const char* varName, const glm::vec4& vec4);
-    void AddUniformVec3(const char* varName, const glm::vec3& vec3);
-    void AddUniformMat4(const char* varName, const glm::mat4& mat4);
-    void AddUniformInt(const char* varName, const int& integer);
-    void AddUniformIntArray(const char* varName, const int& size, const int* array);
+    void AddUniformVec4(const char* varName, const glm::vec4& vec4) const;
+    void AddUniformVec3(const char* varName, const glm::vec3& vec3) const;
+    void AddUniformMat4(const char* varName, const glm::mat4& mat4) const;
+    void AddUniformInt(const char* varName, const int& integer) const;
+    void AddUniformIntArray(const char* varName, const int& size, const int* array) const;
 
-    void Bind();
-    void Unbind();
-    void Dispose();
+    void AddUniformUintArray(const char* varName, const int& size, const uint32_t* array) const;
+    void Bind() const;
+    void Dispose() const ;
 };

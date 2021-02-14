@@ -91,7 +91,7 @@ void Shader::Link() {
     glDeleteShader(m_FragmentID);
 }
 
-void Shader::Bind() {
+void Shader::Bind() const {
     glUseProgram(m_ProgramID);
 }
 
@@ -99,38 +99,37 @@ void Shader::Unbind() {
     glUseProgram(0);
 }
 
-void Shader::Dispose() {
+void Shader::Dispose() const {
     glUseProgram(0);
-
     glDeleteProgram(m_ProgramID);
 }
 
-void Shader::AddUniformVec4(const char* varName, const glm::vec4& vec4) {
+void Shader::AddUniformVec4(const char* varName, const glm::vec4& vec4) const {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform4f(location, vec4.x, vec4.y, vec4.z, vec4.w);
 }
 
-void Shader::AddUniformVec3(const char* varName, const glm::vec3& vec3) {
+void Shader::AddUniformVec3(const char* varName, const glm::vec3& vec3) const {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform3f(location, vec3.x, vec3.y, vec3.z);
 }
 
-void Shader::AddUniformMat4(const char* varName, const glm::mat4& mat4) {
+void Shader::AddUniformMat4(const char* varName, const glm::mat4& mat4) const {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat4));
 }
 
-void Shader::AddUniformInt(const char* varName, const int& integer) {
+void Shader::AddUniformInt(const char* varName, const int& integer) const {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform1i(location, integer);
 }
 
-void Shader::AddUniformIntArray(const char* varName, const int& size, const int* array) {
+void Shader::AddUniformIntArray(const char* varName, const int& size, const int* array) const {
     auto location = glGetUniformLocation(m_ProgramID, varName);
     glUniform1iv(location, size, array);
 }
 
-// void Shader::AddUniformIntArray(const char* varName, const int* array) {
-//     auto location = glGetUniformLocation(m_ProgramID, varName);
-//     glUniform1iv(location, sizeof(*array) / sizeof(int), array);
-// }
+void Shader::AddUniformUintArray(const char* varName, const int& size, const uint32_t* array) const {
+    auto location = glGetUniformLocation(m_ProgramID, varName);
+    glUniform1uiv(location, size, array);
+}
