@@ -14,14 +14,14 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     Texture texture = Texture("assets/textures/image.png", 128, 128);
     texture.Initialize();
 
-    const int& textureID = Renderer::AddTexture(texture);
+//    const int& textureID = Renderer::AddTexture(texture);
 
     AddGameObject(&s_GameObject);
 
-    const Sprite sprite = Sprite(Quad({-0.5f, -0.5f}, {1, 1}, {0, 1, 1, 1}), textureID);
+//    const Sprite sprite = Sprite(Quad({-0.5f, -0.5f}, {1, 1}, {0, 1, 1, 1}), textureID);
 
     s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
-    s_GameObject.AddComponent<SpriteRenderer>(sprite);
+//    s_GameObject.AddComponent<SpriteRenderer>(sprite);
 }
 
 void TestScene::Update(const float& deltaTime) {

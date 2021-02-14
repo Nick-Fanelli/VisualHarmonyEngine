@@ -14,3 +14,8 @@ HarmonyEngine/CMakeFiles/
 HarmonyEngine/HarmonyEngine
 HarmonyEngine/Makefile
 HarmonyEngine/cmake_install.cmake
+
+# Clion
+
+HarmonyEngine/cmake-build-debug/
+.idea/vcs.xml
