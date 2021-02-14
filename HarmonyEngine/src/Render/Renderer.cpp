@@ -224,6 +224,7 @@ const int& Renderer::AddTexture(const Texture& texture) {
 void Renderer::AllocateVertices(const int& amount) {
     uint32_t vertexCount = s_Batch.VertexPtr - s_Batch.Vertices;
     
+    // If there's not enough space, start a new render batch!
     if(vertexCount + amount >= MaxVertexCount) {
         Renderer::EndBatch();
         Renderer::StartBatch();
