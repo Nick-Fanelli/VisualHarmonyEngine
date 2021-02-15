@@ -2,34 +2,29 @@
 
 #include "HarmonyEngine.h"
 
-#include <vector>
-#include <iostream>
-
-//static GameObject s_GameObject = GameObject("Player");
-//static std::vector<GameObject> s_GameObjects = std::vector<GameObject>();
+static float s_CameraAspectRatio = 16.0f / 9.0f;
+static float s_ZoomLevel = 1.0f;
 
 void TestScene::OnCreate(GameContext* gameContextPtr) {
     m_GameContext = gameContextPtr;
 
     Renderer::OnCreate(&m_Camera);
 
-    Texture texture = Texture("assets/textures/image.png", 128, 128);
-    texture.Initialize();
+//    Texture texture = Texture("assets/textures/image.png", 128, 128);
+//    texture.Initialize();
 
-    const int& textureID = Renderer::AddTexture(texture);
+//    const int& textureID = Renderer::AddTexture(texture);
 
-    const Quad quad = Quad({0, 0}, {0.5f, 0.5f}, {1, 1, 1, 1}, textureID);
-
-    for(int x = 0; x < 10; x++) {
-        for(int y = 0; y < 10; y++) {
-            GameObject object = GameObject("Obj");
+    for(float y = -10.0f; y < 10.0f; y += 0.25f) {
+        for(float x = -10.0f; x < 10.0f; x += 0.25f) {
+            GameObject object = GameObject("Generated Quad");
             AddGameObject(&object);
 
-            object.AddComponent<Transform>(glm::vec2((float) x / 2, (float) y / 2));
-            object.AddComponent<QuadRenderer>(quad);
+            glm::vec4 color = { (x + 10) / 20.0f, 0.2f, (y + 10) / 20.0f, 1.0f};
+            object.AddComponent<Transform>(glm::vec2(x, y));
+            object.AddComponent<QuadRenderer>(Quad({0.0f, 0.0f}, {0.25f, 0.25f}, color));
         }
     }
-
 }
 
 void TestScene::Update(const float& deltaTime) {
@@ -47,6 +42,7 @@ void TestScene::Update(const float& deltaTime) {
         m_Camera.Move(glm::vec3(0, -4 * deltaTime, 0));
     }
 
+    RendererStatistics::Start();
     Renderer::StartBatch();
 
     auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
@@ -56,6 +52,9 @@ void TestScene::Update(const float& deltaTime) {
     }
 
     Renderer::EndBatch();
+    RendererStatistics::Stop();
+
+    Log::Info(RendererStatistics::GetBatchCount());
 }
 
 void TestScene::OnDestroy() {

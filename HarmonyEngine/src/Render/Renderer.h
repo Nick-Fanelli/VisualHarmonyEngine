@@ -81,6 +81,27 @@ struct Quad {
     }
 };
 
+class RendererStatistics {
+
+    friend class Renderer;
+
+    static int BatchCount;
+    static int CurrentBatchCount;
+
+public:
+
+    static void Start() {
+        CurrentBatchCount = 0;
+    }
+
+    static void Stop() {
+        BatchCount = CurrentBatchCount;
+    }
+
+    static const int& GetBatchCount() { return BatchCount; }
+
+};
+
 class Renderer {
 
     static void Render();

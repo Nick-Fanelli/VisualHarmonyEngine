@@ -4,12 +4,15 @@
 
 #include "../Scene/Scene.h"
 
-static const size_t MaxQuadCount = 1000;
+static const size_t MaxQuadCount = 20000;
 static const size_t MaxVertexCount = MaxQuadCount * 4;
 static const size_t MaxIndexCount = MaxQuadCount * 6;
 
 static OrthographicCamera* s_Camera = nullptr;
 static std::unique_ptr<Shader> s_Shader = nullptr;
+
+int RendererStatistics::BatchCount = 0;
+int RendererStatistics::CurrentBatchCount = 0;
 
 struct RenderBatch {
 
@@ -96,8 +99,9 @@ void Renderer::OnCreate(OrthographicCamera* camera) {
 
 void Renderer::StartBatch() {
     s_Batch.IndexCount = 0;
-
     s_Batch.VertexPtr = s_Batch.Vertices;
+
+    RendererStatistics::CurrentBatchCount++;
 }
 
 void Renderer::EndBatch() {
