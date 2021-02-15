@@ -17,7 +17,7 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
     AddGameObject(&s_GameObject);
 
     s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
-    s_GameObject.AddComponent<QuadRenderer>(Quad({-0.5f, -0.5f}, {1, 1}, {1, 1, 1, 1}, textureID));
+    s_GameObject.AddComponent<QuadRenderer>(Quad({0, 0}, {1, 1}, {1, 1, 1, 1}, textureID));
 }
 
 void TestScene::Update(const float& deltaTime) {

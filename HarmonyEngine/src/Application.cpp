@@ -3,8 +3,8 @@
 #include "TestScene.h"
 
 int main() {
-    GameContext context = GameContext();
+    GameContext gameContext = GameContext();
     TestScene testScene = TestScene();
 
-    context.Start(&testScene);
+    gameContext.Start(&testScene);
 }

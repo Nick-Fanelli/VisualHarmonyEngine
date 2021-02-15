@@ -36,45 +36,45 @@ struct Quad {
 
     Quad() = default;
 
-    Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const std::array<glm::vec4, 4> colorArray = DefaultWhiteColor, const int& textureID = 0) {
-        V0.Position = position;
+    Quad(const glm::vec2& offset, const glm::vec2& scale = {1, 1 }, const std::array<glm::vec4, 4> colorArray = DefaultWhiteColor, const int& textureID = 0) {
+        V0.Position = offset;
         V0.Color = colorArray[0];
         V0.TextureCoord = { 0, 0 };
         V0.TextureID = (float) textureID;
 
-        V1.Position = glm::vec2(position.x, position.y + 1 * scale.y);
+        V1.Position = glm::vec2(offset.x, offset.y + 1 * scale.y);
         V1.Color = colorArray[1];
         V1.TextureCoord = { 0, 1 };
         V1.TextureID = (float) textureID;
 
-        V2.Position = glm::vec2(position.x + 1 * scale.x, position.y + 1 * scale.y);
+        V2.Position = glm::vec2(offset.x + 1 * scale.x, offset.y + 1 * scale.y);
         V2.Color = colorArray[2];
         V2.TextureCoord = { 1, 1 };
         V2.TextureID = (float) textureID;
 
-        V3.Position = glm::vec2(position.x + 1 * scale.x, position.y);
+        V3.Position = glm::vec2(offset.x + 1 * scale.x, offset.y);
         V3.Color = colorArray[3];
         V3.TextureCoord = { 1, 0 };
         V3.TextureID = (float) textureID;
     }
 
-    Quad(const glm::vec2& position, const glm::vec2& scale = { 1, 1 }, const glm::vec4 color = { 1, 1, 1, 1 }, const int& textureID = 0) {
-        V0.Position = position;
+    Quad(const glm::vec2& offset, const glm::vec2& scale = {1, 1 }, const glm::vec4 color = {1, 1, 1, 1 }, const int& textureID = 0) {
+        V0.Position = offset;
         V0.Color = color;
         V0.TextureCoord = { 0, 0 };
         V0.TextureID = (float) textureID;
 
-        V1.Position = glm::vec2(position.x, position.y + 1 * scale.y);
+        V1.Position = glm::vec2(offset.x, offset.y + 1 * scale.y);
         V1.Color = color;
         V1.TextureCoord = { 0, 1 };
         V1.TextureID = (float) textureID;
 
-        V2.Position = glm::vec2(position.x + 1 * scale.x, position.y + 1 * scale.y);
+        V2.Position = glm::vec2(offset.x + 1 * scale.x, offset.y + 1 * scale.y);
         V2.Color = color;
         V2.TextureCoord = { 1, 1 };
         V2.TextureID = (float) textureID;
 
-        V3.Position = glm::vec2(position.x + 1 * scale.x, position.y);
+        V3.Position = glm::vec2(offset.x + 1 * scale.x, offset.y);
         V3.Color = color;
         V3.TextureCoord = { 1, 0 };
         V3.TextureID = (float) textureID;
