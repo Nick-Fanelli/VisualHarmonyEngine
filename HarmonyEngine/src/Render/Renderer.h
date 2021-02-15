@@ -29,10 +29,10 @@ struct Vertex {
 
 struct Quad {
 
-    Vertex V0;
-    Vertex V1;
-    Vertex V2;
-    Vertex V3;
+    Vertex V0 = Vertex();
+    Vertex V1 = Vertex();
+    Vertex V2 = Vertex();
+    Vertex V3 = Vertex();
 
     Quad() = default;
 
