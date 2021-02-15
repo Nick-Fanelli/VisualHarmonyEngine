@@ -18,6 +18,6 @@ file(GLOB_RECURSE SRC_FILES
 set(target ${CMAKE_SOURCE_DIR}/assets)
 set(link ${CMAKE_CURRENT_BINARY_DIR}/assets)
 
-add_executable(HarmonyEngine ${SRC_FILES})
+add_executable(HarmonyEngine ${SRC_FILES} src/Core/Log.cpp)
 add_custom_target(link_target ALL
                     COMMAND ${CMAKE_COMMAND} -E create_symlink ${target} ${link})

@@ -21,6 +21,7 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
 }
 
 void TestScene::Update(const float& deltaTime) {
+
     if(m_GameContext->GetInput().StandardInput.IsKey(GLFW_KEY_D)) {
         m_Camera.Move(glm::vec3(4 * deltaTime, 0, 0));
     }
