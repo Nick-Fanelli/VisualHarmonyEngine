@@ -2,7 +2,11 @@
 
 #include "HarmonyEngine.h"
 
-static GameObject s_GameObject = GameObject("Player");
+#include <vector>
+#include <iostream>
+
+//static GameObject s_GameObject = GameObject("Player");
+//static std::vector<GameObject> s_GameObjects = std::vector<GameObject>();
 
 void TestScene::OnCreate(GameContext* gameContextPtr) {
     m_GameContext = gameContextPtr;
@@ -14,10 +18,18 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
 
     const int& textureID = Renderer::AddTexture(texture);
 
-    AddGameObject(&s_GameObject);
+    const Quad quad = Quad({0, 0}, {0.5f, 0.5f}, {1, 1, 1, 1}, textureID);
 
-    s_GameObject.AddComponent<Transform>(glm::vec2(-0.5f, -0.5f));
-    s_GameObject.AddComponent<QuadRenderer>(Quad({0, 0}, {1, 1}, {1, 1, 1, 1}, textureID));
+    for(int x = 0; x < 10; x++) {
+        for(int y = 0; y < 10; y++) {
+            GameObject object = GameObject("Obj");
+            AddGameObject(&object);
+
+            object.AddComponent<Transform>(glm::vec2((float) x / 2, (float) y / 2));
+            object.AddComponent<QuadRenderer>(quad);
+        }
+    }
+
 }
 
 void TestScene::Update(const float& deltaTime) {
