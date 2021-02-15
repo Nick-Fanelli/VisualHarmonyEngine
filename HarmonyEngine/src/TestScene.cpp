@@ -2,7 +2,7 @@
 
 #include "HarmonyEngine.h"
 
-static float s_CameraAspectRatio = 1280 / 720;
+static float s_CameraAspectRatio = 16.0f / 9.0f;
 static float s_CameraZoomLevel = 1.0f;
 
 void TestScene::OnCreate(GameContext* gameContextPtr) {
@@ -22,7 +22,7 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
 
             glm::vec4 color = { (x + 10) / 20.0f, 0.2f, (y + 10) / 20.0f, 1.0f};
             object.AddComponent<Transform>(glm::vec2(x, y));
-            object.AddComponent<QuadRenderer>(Quad({0.0f, 0.0f}, {0.25f, 0.25f}, color));
+            object.AddComponent<QuadRenderer>(Quad({0.0f, 0.0f}, {0.2f, 0.2f}, color));
         }
     }
 }
