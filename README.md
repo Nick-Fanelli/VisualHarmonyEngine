@@ -28,10 +28,10 @@ git clone https://github.com/Nick-Fanelli/HarmonyEngine
     ```
 **3. Building Project**:
 
-* Navigate to the `HarmonyEngine/HarmonyEngine` directory
+* Navigate to the `HarmonyEngine/HarmonyEngine/cmake-build-debug` directory; or create it
 * Run cmake in the current directory: 
     ```shell
-    cmake .
+    cmake ..
     ```
 **4. Build and Run the C++ and Header Files**
 
