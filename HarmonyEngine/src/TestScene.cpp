@@ -2,8 +2,8 @@
 
 #include "HarmonyEngine.h"
 
-static float s_CameraAspectRatio = 16.0f / 9.0f;
-static float s_ZoomLevel = 1.0f;
+static float s_CameraAspectRatio = 1280 / 720;
+static float s_CameraZoomLevel = 1.0f;
 
 void TestScene::OnCreate(GameContext* gameContextPtr) {
     m_GameContext = gameContextPtr;
@@ -42,6 +42,10 @@ void TestScene::Update(const float& deltaTime) {
         m_Camera.Move(glm::vec3(0, -4 * deltaTime, 0));
     }
 
+    s_CameraZoomLevel -= m_GameContext->GetInput().StandardInput.GetScrollPosition().y * 0.25f;
+    s_CameraZoomLevel = std::max(s_CameraZoomLevel, 0.25f);
+    m_Camera.SetProjection(-s_CameraAspectRatio * s_CameraZoomLevel, s_CameraAspectRatio * s_CameraZoomLevel, -s_CameraZoomLevel, s_CameraZoomLevel);
+
     RendererStatistics::Start();
     Renderer::StartBatch();
 
@@ -53,8 +57,6 @@ void TestScene::Update(const float& deltaTime) {
 
     Renderer::EndBatch();
     RendererStatistics::Stop();
-
-    Log::Info(RendererStatistics::GetBatchCount());
 }
 
 void TestScene::OnDestroy() {
