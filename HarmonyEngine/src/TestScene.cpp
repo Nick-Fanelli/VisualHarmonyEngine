@@ -8,7 +8,7 @@ static float s_CameraZoomLevel = 1.0f;
 void TestScene::OnCreate(GameContext* gameContextPtr) {
     m_GameContext = gameContextPtr;
 
-    Renderer::OnCreate(&m_Camera);
+    m_GameContext->GetRenderer().OnCreate(&m_Camera);
 
 //    Texture texture = Texture("assets/textures/image.png", 128, 128);
 //    texture.Initialize();
@@ -47,15 +47,15 @@ void TestScene::Update(const float& deltaTime) {
     m_Camera.SetProjection(-s_CameraAspectRatio * s_CameraZoomLevel, s_CameraAspectRatio * s_CameraZoomLevel, -s_CameraZoomLevel, s_CameraZoomLevel);
 
     RendererStatistics::Start();
-    Renderer::StartBatch();
+    m_GameContext->GetRenderer().StartBatch();
 
     auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
     for(auto entity : quadRendererGroup) {
         auto[renderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);
-        Renderer::DrawQuad(transform.Position, renderer.quad);
+        m_GameContext->GetRenderer().DrawQuad(transform.Position, renderer.quad);
     }
 
-    Renderer::EndBatch();
+    m_GameContext->GetRenderer().EndBatch();
     RendererStatistics::Stop();
 }
 

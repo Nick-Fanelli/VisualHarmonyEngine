@@ -104,20 +104,20 @@ public:
 
 class Renderer {
 
-    static void Render();
-    static void UpdateBatchVertexData();
-    static void AllocateVertices(const int& amount);
+    void Render();
+    void UpdateBatchVertexData();
+    void AllocateVertices(const int& amount);
 
 public:
-    static const int& AddTexture(const Texture& texture);
+    const int& AddTexture(const Texture& texture);
 
-    static void OnCreate(OrthographicCamera* camera);
-    static void StartBatch();
-    static void EndBatch();
-    static void OnDestroy();
+    void OnCreate(OrthographicCamera* camera);
+    void StartBatch();
+    void EndBatch();
+    void OnDestroy();
 
-    static void DrawQuad(const Quad& quad);
-    static void DrawQuad(const glm::vec2& positionOffset, const Quad& quad);
-    static void DrawQuad(const glm::vec2& position = { 0, 0 }, const glm::vec2& scale = { 1, 1 }, const glm::vec4& color = { 1, 1, 1, 1 }, const float& textureID = 0);
-    static void DrawQuad(const glm::vec2& position = { 0, 0 }, const glm::vec2& scale = { 1, 1 }, const std::array<glm::vec4, 4>& colorArray = DefaultWhiteColor, const float& textureID = 0);
+    void DrawQuad(const Quad& quad);
+    void DrawQuad(const glm::vec2& positionOffset, const Quad& quad);
+    void DrawQuad(const glm::vec2& position = { 0, 0 }, const glm::vec2& scale = { 1, 1 }, const glm::vec4& color = { 1, 1, 1, 1 }, const float& textureID = 0);
+    void DrawQuad(const glm::vec2& position = { 0, 0 }, const glm::vec2& scale = { 1, 1 }, const std::array<glm::vec4, 4>& colorArray = DefaultWhiteColor, const float& textureID = 0);
 };

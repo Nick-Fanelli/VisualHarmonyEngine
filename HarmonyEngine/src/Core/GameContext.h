@@ -1,9 +1,8 @@
 #pragma once
-#define GLEW_STATIC
+
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 
-#define GLFW_DLL
 #include <GLFW/glfw3.h>
 
 #include "Log.h"
@@ -21,13 +20,13 @@ class GameContext {
     Display m_Display;
     SceneManager m_SceneManager;
     
-    // Input m_Input;
     Input m_Input;
+    Renderer m_Renderer;
 
     int m_CurrentFps;
 
 public:
-    GameContext() : m_Display(Display()), m_SceneManager(SceneManager(this)), m_Input(Input()) {}
+    GameContext() : m_Display(Display()), m_SceneManager(SceneManager(this)), m_Input(Input()), m_Renderer(Renderer()) {}
 
     void Start(Scene* scene);
     void Update(const float& deltaTime);
@@ -35,4 +34,5 @@ public:
 
     const int& GetCurrentFps() const { return m_CurrentFps; }
     Input& GetInput() { return m_Input; }
+    Renderer& GetRenderer() { return m_Renderer; }
 };
