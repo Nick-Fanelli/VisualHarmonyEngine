@@ -61,5 +61,6 @@ void TestScene::Update(const float& deltaTime) {
 
 void TestScene::OnDestroy() {
     m_Registry.clear<>();
+    m_GameContext->GetRenderer().OnDestroy();
 }
 
