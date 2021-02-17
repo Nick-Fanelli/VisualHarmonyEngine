@@ -17,5 +17,5 @@ HarmonyEngine/cmake_install.cmake
 
 # Clion
 
-HarmonyEngine/cmake-build-debug/
+cmake-build-debug/
 .idea/vcs.xml
