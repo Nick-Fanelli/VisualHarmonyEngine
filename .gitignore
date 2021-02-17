@@ -19,3 +19,6 @@ HarmonyEngine/cmake_install.cmake
 
 cmake-build-debug/
 .idea/vcs.xml
+
+# NPM
+node_modules/
