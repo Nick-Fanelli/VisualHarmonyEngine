@@ -6,20 +6,6 @@
 1. [Windows Instructions](#getting-started-with-windows)
 1. [Linux Instructions](#getting-started-with-linux)
 
-## Creating the Auto Changelog
-
-**1. Make sure that NPM command line tools is installed**
-**2. Get the needed dependencies**
-* Run the following command in the root directory of the project
-```shell
-npm install -all
-```
-**3. Create the version/change-log commit**
-* Run the following command in the root directory of the project *(Replace {TARGET_VERSION_TAG} with the version tag. eg. v1.0.0 or SNAPSHOT-1.0.0)*
-```shell
-npm run release -- --release-as {TARGET_VERSION_TAG}
-```
-
 ---
 
 ### Getting Started with Mac
@@ -69,3 +55,19 @@ Getting statred instructions for Windows coming soon...
 ### Getting Started with Linux
 
 Getting started instructions for Linux coming soon...
+
+---
+
+## Creating the Auto Changelog
+
+**1. Make sure that NPM command line tools is installed**
+**2. Get the needed dependencies**
+* Run the following command in the root directory of the project
+```shell
+npm install -all
+```
+**3. Create the version/change-log commit**
+* Run the following command in the root directory of the project *(Replace {TARGET_VERSION_TAG} with the version tag. eg. v1.0.0 or SNAPSHOT-1.0.0)*
+```shell
+npm run release -- --release-as {TARGET_VERSION_TAG}
+```
