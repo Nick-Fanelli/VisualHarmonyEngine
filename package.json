@@ -1,0 +1,24 @@
+{
+  "name": "HarmonyEngine",
+  "version": "1.0.5",
+  "description": "## Getting Started | Cloning and Building the Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nick-Fanelli/HarmonyEngine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nick-Fanelli/HarmonyEngine/issues"
+  },
+  "homepage": "https://github.com/Nick-Fanelli/HarmonyEngine#readme",
+  "devDependencies": {
+    "standard-version": "^9.1.0"
+  }
+}
