@@ -48,10 +48,10 @@ git clone https://github.com/Nick-Fanelli/HarmonyEngine
 
 ### Getting Started with Windows
 
-Windows getting started support to come soon.
+Getting statred instructions for Windows coming soon...
 
 ---
 
 ### Getting Started with Linux
 
-Linux getting started support to come soon.
+Getting started instructions for Linux coming soon...
