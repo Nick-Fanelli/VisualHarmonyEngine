@@ -17,7 +17,6 @@ namespace HarmonyEngine {
     class DesktopInput {
 
         friend class Input;
-
         friend class GameContext;
 
         static std::vector<DesktopInput*> s_Instances;
@@ -41,11 +40,8 @@ namespace HarmonyEngine {
         void Update();
 
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
         static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-
         static void MousePositionCallback(GLFWwindow* window, double xPos, double yPos);
-
         static void MouseScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
     public:
@@ -54,37 +50,29 @@ namespace HarmonyEngine {
         void SetupKeyInputs(Display* display);
 
         const bool& IsKey(int keycode) const { return m_Keys[keycode]; }
-
         const bool IsKeyDown(int keycode) const { return m_Keys[keycode] && !m_KeysLast[keycode]; }
-
         const bool IsKeyUp(int keycode) const { return !m_Keys[keycode] && m_KeysLast[keycode]; }
 
         const bool& IsMouseButton(int button) const { return m_MouseButtons[button]; }
-
         const bool IsMouseButtonDown(int button) const { return m_MouseButtons[button] && !m_MouseButtonsLast[button]; }
-
         const bool IsMoueButtonUp(int button) const { return !m_MouseButtons[button] && m_MouseButtonsLast[button]; }
 
         const glm::vec2& GetMousePosition() const { return m_MousePosition; }
-
         const glm::vec2& GetScrollPosition() const { return m_ScrollPosition; }
-
         const glm::vec2& GetAbsScrollPosition() const { return m_AbsScrollPosition; }
-
         const glm::vec2 GetDeltaMousePosition() const { return m_MousePosition - m_MousePositionLast; }
     };
 
     class Input {
 
         friend class GameContext;
-
         friend class Display;
 
     public:
         DesktopInput StandardInput;
 
     private:
-        Input();
+        Input() = default;
 
         void Update() { StandardInput.Update(); }
     };

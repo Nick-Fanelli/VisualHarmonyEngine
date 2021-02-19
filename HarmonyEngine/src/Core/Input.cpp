@@ -1,17 +1,11 @@
 #include "Input.h"
 #include <iostream>
-#include <stdio.h>
-#include <iostream>
 
 namespace HarmonyEngine {
 
-    Input::Input() : StandardInput(DesktopInput()) {
-
-    }
-
-// =================================================================
-// Desktop Input
-// =================================================================
+    // =================================================================
+    // Desktop Input
+    // =================================================================
 
     std::vector<DesktopInput*> DesktopInput::s_Instances;
 
