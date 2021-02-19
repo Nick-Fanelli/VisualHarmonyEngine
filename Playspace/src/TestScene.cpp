@@ -10,21 +10,31 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
 
     m_GameContext->GetRenderer().OnCreate(&m_Camera);
 
-//    Texture texture = Texture("assets/textures/image.png", 128, 128);
-//    texture.Initialize();
+    auto texture = Texture("assets/textures/image.png");
+    texture.Initialize();
 
-//    const int& textureID = Renderer::AddTexture(texture);
+    auto& textureID = m_GameContext->GetRenderer().AddTexture(texture);
 
-    for(float y = -10.0f; y < 10.0f; y += 0.25f) {
-        for(float x = -10.0f; x < 10.0f; x += 0.25f) {
-            GameObject object = GameObject("Generated Quad");
-            AddGameObject(&object);
+    SpriteSheet spriteSheet = SpriteSheet(texture, texture.GetWidth() / 2, texture.GetHeight() / 2);
 
-            glm::vec4 color = { (x + 10) / 20.0f, 0.2f, (y + 10) / 20.0f, 1.0f};
-            object.AddComponent<Transform>(glm::vec2(x, y));
-            object.AddComponent<QuadRenderer>(Quad({0.0f, 0.0f}, {0.2f, 0.2f}, color));
-        }
-    }
+    Quad quad = Quad({0.0f, 0.0f}, {0.2f, 0.2f}, {1, 1, 1, 1}, textureID);
+    spriteSheet.AssignToSprite(&quad, 0, 1);
+
+    GameObject object = GameObject("Sample Object");
+    AddGameObject(&object);
+    object.AddComponent<Transform>();
+    object.AddComponent<QuadRenderer>(quad);
+
+//    for(float y = -10.0f; y < 10.0f; y += 0.25f) {
+//        for(float x = -10.0f; x < 10.0f; x += 0.25f) {
+//            GameObject object = GameObject("Generated Quad");
+//            AddGameObject(&object);
+//
+//            glm::vec4 color = { (x + 10) / 20.0f, 0.2f, (y + 10) / 20.0f, 1.0f};
+//            object.AddComponent<Transform>(glm::vec2(x, y));
+//            object.AddComponent<QuadRenderer>(Quad({0.0f, 0.0f}, {0.2f, 0.2f}, color));
+//        }
+//    }
 }
 
 void TestScene::Update(const float& deltaTime) {

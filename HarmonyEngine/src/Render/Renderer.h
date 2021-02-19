@@ -24,6 +24,7 @@ struct Vertex {
     float TextureID;
 
     Vertex() = default;
+    Vertex(const Vertex&) = default;
 
 };
 

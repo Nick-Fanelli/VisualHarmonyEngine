@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include "Utils.h"
 
 static const char* ANSI_RESET = "\033[0m";

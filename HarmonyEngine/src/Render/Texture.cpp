@@ -1,12 +1,14 @@
 #include "Texture.h"
 
 #include <string>
-#include <sstream>
-
-#include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "Renderer.h"
+
+// ====================================================================================
+// Texture
+// ====================================================================================
 
 void Texture::Initialize() {
     if(m_Filepath == nullptr) {
@@ -37,9 +39,7 @@ void Texture::Initialize() {
         } else if(channels == 4) { // RBGA Channels
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
         } else {
-            // std::stringstream errorMessage;
-            std::cout << "Could not load image " << m_Filepath << ", with unknown number of channels : " << channels << std::endl;
-            // Log::Error(errorMessage);
+            Log::Error(std::string("Could not load image ") + m_Filepath + std::string(", with unknown number of channels: ") + std::to_string(channels));
         }
 
         stbi_image_free(image);
@@ -67,4 +67,17 @@ void Texture::Bind() {
 
 void Texture::Unbind() {
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+// ====================================================================================
+// SpriteSheet
+// ====================================================================================
+void SpriteSheet::AssignToSprite(Quad* quad, const int& spriteX, const int& spriteY) {
+    float normalizedX = (float) spriteX * m_NormalizedSpriteWidth;
+    float normalizedY = (float) spriteY * m_NormalizedSpriteHeight;
+
+    quad->V0.TextureCoord = { normalizedX, normalizedY };
+    quad->V1.TextureCoord = { normalizedX, normalizedY + m_NormalizedSpriteHeight };
+    quad->V2.TextureCoord = { normalizedX + m_NormalizedSpriteWidth, normalizedY + m_NormalizedSpriteHeight};
+    quad->V3.TextureCoord = { normalizedX + m_NormalizedSpriteWidth, normalizedY };
 }
