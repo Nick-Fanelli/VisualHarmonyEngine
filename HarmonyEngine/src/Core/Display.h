@@ -9,20 +9,24 @@
 
 #include <iostream>
 
-class GameContext;
+namespace HarmonyEngine {
 
-class Display {
+    class GameContext;
 
-    GLFWwindow* m_Window;
-    GameContext* m_GameContext;
+    class Display {
 
-public:
-    void CreateDisplay(GameContext* gameContext);
-    void StartGameLoop();
+        GLFWwindow* m_Window;
+        GameContext* m_GameContext;
 
-    GLFWwindow* GetWindowPointer() const { return m_Window; }
+    public:
+        void CreateDisplay(GameContext* gameContext);
 
-private:
-    void CleanUp(); 
+        void StartGameLoop();
 
-};
+        GLFWwindow* GetWindowPointer() const { return m_Window; }
+
+    private:
+        void CleanUp();
+
+    };
+}

@@ -2,12 +2,16 @@
 
 #include <entt/entt.hpp>
 
-void GameObject::OnCreate(const entt::entity& entityID) {
-    m_EntityID = entityID;
-}
+namespace HarmonyEngine {
 
-void GameObject::Update(const float& deltaTime) {
-}
+    void GameObject::OnCreate(const entt::entity& entityID) {
+        m_EntityID = entityID;
+    }
 
-void GameObject::OnDestroy() {
+    void GameObject::Update(const float& deltaTime) {
+    }
+
+    void GameObject::OnDestroy() {
+    }
+
 }

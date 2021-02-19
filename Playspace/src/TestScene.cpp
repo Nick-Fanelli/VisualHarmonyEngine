@@ -2,6 +2,8 @@
 
 #include "HarmonyEngine.h"
 
+using namespace HarmonyEngine;
+
 static float s_CameraAspectRatio = 16.0f / 9.0f;
 static float s_CameraZoomLevel = 1.0f;
 
@@ -17,8 +19,8 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
 
     SpriteSheet spriteSheet = SpriteSheet(texture, texture.GetWidth() / 2, texture.GetHeight() / 2);
 
-    Quad quad = Quad({0.0f, 0.0f}, {0.2f, 0.2f}, {1, 1, 1, 1}, textureID);
-    spriteSheet.AssignToSprite(&quad, 0, 1);
+    Quad quad = Quad({0.0f, 0.0f}, {1, 1}, {1, 1, 1, 1}, textureID);
+    spriteSheet.AssignToSprite(&quad, 0, 0);
 
     GameObject object = GameObject("Sample Object");
     AddGameObject(&object);

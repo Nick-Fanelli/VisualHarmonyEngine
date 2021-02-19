@@ -4,4 +4,8 @@
 
 #include "Log.h"
 
-Log::LogLevel Log::s_LogLevel = Log::LogLevelInfo;
+namespace HarmonyEngine {
+
+    Log::LogLevel Log::s_LogLevel = Log::LogLevelInfo;
+
+}

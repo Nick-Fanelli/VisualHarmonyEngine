@@ -10,29 +10,38 @@
 #include "Display.h"
 #include "../Scene/Scene.h"
 
+namespace HarmonyEngine {
+
 // ==========================================================================================
 // Game Context Class Methods
 // ==========================================================================================
-class GameContext {
+    class GameContext {
 
-    friend class Display; 
+        friend class Display;
 
-    Display m_Display;
-    SceneManager m_SceneManager;
-    
-    Input m_Input;
-    Renderer m_Renderer;
+        Display m_Display;
+        SceneManager m_SceneManager;
 
-    int m_CurrentFps;
+        Input m_Input;
+        Renderer m_Renderer;
 
-public:
-    GameContext() : m_Display(Display()), m_SceneManager(SceneManager(this)), m_Input(Input()), m_Renderer(Renderer()) {}
+        int m_CurrentFps;
 
-    void Start(Scene* scene);
-    void Update(const float& deltaTime);
-    void Stop();
+    public:
+        GameContext() : m_Display(Display()), m_SceneManager(SceneManager(this)), m_Input(Input()),
+                        m_Renderer(Renderer()) {}
 
-    const int& GetCurrentFps() const { return m_CurrentFps; }
-    Input& GetInput() { return m_Input; }
-    Renderer& GetRenderer() { return m_Renderer; }
-};
+        void Start(Scene* scene);
+
+        void Update(const float& deltaTime);
+
+        void Stop();
+
+        const int& GetCurrentFps() const { return m_CurrentFps; }
+
+        Input& GetInput() { return m_Input; }
+
+        Renderer& GetRenderer() { return m_Renderer; }
+    };
+
+}

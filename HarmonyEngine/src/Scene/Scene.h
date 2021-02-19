@@ -8,56 +8,65 @@
 
 #include <entt/entt.hpp>
 
-class GameObject;
-class GameContext;
+namespace HarmonyEngine {
+
+    class GameObject;
+
+    class GameContext;
 
 // ======================================================================================
 // Scene
 // ======================================================================================
 
-static const float CameraAspectRatio = 1280.0f / 720.0f;
-static const float CameraZoomLevel = 1.0f;
+    static const float CameraAspectRatio = 1280.0f / 720.0f;
+    static const float CameraZoomLevel = 1.0f;
 
-class Scene {
+    class Scene {
 
-    friend class SceneManager;
+        friend class SceneManager;
 
-protected:
-    GameContext* m_GameContext = nullptr;
-    OrthographicCamera m_Camera;
-    
-    virtual void OnCreate(GameContext* gameContext);
-    virtual void Update(const float& deltaTime);
-    virtual void OnDestroy();
+    protected:
+        GameContext* m_GameContext = nullptr;
+        OrthographicCamera m_Camera;
 
-public:
-    entt::registry m_Registry;
+        virtual void OnCreate(GameContext* gameContext);
 
-    Scene();
-    ~Scene() { OnDestroy(); }
+        virtual void Update(const float& deltaTime);
 
-    void AddGameObject(GameObject* ptr);
+        virtual void OnDestroy();
 
-    const GameContext* GetGameContext() const { return m_GameContext; }
-};
+    public:
+        entt::registry m_Registry;
+
+        Scene();
+
+        ~Scene() { OnDestroy(); }
+
+        void AddGameObject(GameObject* ptr);
+
+        const GameContext* GetGameContext() const { return m_GameContext; }
+    };
 
 // ======================================================================================
 // Scene Manager
 // ======================================================================================
 
-class SceneManager {
+    class SceneManager {
 
-    static GameContext* s_GameContext;
-    static Scene* s_ActiveScene;
+        static GameContext* s_GameContext;
+        static Scene* s_ActiveScene;
 
-public:
+    public:
 
-    SceneManager(GameContext* gameContext);
+        SceneManager(GameContext* gameContext);
 
-    void Update(const float& deltaTime);
-    void OnDestroy();
+        void Update(const float& deltaTime);
 
-    static void SetActiveScene(Scene* m_ActiveScene);
-    static const Scene* GetActiveScene() { return s_ActiveScene; }
+        void OnDestroy();
 
-};
+        static void SetActiveScene(Scene* m_ActiveScene);
+
+        static const Scene* GetActiveScene() { return s_ActiveScene; }
+
+    };
+}

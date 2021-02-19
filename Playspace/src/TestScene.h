@@ -2,6 +2,8 @@
 
 #include "HarmonyEngine.h"
 
+using namespace HarmonyEngine;
+
 class TestScene : public Scene {
 
     void OnCreate(GameContext* gameContextPtr) override;

@@ -5,15 +5,20 @@
 #include <string>
 #include <glm/glm.hpp>
 
-namespace FileUtils {
-    std::string ReadFile(const char* filepath);
-}
+namespace HarmonyEngine {
 
-namespace OpenGLUtils {
-    int GetGPUMaxTextureSlots();
-    
-    // GLM Operator Overloads
-    std::ostream &operator<< (std::ostream& out, const glm::vec2& vec);
-    std::ostream &operator<< (std::ostream& out, const glm::vec3& vec);
-    std::ostream &operator<< (std::ostream& out, const glm::vec4& vec);
+    namespace FileUtils {
+        std::string ReadFile(const char* filepath);
+    }
+
+    namespace OpenGLUtils {
+        int GetGPUMaxTextureSlots();
+
+        // GLM Operator Overloads
+        std::ostream& operator<<(std::ostream& out, const glm::vec2& vec);
+
+        std::ostream& operator<<(std::ostream& out, const glm::vec3& vec);
+
+        std::ostream& operator<<(std::ostream& out, const glm::vec4& vec);
+    }
 }

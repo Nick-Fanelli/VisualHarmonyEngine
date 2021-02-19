@@ -4,63 +4,66 @@
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 
-namespace FileUtils {
+namespace HarmonyEngine {
 
-    std::string ReadFile(std::string& filepath) {
-        std::ifstream FileStream(filepath);
-        std::string Result;
-        std::string Line;
+    namespace FileUtils {
 
-        while(std::getline(FileStream, Line)) {
-            Result.append(Line).append("\n");
+        std::string ReadFile(std::string& filepath) {
+            std::ifstream FileStream(filepath);
+            std::string Result;
+            std::string Line;
+
+            while (std::getline(FileStream, Line)) {
+                Result.append(Line).append("\n");
+            }
+
+            return Result;
         }
 
-        return Result;
-    }
+        std::string ReadFile(const char* filepath) {
+            std::ifstream FileStream(filepath);
+            std::string Result;
+            std::string Line;
 
-    std::string ReadFile(const char* filepath) {
-        std::ifstream FileStream(filepath);
-        std::string Result;
-        std::string Line;
+            while (std::getline(FileStream, Line)) {
+                Result.append(Line).append("\n");
+            }
 
-        while(std::getline(FileStream, Line)) {
-            Result.append(Line).append("\n");
+            return Result;
         }
 
-        return Result;
     }
 
-}
+    namespace OpenGLUtils {
+        int GetGPUMaxTextureSlots() {
+            int queryResult;
+            glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &queryResult);
+            return queryResult;
+        }
 
-namespace OpenGLUtils {
-    int GetGPUMaxTextureSlots() {
-        int queryResult;
-        glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &queryResult);
-        return queryResult;
-    }
+        // GLM Operator Overloads
+        std::ostream& operator<<(std::ostream& out, const glm::vec2& vec) {
+            out << "Vector2f[ "
+                << "X: " << vec.x << ", Y: " << vec.y
+                << " ]";
 
-    // GLM Operator Overloads
-    std::ostream &operator<< (std::ostream& out, const glm::vec2& vec) {
-        out << "Vector2f[ "
-            << "X: " << vec.x << ", Y: " << vec.y
-            << " ]";
+            return out;
+        }
 
-        return out;
-    }
+        std::ostream& operator<<(std::ostream& out, const glm::vec3& vec) {
+            out << "Vector3f[ "
+                << "X: " << vec.x << ", Y; " << vec.y << ", Z: " << vec.z
+                << " ]";
 
-    std::ostream &operator<< (std::ostream& out, const glm::vec3& vec) {
-        out << "Vector3f[ "
-            << "X: " << vec.x << ", Y; " << vec.y << ", Z: " << vec.z
-            << " ]";
+            return out;
+        }
 
-        return out;
-    }
+        std::ostream& operator<<(std::ostream& out, const glm::vec4& vec) {
+            out << "Vector3f[ "
+                << "X: " << vec.x << ", Y; " << vec.y << ", Z: " << vec.z << ", W: " << vec.w
+                << " ]";
 
-    std::ostream &operator<< (std::ostream& out, const glm::vec4& vec) {
-        out << "Vector3f[ "
-            << "X: " << vec.x << ", Y; " << vec.y << ", Z: " << vec.z << ", W: " << vec.w
-            << " ]";
-
-        return out;
+            return out;
+        }
     }
 }

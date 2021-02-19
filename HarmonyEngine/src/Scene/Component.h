@@ -1,26 +1,33 @@
 #pragma once
 
-// ======================================================================================
-// Transform Component
-// ======================================================================================
-struct Transform {
+namespace HarmonyEngine {
 
-    glm::vec2 Position;
+    // ======================================================================================
+    // Transform Component
+    // ======================================================================================
+    struct Transform {
 
-    Transform() = default;
-    Transform(const Transform&) = default;
-    Transform(const glm::vec2& position) : Position(position) {}
+        glm::vec2 Position;
 
-};
+        Transform() = default;
 
-// ======================================================================================
-// Quad Renderer Component
-// ======================================================================================
-struct QuadRenderer {
+        Transform(const Transform&) = default;
 
-    Quad quad;
+        Transform(const glm::vec2& position) : Position(position) {}
 
-    QuadRenderer() = default;
-    QuadRenderer(const QuadRenderer&) = default;
-    QuadRenderer(const Quad& quad) : quad(quad) {}
-};
+    };
+
+    // ======================================================================================
+    // Quad Renderer Component
+    // ======================================================================================
+    struct QuadRenderer {
+
+        Quad quad;
+
+        QuadRenderer() = default;
+
+        QuadRenderer(const QuadRenderer&) = default;
+
+        QuadRenderer(const Quad& quad) : quad(quad) {}
+    };
+}
