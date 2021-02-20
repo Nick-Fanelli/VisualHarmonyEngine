@@ -3,11 +3,8 @@
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 
-#include <string>
-#include <unordered_map>
+#include "harmonypch.h"
 #include "../Core/Utils.h"
-
-#include <glm/glm.hpp>
 
 namespace HarmonyEngine {
 

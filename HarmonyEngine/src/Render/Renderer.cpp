@@ -1,7 +1,5 @@
 #include "Renderer.h"
 
-#include <iostream>
-
 #include "../Scene/Scene.h"
 
 namespace HarmonyEngine {

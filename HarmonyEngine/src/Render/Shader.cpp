@@ -1,7 +1,5 @@
 #include "Shader.h"
 
-#include <vector>
-#include <string> 
 #include <regex>
 #include <glm/gtc/type_ptr.hpp>
 #include "../Core/Log.h"

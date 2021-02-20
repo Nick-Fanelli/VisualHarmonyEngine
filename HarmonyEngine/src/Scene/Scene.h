@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <memory>
+#include "harmonypch.h"
 #include "../Render/Renderer.h"
 #include "../Core/Log.h"
 #include "Camera.h"

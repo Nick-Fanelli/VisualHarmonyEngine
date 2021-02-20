@@ -1,8 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <vector>
-#include <algorithm>
+#include "harmonypch.h"
 
 #include "Display.h"
 #include "Log.h"

@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <GLUT/glut.h>
 
+#include "harmonypch.h"
+
 #include "../Core/Log.h"
 
 namespace HarmonyEngine {

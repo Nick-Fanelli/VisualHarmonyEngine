@@ -1,7 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <array>
+#include "harmonypch.h"
 
 #include "Texture.h"
 #include "../Scene/Camera.h"
