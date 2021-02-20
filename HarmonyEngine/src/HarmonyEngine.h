@@ -11,6 +11,7 @@
 #include "Render/Renderer.h"
 #include "Render/Shader.h"
 #include "Render/Texture.h"
+#include "Render/Sprite.h"
 
 #include "Scene/Camera.h"
 #include "Scene/Component.h"

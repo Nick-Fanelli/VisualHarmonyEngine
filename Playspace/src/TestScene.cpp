@@ -12,7 +12,7 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
 
     m_GameContext->GetRenderer().OnCreate(&m_Camera);
 
-   for(float y = -10.0f; y < 10.0f; y += 0.25f) {
+    for(float y = -10.0f; y < 10.0f; y += 0.25f) {
        for(float x = -10.0f; x < 10.0f; x += 0.25f) {
            GameObject object = GameObject("Generated Quad");
            AddGameObject(&object);
@@ -21,7 +21,7 @@ void TestScene::OnCreate(GameContext* gameContextPtr) {
            object.AddComponent<Transform>(glm::vec2(x, y));
            object.AddComponent<QuadRenderer>(Quad({0.0f, 0.0f}, {0.2f, 0.2f}, color));
        }
-   }
+    }
 }
 
 void TestScene::Update(const float& deltaTime) {
