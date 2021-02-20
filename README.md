@@ -71,22 +71,3 @@ npm install -all
 ```shell
 npm run release -- --release-as {TARGET_VERSION_TAG}
 ```
-**4. Push the following tags to GitHub**
-* Run the following command. *(Command line git client must be installed)*
-```shell
-git push --follow-tags
-```
-
----
-
-### More with Auto Changelog
-
-* **Create a version release automatically** *This code automatically creates a new release under the next release tag*
-```shell
-npm run release --
-```
-
-* **Test Run a Release** *This code will print out the change log and following version without doing anyting*
-```shell
-npm run release -- --dry-run
-```
