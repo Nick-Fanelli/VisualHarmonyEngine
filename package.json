@@ -1,6 +1,6 @@
 {
   "name": "HarmonyEngine",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "## Getting Started | Cloning and Building the Project",
   "main": "index.js",
   "scripts": {
