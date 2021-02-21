@@ -40,9 +40,14 @@ git clone https://github.com/Nick-Fanelli/HarmonyEngine
     make HarmonyEngine
     ```
 
+* Navigate to the playspace directory.
+    ```shell
+    cd Playspace
+    ```
+    
 * Run the Executable
     ```shell
-    ./HarmonyEngine
+    ./PlayspaceExecutable
     ```
 ---
 
