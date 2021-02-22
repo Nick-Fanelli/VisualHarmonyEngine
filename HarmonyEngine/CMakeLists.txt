@@ -26,4 +26,5 @@ add_library(HarmonyEngine ${SRC_FILES})
 add_custom_target(link_target ALL
                     COMMAND ${CMAKE_COMMAND} -E create_symlink ${target} ${link})
 target_include_directories(HarmonyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(HarmonyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_precompile_headers(HarmonyEngine PUBLIC "src/harmonypch.h")
