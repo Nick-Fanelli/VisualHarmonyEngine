@@ -17,5 +17,7 @@ namespace HarmonyEngine {
         Sprite(const Sprite&) = default;
         Sprite(const Quad& quad, SpriteSheet* spriteSheet) : m_Quad(quad), m_SpriteSheet(spriteSheet) {}
 
+    	const SpriteSheet* GetSpriteSheet() const { return m_SpriteSheet; }
+
     };
 }

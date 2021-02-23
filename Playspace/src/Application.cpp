@@ -2,9 +2,9 @@
 
 #include "TestScene.h"
 
- int main() {
-     GameContext gameContext = GameContext();
-     TestScene testScene = TestScene();
+int main() {
+	GameContext gameContext = GameContext();
+	TestScene testScene = TestScene();
 
-     gameContext.Start(&testScene);
- }
+	gameContext.Start(&testScene);
+}
