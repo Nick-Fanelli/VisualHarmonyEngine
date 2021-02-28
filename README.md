@@ -65,7 +65,7 @@ Getting started instructions for Linux coming soon...
 
 ## Creating the Auto Changelog
 
-**1. Make sure that NPM command line tools is installed**
+**1. Make sure that NPM command line tools is installed**<br>
 **2. Get the needed dependencies**
 * Run the following command in the root directory of the project
 ```shell
