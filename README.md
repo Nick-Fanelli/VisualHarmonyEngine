@@ -37,7 +37,7 @@ git clone https://github.com/Nick-Fanelli/HarmonyEngine
 
 * Run the make file
     ```shell
-    make HarmonyEngine
+    make
     ```
 
 * Navigate to the playspace directory.
