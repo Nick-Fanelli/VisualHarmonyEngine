@@ -76,3 +76,8 @@ npm install
 ```shell
 npm run release -- --release-as {TARGET_VERSION_TAG}
 ```
+**4. Push the new tag/version**
+* Run the following command in the root directory of the project
+```shell
+git push --follow-tags
+```
