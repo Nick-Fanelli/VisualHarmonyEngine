@@ -12,6 +12,7 @@ using namespace HarmonyEngine;
 
 void EditorScene::OnCreate(GameContext* gameContext) {
     m_GameContext = gameContext;
+    Renderer::OnCreate(&m_Camera);
 
     const char* glsl_version = "#version 150";
 
