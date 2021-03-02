@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/Nick-Fanelli/HarmonyEngine/compare/v0.1.0...v0.1.1) (2021-03-02)
+
+
+### Features
+
+* implement basic imgui boiler-plate code ([597afd9](https://github.com/Nick-Fanelli/HarmonyEngine/commit/597afd993d2e8d94f03c498c7202911177b9e03c))
+* implement basic imgui to editor scene ([2da429b](https://github.com/Nick-Fanelli/HarmonyEngine/commit/2da429bb688258298b8b85a57f20f82f8ff73627))
+* implement basic sprite header ([bac4306](https://github.com/Nick-Fanelli/HarmonyEngine/commit/bac4306fb93de215996ec5ad8ad318b903670e66))
+* implement imgui renderer implementation ([ece22f3](https://github.com/Nick-Fanelli/HarmonyEngine/commit/ece22f3e2b7feb99a098abc781a993ded9ae0338))
+
+
+### Bug Fixes
+
+* add imgui license ([f372d1e](https://github.com/Nick-Fanelli/HarmonyEngine/commit/f372d1e6baa1b9b79b1cdb7ce4e83f39a8cc99fe))
+* add the include directory in the HarmonyEngine project as target_include_directory ([3ba3f84](https://github.com/Nick-Fanelli/HarmonyEngine/commit/3ba3f8421f67913014a28ca24c624134dd8accf1))
+
 ## 0.1.0 (2021-02-20)
 
 
