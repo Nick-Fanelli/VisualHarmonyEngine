@@ -122,6 +122,7 @@ namespace HarmonyEngine {
         static void OnDestroy();
 
         static void DrawQuad(const Quad& quad);
+        static void DrawQuad(const Quad& quad, const glm::vec4& color);
         static void DrawQuad(const glm::vec2& positionOffset, const Quad& quad);
         static void DrawQuad(const glm::vec2& position = {0, 0}, const glm::vec2& scale = {1, 1},
                              const glm::vec4& color = {1, 1, 1, 1}, const float& textureID = 0);

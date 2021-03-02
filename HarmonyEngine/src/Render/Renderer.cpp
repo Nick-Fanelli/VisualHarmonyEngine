@@ -211,6 +211,28 @@ namespace HarmonyEngine {
         s_Batch.IndexCount += 6;
     }
 
+    void Renderer::DrawQuad(const Quad& quad, const glm::vec4& color) {
+        AllocateVertices(4);
+
+        (*s_Batch.VertexPtr) = quad.V0;
+        (*s_Batch.VertexPtr).Color = color;
+        s_Batch.VertexPtr++;
+
+        (*s_Batch.VertexPtr) = quad.V1;
+        (*s_Batch.VertexPtr).Color = color;
+        s_Batch.VertexPtr++;
+
+        (*s_Batch.VertexPtr) = quad.V2;
+        (*s_Batch.VertexPtr).Color = color;
+        s_Batch.VertexPtr++;
+
+        (*s_Batch.VertexPtr) = quad.V3;
+        (*s_Batch.VertexPtr).Color = color;
+        s_Batch.VertexPtr++;
+
+        s_Batch.IndexCount += 6;
+    }
+
     void Renderer::DrawQuad(const glm::vec2& positionOffset, const Quad& quad) {
         AllocateVertices(4);
 
