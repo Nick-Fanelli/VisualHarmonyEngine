@@ -1,13 +1,18 @@
+//
+// Created by Nick Fanelli on 3/1/21.
+//
+
 #pragma once
 
 #include "HarmonyEngine.h"
 
 using namespace HarmonyEngine;
 
-class TestScene : public Scene {
+class EditorScene : public Scene {
 
-    void OnCreate(GameContext* gameContextPtr) override;
+    void OnCreate(GameContext* gameContext) override;
     void Update(const float& deltaTime) override;
     void OnDestroy() override;
 
 };
+

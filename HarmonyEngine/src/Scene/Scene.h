@@ -29,9 +29,7 @@ namespace HarmonyEngine {
         OrthographicCamera m_Camera;
 
         virtual void OnCreate(GameContext* gameContext);
-
         virtual void Update(const float& deltaTime);
-
         virtual void OnDestroy();
 
     public:

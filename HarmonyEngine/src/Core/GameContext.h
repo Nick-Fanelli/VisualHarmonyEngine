@@ -32,16 +32,15 @@ namespace HarmonyEngine {
                         m_Renderer(Renderer()) {}
 
         void Start(Scene* scene);
-
         void Update(const float& deltaTime);
-
         void Stop();
 
         const int& GetCurrentFps() const { return m_CurrentFps; }
 
         Input& GetInput() { return m_Input; }
-
         Renderer& GetRenderer() { return m_Renderer; }
+        Display& GetDisplay() { return m_Display; }
+
     };
 
 }

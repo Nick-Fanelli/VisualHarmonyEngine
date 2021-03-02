@@ -1,10 +1,10 @@
 #include "HarmonyEngine.h"
 
-#include "TestScene.h"
+#include "EditorScene.h"
 
-// int main() {
-// 	GameContext gameContext = GameContext();
-// 	TestScene testScene = TestScene();
+int main() {
+    GameContext gameContext = GameContext();
+    EditorScene scene = EditorScene();
 
-// 	gameContext.Start(&testScene);
-// }
+    gameContext.Start(&scene);
+}
