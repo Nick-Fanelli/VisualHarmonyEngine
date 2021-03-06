@@ -5,8 +5,6 @@
 #include "../Core/Log.h"
 #include "Camera.h"
 
-#include <entt/entt.hpp>
-
 namespace HarmonyEngine {
 
     class GameObject;
