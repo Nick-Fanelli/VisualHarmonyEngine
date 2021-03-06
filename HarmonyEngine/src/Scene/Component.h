@@ -10,9 +10,7 @@ namespace HarmonyEngine {
         glm::vec2 Position;
 
         Transform() = default;
-
         Transform(const Transform&) = default;
-
         Transform(const glm::vec2& position) : Position(position) {}
 
     };

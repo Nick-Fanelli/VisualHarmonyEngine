@@ -6,8 +6,6 @@
 
 namespace HarmonyEngine {
 
-    class GameObject;
-
     class GameContext;
 
 // ======================================================================================
@@ -34,9 +32,7 @@ namespace HarmonyEngine {
 
         Scene();
 
-        ~Scene() { OnDestroy(); }
-
-        void AddGameObject(GameObject* ptr);
+        entt::entity CreateGameObject();
 
         const GameContext* GetGameContext() const { return m_GameContext; }
     };

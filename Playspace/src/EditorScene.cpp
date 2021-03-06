@@ -3,8 +3,9 @@
 //
 
 #include "EditorScene.h"
+#include "harmonypch.h"
 
-#include "entt/entt.hpp"
+#include "Hierarchy.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -15,7 +16,8 @@ using namespace HarmonyEngine;
 static Quad s_Quad = Quad({0, 0}, {1, 1}, {1, 1, 1, 1});
 static glm::vec4  s_Color = {1, 1, 1, 1};
 
-static entt::entity* s_SelectedEntity = nullptr;
+static Hierarchy s_Hierarchy = Hierarchy();
+static entt::entity s_Entity;
 
 void EditorScene::OnCreate(GameContext* gameContext) {
     m_GameContext = gameContext;
@@ -32,6 +34,11 @@ void EditorScene::OnCreate(GameContext* gameContext) {
 
     ImGui_ImplGlfw_InitForOpenGL(gameContext->GetDisplay().GetWindowPointer(), true);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    s_Entity = CreateGameObject();
+
+    Entity::AddComponent<Transform>(this, s_Entity, glm::vec2(-0.5, -0.5));
+    Entity::AddComponent<QuadRenderer>(this, s_Entity, s_Quad);
 }
 
 void ShowRendererStatistics() {
@@ -46,6 +53,10 @@ void EditorScene::Update(const float& deltaTime) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+//    Log::Info(s_Entity);
+
+//    Log::Info(s_Hierarchy.RootNode.Children.at(1).Entity);
+
 //    ImGui::ShowDemoWindow();
 
 //    ImGui::Begin("Test");
@@ -55,10 +66,22 @@ void EditorScene::Update(const float& deltaTime) {
 //
 //    ImGui::End();
 
+    ImGui::Begin("Inspector");
+
+    ImGui::ColorEdit3("Quad Color", &s_Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
+
+    ImGui::End();
+
     RendererStatistics::Start();
     Renderer::StartBatch();
 
-    Renderer::DrawQuad(s_Quad, s_Color);
+    auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
+    for(auto entity : quadRendererGroup) {
+        auto[quadRenderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);\
+        Renderer::DrawQuad(transform.Position, {1, 1}, s_Color);
+    }
+
+//    Renderer::DrawQuad(s_Quad, s_Color);
 
     Renderer::EndBatch();
     RendererStatistics::Stop();

@@ -15,5 +15,5 @@
 
 #include "Scene/Camera.h"
 #include "Scene/Component.h"
-#include "Scene/GameObject.h"
+#include "Scene/Entity.h"
 #include "Scene/Scene.h"

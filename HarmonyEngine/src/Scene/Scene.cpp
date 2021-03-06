@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-#include "GameObject.h"
 #include "../Core/GameContext.h"
 
 namespace HarmonyEngine {
@@ -25,11 +24,8 @@ namespace HarmonyEngine {
         m_Registry.clear<>();
     }
 
-    void Scene::AddGameObject(GameObject* gameObjectPtr) {
-        entt::entity entityID = m_Registry.create();
-
-        gameObjectPtr->SetParentScene(this);
-        gameObjectPtr->OnCreate(entityID);
+    entt::entity Scene::CreateGameObject() {
+        return m_Registry.create();
     }
 
 // ======================================================================================
