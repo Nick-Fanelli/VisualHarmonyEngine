@@ -6,6 +6,7 @@
 #include "Component.h"
 
 #include <entt/entt.hpp>
+#include <utility>
 
 namespace HarmonyEngine {
 
@@ -17,22 +18,16 @@ namespace HarmonyEngine {
         entt::entity m_EntityID;
 
     public:
-        GameObject(std::string name) : m_Name(name), m_Position(glm::vec2()) {}
+        GameObject(std::string name) : m_Name(std::move(name)), m_Position(glm::vec2()) {}
 
         virtual ~GameObject() { OnDestroy(); }
-
         virtual void OnCreate(const entt::entity& entityID);
-
         virtual void Update(const float& deltaTime);
-
         virtual void OnDestroy();
 
         const Scene* GetParentScene() const { return m_ParentScene; }
-
         const std::string& GetName() const { return m_Name; }
-
         const glm::vec2& GetPosition() const { return m_Position; }
-
         const void SetPosition(const glm::vec2& position) { m_Position = position; }
 
         void SetParentScene(Scene* scene) { m_ParentScene = scene; }
@@ -65,5 +60,7 @@ namespace HarmonyEngine {
             }
             m_ParentScene->m_Registry.remove<T>(m_EntityID);
         }
+
+        const entt::entity& GetEntityID() { return m_EntityID; }
     };
 }
