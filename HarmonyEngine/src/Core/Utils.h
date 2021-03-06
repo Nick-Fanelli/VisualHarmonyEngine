@@ -4,6 +4,8 @@
 
 namespace HarmonyEngine {
 
+    std::ostream& operator<<(std::ostream& out, const entt::entity& entity);
+
     namespace FileUtils {
         std::string ReadFile(const char* filepath);
     }
@@ -13,9 +15,7 @@ namespace HarmonyEngine {
 
         // GLM Operator Overloads
         std::ostream& operator<<(std::ostream& out, const glm::vec2& vec);
-
         std::ostream& operator<<(std::ostream& out, const glm::vec3& vec);
-
         std::ostream& operator<<(std::ostream& out, const glm::vec4& vec);
     }
 }

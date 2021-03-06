@@ -2,9 +2,12 @@
 
 #define GLEW_STATIC
 #include <GL/glew.h>
-#include <GLUT/glut.h>
 
 namespace HarmonyEngine {
+
+    std::ostream& operator<<(std::ostream& out, const entt::entity& entity) {
+        return (out << static_cast<uint32_t>(entity));
+    }
 
     namespace FileUtils {
 
