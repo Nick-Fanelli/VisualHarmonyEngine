@@ -19,3 +19,6 @@
 
 #include <glm/glm.hpp>
 #include <entt/entt.hpp>
+
+#include "Core/Utils.h"
+#include "Core/Log.h"

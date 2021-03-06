@@ -1,12 +1,8 @@
 #pragma once
 
 #include "harmonypch.h"
-#include "../Core/Log.h"
 #include "Scene.h"
 #include "Component.h"
-
-#include <entt/entt.hpp>
-#include <utility>
 
 namespace HarmonyEngine {
 

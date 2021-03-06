@@ -1,7 +1,6 @@
 #pragma once
 
 #include "harmonypch.h"
-#include "Utils.h"
 
 namespace HarmonyEngine {
 
@@ -51,7 +50,6 @@ namespace HarmonyEngine {
         }
 
         Log() = delete;
-
         ~Log() = delete;
 
     private:

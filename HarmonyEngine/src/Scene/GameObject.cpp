@@ -1,7 +1,5 @@
 #include "GameObject.h"
 
-#include <entt/entt.hpp>
-
 namespace HarmonyEngine {
 
     void GameObject::OnCreate(const entt::entity& entityID) {

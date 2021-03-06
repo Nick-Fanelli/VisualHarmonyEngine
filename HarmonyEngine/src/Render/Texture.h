@@ -5,8 +5,6 @@
 
 #include "harmonypch.h"
 
-#include "../Core/Log.h"
-
 namespace HarmonyEngine {
 
     static const int MIN_FILTER = GL_LINEAR;

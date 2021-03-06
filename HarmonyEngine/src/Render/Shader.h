@@ -4,7 +4,6 @@
 #include <GLUT/glut.h>
 
 #include "harmonypch.h"
-#include "../Core/Utils.h"
 
 namespace HarmonyEngine {
 

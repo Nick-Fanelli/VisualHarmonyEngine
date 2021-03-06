@@ -3,7 +3,6 @@
 #include "harmonypch.h"
 
 #include "Display.h"
-#include "Log.h"
 
 namespace HarmonyEngine {
 

@@ -5,7 +5,6 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Log.h"
 #include "Input.h"
 #include "Display.h"
 #include "../Scene/Scene.h"

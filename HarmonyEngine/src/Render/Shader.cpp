@@ -2,7 +2,6 @@
 
 #include <regex>
 #include <glm/gtc/type_ptr.hpp>
-#include "../Core/Log.h"
 
 namespace HarmonyEngine {
 

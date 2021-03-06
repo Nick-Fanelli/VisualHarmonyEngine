@@ -1,5 +1,4 @@
 #include "Display.h"
-#include "Log.h"
 #include "GameContext.h"
 
 namespace HarmonyEngine {
