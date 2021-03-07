@@ -1,10 +1,12 @@
 #include "Display.h"
+
 #include "GameContext.h"
+#include "Input.h"
 
 namespace HarmonyEngine {
 
-    static GLuint startingWidth = 1280;
-    static GLuint startingHeight = 720;
+    static int startingWidth = 1280;
+    static int startingHeight = 720;
 
     void Display::CreateDisplay(GameContext* gameContext) {
 
@@ -40,7 +42,7 @@ namespace HarmonyEngine {
         glewExperimental = GL_TRUE;
 
         // Handle Input
-        m_GameContext->GetInput().StandardInput.SetupKeyInputs(this);
+        Input::StandardInput.SetupKeyInputs(this);
 
         if (glewInit() != GLEW_OK) {
             Log::Error("Could not initialize GLEW");
@@ -51,7 +53,7 @@ namespace HarmonyEngine {
 
         // glDebugMessageCallback(GL_DEBUG_CALLBACK_FUNCTION, )
 
-        Log::Success("Created the GLFW dsiplay!");
+        Log::Success("Created the GLFW display!");
 
         glfwFocusWindow(m_Window);
     }
@@ -74,7 +76,7 @@ namespace HarmonyEngine {
             if (deltaTime >= 0) {
                 m_GameContext->Update(deltaTime);
 
-                m_GameContext->GetInput().Update(); // Input Last
+                Input::Update();
             }
 
             glfwSwapBuffers(m_Window);
@@ -84,7 +86,7 @@ namespace HarmonyEngine {
             frameCount++;
 
             if (currentTime - lastTime >= 1.0) {
-                m_GameContext->m_CurrentFps = 1000.0 / double(frameCount);
+                m_GameContext->m_CurrentFps = 1000 / frameCount;
                 frameCount = 0;
                 lastTime = glfwGetTime();
             }
@@ -105,6 +107,6 @@ namespace HarmonyEngine {
         glfwDestroyWindow(m_Window);
         glfwTerminate();
 
-        Log::Success("Progam successfully exited!");
+        Log::Success("Program successfully exited!");
     }
 }

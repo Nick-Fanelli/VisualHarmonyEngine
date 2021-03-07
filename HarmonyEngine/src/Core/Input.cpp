@@ -3,10 +3,16 @@
 namespace HarmonyEngine {
 
     // =================================================================
-    // Desktop Input
+    // Input
     // =================================================================
 
     std::vector<DesktopInput*> DesktopInput::s_Instances;
+
+    DesktopInput Input::StandardInput = DesktopInput();
+
+    // =================================================================
+    // Desktop Input
+    // =================================================================
 
     DesktopInput::DesktopInput() {
         s_Instances.push_back(this);

@@ -54,25 +54,15 @@ void EditorScene::Update(const float& deltaTime) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-//    Log::Info(s_Entity);
-
-//    Log::Info(s_Hierarchy.RootNode.Children.at(1).Entity);
-
-//    ImGui::ShowDemoWindow();
-
-//    ImGui::Begin("Test");
-//
-//    ImGui::ColorEdit3("Background Color", &m_GameContext->GetDisplay().GetBackgroundColor().r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
-//    ImGui::ColorEdit4("Quad Color", &s_Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
-//
-//    ImGui::End();
-
     ImGui::Begin("Inspector");
-
     ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
-
     ImGui::End();
 
+    // Input/Movement
+
+    if(Input::StandardInput.IsKeyUp(GLFW_KEY_A)) Log::Info("A");
+
+    // Render Stuff
     RendererStatistics::Start();
     Renderer::StartBatch();
 

@@ -3,18 +3,17 @@
 #include "harmonypch.h"
 
 #include "Display.h"
+#include "GameContext.h"
 
 namespace HarmonyEngine {
 
     static const int NUM_KEYS = 350; // Amount of keys that glfw can handle
     static const int NUM_MOUSE_BUTTONS = 9; // Amount of mouse buttons that glfw can handle
 
-    class GameContext;
-
     class DesktopInput {
 
         friend class Input;
-        friend class GameContext;
+        friend class Display;
 
         static std::vector<DesktopInput*> s_Instances;
 
@@ -62,15 +61,14 @@ namespace HarmonyEngine {
 
     class Input {
 
-        friend class GameContext;
         friend class Display;
 
     public:
-        DesktopInput StandardInput;
+        static DesktopInput StandardInput;
 
     private:
         Input() = default;
 
-        void Update() { StandardInput.Update(); }
+        static void Update() { StandardInput.Update(); }
     };
 }

@@ -1,13 +1,10 @@
 #include "GameContext.h"
-#include "../Scene/Scene.h"
 
 namespace HarmonyEngine {
 
     void GameContext::Start(Scene* scene) {
         m_Display.CreateDisplay(this);
-
-        m_SceneManager.SetActiveScene(scene);
-
+        HarmonyEngine::SceneManager::SetActiveScene(scene);
         m_Display.StartGameLoop();
     }
 
