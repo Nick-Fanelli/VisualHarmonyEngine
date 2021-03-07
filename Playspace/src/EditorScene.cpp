@@ -60,7 +60,7 @@ void EditorScene::Update(const float& deltaTime) {
 
     // Input/Movement
 
-    if(Input::StandardInput.IsKeyUp(GLFW_KEY_A)) Log::Info("A");
+    if(Input::StandardInput.IsKeyUp(HARMONY_KEY_A)) Log::Info("A");
 
     // Render Stuff
     RendererStatistics::Start();
