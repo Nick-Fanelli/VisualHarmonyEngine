@@ -8,10 +8,14 @@ namespace HarmonyEngine {
     struct Transform {
 
         glm::vec2 Position;
+        glm::vec2 Scale;
+        float Rotation;
 
         Transform() = default;
         Transform(const Transform&) = default;
-        Transform(const glm::vec2& position) : Position(position) {}
+
+        Transform(const glm::vec2& position, const glm::vec2& scale = {1, 1}, const float& rotation = 0.0f)
+            : Position(position), Scale(scale), Rotation(rotation) {}
 
     };
 
@@ -20,12 +24,9 @@ namespace HarmonyEngine {
     // ======================================================================================
     struct QuadRenderer {
 
-        Quad quad;
+        glm::vec4 Color;
 
         QuadRenderer() = default;
-
         QuadRenderer(const QuadRenderer&) = default;
-
-        QuadRenderer(const Quad& quad) : quad(quad) {}
     };
 }

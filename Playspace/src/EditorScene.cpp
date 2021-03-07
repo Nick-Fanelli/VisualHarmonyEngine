@@ -13,11 +13,10 @@
 
 using namespace HarmonyEngine;
 
-static Quad s_Quad = Quad({0, 0}, {1, 1}, {1, 1, 1, 1});
-static glm::vec4  s_Color = {1, 1, 1, 1};
-
 static Hierarchy s_Hierarchy = Hierarchy();
 static entt::entity s_Entity;
+
+static QuadRenderer* s_QuadRenderer;
 
 void EditorScene::OnCreate(GameContext* gameContext) {
     m_GameContext = gameContext;
@@ -38,7 +37,9 @@ void EditorScene::OnCreate(GameContext* gameContext) {
     s_Entity = CreateGameObject();
 
     Entity::AddComponent<Transform>(this, s_Entity, glm::vec2(-0.5, -0.5));
-    Entity::AddComponent<QuadRenderer>(this, s_Entity, s_Quad);
+    s_QuadRenderer = &Entity::AddComponent<QuadRenderer>(this, s_Entity, glm::vec4(1, 1, 1, 1));
+
+    s_Hierarchy.AddGameObject(s_Entity);
 }
 
 void ShowRendererStatistics() {
@@ -68,7 +69,7 @@ void EditorScene::Update(const float& deltaTime) {
 
     ImGui::Begin("Inspector");
 
-    ImGui::ColorEdit3("Quad Color", &s_Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
+    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
 
     ImGui::End();
 
@@ -77,8 +78,8 @@ void EditorScene::Update(const float& deltaTime) {
 
     auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
     for(auto entity : quadRendererGroup) {
-        auto[quadRenderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);\
-        Renderer::DrawQuad(transform.Position, {1, 1}, s_Color);
+        auto[quadRenderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);
+        Renderer::DrawQuad(transform.Position, transform.Scale, quadRenderer.Color);
     }
 
 //    Renderer::DrawQuad(s_Quad, s_Color);
