@@ -20,7 +20,6 @@ namespace HarmonyEngine::Entity {
     static T& GetComponent(Scene* scene, const entt::entity& entityID) {
         if(!ContainsComponent<T>(scene, entityID)) {
             Log::Error("Entity does not contain component!");
-            exit(-1);
         }
 
         return scene->m_Registry.template get<T>(entityID);
@@ -30,7 +29,6 @@ namespace HarmonyEngine::Entity {
     static void RemoveComponent(Scene* scene, const entt::entity& entityID) {
         if(!ContainsComponent<T>(scene, entityID)) {
             Log::Error("Entity does not contain component!");
-            exit(-1);
         }
         scene->m_Registry.remove<T>(entityID);
     }

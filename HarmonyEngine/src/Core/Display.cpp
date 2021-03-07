@@ -15,7 +15,7 @@ namespace HarmonyEngine {
         Log::Info("Creating the display...");
 
         if (!glfwInit()) {
-            Log::Error("Could not initialize GLFW");
+            HARMONY_ASSERT("Could not initialize GLFW")
         }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -32,9 +32,8 @@ namespace HarmonyEngine {
         glfwGetFramebufferSize(m_Window, &screenWidth, &screenHeight);
 
         if (m_Window == nullptr) {
-            Log::Error("could not create the GLFW Window");
             glfwTerminate();
-
+            HARMONY_ASSERT("Could not create the GLFW Window")
             return;
         }
 
@@ -45,7 +44,7 @@ namespace HarmonyEngine {
         Input::StandardInput.SetupKeyInputs(this);
 
         if (glewInit() != GLEW_OK) {
-            Log::Error("Could not initialize GLEW");
+            HARMONY_ASSERT("Could not initialize GLEW")
             return;
         }
 
