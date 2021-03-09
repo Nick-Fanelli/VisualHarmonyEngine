@@ -43,7 +43,11 @@ void EditorScene::OnCreate(GameContext* gameContext) {
 
 void ShowRendererStatistics() {
     ImGui::Begin("Renderer Statistics");
-    ImGui::Text("Batch Count: %i", RendererStatistics::GetBatchCount());
+
+    ImGui::Text("Batch Count: %zu", RendererStatistics::GetBatchCount());
+    ImGui::Text("Vertex Count: %zu", RendererStatistics::GetVertexCount());
+    ImGui::Text("Index Count: %zu", RendererStatistics::GetIndexCount());
+
     ImGui::End();
 }
 
@@ -53,16 +57,21 @@ void EditorScene::Update(const float& deltaTime) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::Begin("Inspector");
-    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
-    ImGui::End();
+    ShowRendererStatistics();
+
+//    ImGui::Begin("Inspector");
+//    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
+//    ImGui::End();
 
     // Input/Movement
 
     if(Input::StandardInput.IsKeyUp(HARMONY_KEY_A)) Log::Info("A");
 
     // Render Stuff
+#ifdef HARMONY_DEBUG_ENABLED
     RendererStatistics::Start();
+#endif
+
     Renderer::StartBatch();
 
     auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
@@ -74,7 +83,10 @@ void EditorScene::Update(const float& deltaTime) {
 //    Renderer::DrawQuad(s_Quad, s_Color);
 
     Renderer::EndBatch();
+
+#ifdef HARMONY_DEBUG_ENABLED
     RendererStatistics::Stop();
+#endif
 
     // End ImGui Frame
     ImGui::Render();

@@ -11,8 +11,14 @@ namespace HarmonyEngine {
     static OrthographicCamera* s_Camera = nullptr;
     static std::unique_ptr<Shader> s_Shader = nullptr;
 
-    int RendererStatistics::BatchCount = 0;
-    int RendererStatistics::CurrentBatchCount = 0;
+    size_t RendererStatistics::BatchCount = 0;
+    size_t RendererStatistics::CurrentBatchCount = 0;
+
+    size_t RendererStatistics::VertexCount = 0;
+    size_t RendererStatistics::CurrentVertexCount = 0;
+
+    size_t RendererStatistics::IndexCount = 0;
+    size_t RendererStatistics::CurrentIndexCount = 0;
 
     struct RenderBatch {
 
@@ -102,7 +108,9 @@ namespace HarmonyEngine {
         s_Batch.IndexCount = 0;
         s_Batch.VertexPtr = s_Batch.Vertices;
 
+#ifdef HARMONY_DEBUG_ENABLED
         RendererStatistics::CurrentBatchCount++;
+#endif
     }
 
     void Renderer::EndBatch() {
@@ -186,6 +194,10 @@ namespace HarmonyEngine {
     void Renderer::AllocateVertices(const int& amount) {
         uint32_t vertexCount = s_Batch.VertexPtr - s_Batch.Vertices;
 
+#ifdef HARMONY_DEBUG_ENABLED
+        RendererStatistics::CurrentVertexCount += amount;
+#endif
+
         // If there's not enough space, start a new render batch!
         if (vertexCount + amount >= MaxVertexCount) {
             Renderer::EndBatch();
@@ -209,6 +221,9 @@ namespace HarmonyEngine {
         s_Batch.VertexPtr++;
 
         s_Batch.IndexCount += 6;
+#ifdef HARMONY_DEBUG_ENABLED
+        RendererStatistics::CurrentIndexCount += 6;
+#endif
     }
 
     void Renderer::DrawQuad(const Quad& quad, const glm::vec4& color) {
@@ -231,6 +246,9 @@ namespace HarmonyEngine {
         s_Batch.VertexPtr++;
 
         s_Batch.IndexCount += 6;
+#ifdef HARMONY_DEBUG_ENABLED
+        RendererStatistics::CurrentIndexCount += 6;
+#endif
     }
 
     void Renderer::DrawQuad(const glm::vec2& positionOffset, const Quad& quad) {
@@ -259,6 +277,9 @@ namespace HarmonyEngine {
         s_Batch.VertexPtr++;
 
         s_Batch.IndexCount += 6;
+#ifdef HARMONY_DEBUG_ENABLED
+        RendererStatistics::CurrentIndexCount += 6;
+#endif
     }
 
     void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& color,
@@ -303,6 +324,9 @@ namespace HarmonyEngine {
         s_Batch.VertexPtr++;
 
         s_Batch.IndexCount += 6;
+#ifdef HARMONY_DEBUG_ENABLED
+        RendererStatistics::CurrentIndexCount += 6;
+#endif
     }
 
     void Renderer::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const std::array<glm::vec4, 4>& colorArray,
@@ -347,5 +371,8 @@ namespace HarmonyEngine {
         s_Batch.VertexPtr++;
 
         s_Batch.IndexCount += 6;
+#ifdef HARMONY_DEBUG_ENABLED
+        RendererStatistics::CurrentIndexCount += 6;
+#endif
     }
 }

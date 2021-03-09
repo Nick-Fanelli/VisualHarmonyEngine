@@ -90,20 +90,32 @@ namespace HarmonyEngine {
 
         friend class Renderer;
 
-        static int BatchCount;
-        static int CurrentBatchCount;
+        static size_t BatchCount;
+        static size_t CurrentBatchCount;
+
+        static size_t VertexCount;
+        static size_t CurrentVertexCount;
+
+        static size_t IndexCount;
+        static size_t CurrentIndexCount;
 
     public:
 
         static void Start() {
             CurrentBatchCount = 0;
+            CurrentVertexCount = 0;
+            CurrentIndexCount = 0;
         }
 
         static void Stop() {
             BatchCount = CurrentBatchCount;
+            VertexCount = CurrentVertexCount;
+            IndexCount = CurrentIndexCount;
         }
 
-        static const int& GetBatchCount() { return BatchCount; }
+        static const size_t& GetBatchCount() { return BatchCount; }
+        static const size_t& GetVertexCount() { return VertexCount; }
+        static const size_t& GetIndexCount() { return IndexCount; }
 
     };
 
