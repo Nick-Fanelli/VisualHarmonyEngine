@@ -3,13 +3,12 @@
 //
 
 #include "EditorScene.h"
-#include "harmonypch.h"
 
 #include "Hierarchy.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 using namespace HarmonyEngine;
 
