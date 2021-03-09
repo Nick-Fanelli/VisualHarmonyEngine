@@ -4,21 +4,22 @@
 
 namespace HarmonyEngine {
 
-// ======================================================================================
-// Scene 
-// ======================================================================================
+    // ======================================================================================
+    // Scene
+    // ======================================================================================
 
-    Scene::Scene() : m_Camera(
-            OrthographicCamera(-CameraAspectRatio * CameraZoomLevel, CameraAspectRatio * CameraZoomLevel,
-                               -CameraZoomLevel, CameraZoomLevel)) {
+    Scene::Scene()
+    : m_Camera(OrthographicCamera(-CameraAspectRatio * CameraZoomLevel,
+                                  CameraAspectRatio * CameraZoomLevel,
+                                  -CameraZoomLevel, CameraZoomLevel)) {
     }
 
-// Definition for Override Methods
+    // Definition for Override Methods
     void Scene::OnCreate(GameContext* gameContext) {
         m_GameContext = gameContext;
     }
 
-    void Scene::Update(const float& deltaTime) {}
+    void Scene::Update(const float& deltaTime) { }
 
     void Scene::OnDestroy() {
         m_Registry.clear<>();
@@ -28,9 +29,9 @@ namespace HarmonyEngine {
         return m_Registry.create();
     }
 
-// ======================================================================================
-// Scene Manager
-// ======================================================================================
+    // ======================================================================================
+    // Scene Manager
+    // ======================================================================================
 
     Scene* SceneManager::s_ActiveScene = nullptr;
     GameContext* SceneManager::s_GameContext = nullptr;
