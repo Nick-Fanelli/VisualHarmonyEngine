@@ -15,7 +15,7 @@ namespace HarmonyEngine {
 
         HierarchalNode() = default;
         HierarchalNode(const HierarchalNode&) = default;
-        HierarchalNode(const entt::entity& GameObject) : GameObject(GameObject), Children() {}
+        explicit HierarchalNode(const entt::entity& GameObject) : GameObject(GameObject), Children() {}
 
         void AddChildGameObject(const entt::entity& GameObjectRef) { Children.emplace_back(GameObjectRef); }
 
