@@ -34,6 +34,9 @@ namespace HarmonyEngine {
         entt::entity CreateGameObject();
 
         const GameContext* GetGameContext() const { return m_GameContext; }
+
+        const entt::registry& GetRegistry() const { return m_Registry; }
+        entt::registry& GetRegistry() { return m_Registry; }
     };
 
     // ======================================================================================

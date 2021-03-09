@@ -8,12 +8,12 @@ namespace HarmonyEngine::Entity {
 
     template<typename T, typename... Args>
     static T& AddComponent(Scene* scene, const entt::entity& entityID, Args&& ... args) {
-        return scene->m_Registry.emplace<T>(entityID, std::forward<Args>(args)...);
+        return scene->GetRegistry().emplace<T>(entityID, std::forward<Args>(args)...);
     }
 
     template<typename T>
     static bool ContainsComponent(Scene* scene, const entt::entity& entityID) {
-        return scene->m_Registry.has<T>(entityID);
+        return scene->GetRegistry().has<T>(entityID);
     }
 
     template<typename T>
@@ -22,7 +22,7 @@ namespace HarmonyEngine::Entity {
             Log::Error("Entity does not contain component!");
         }
 
-        return scene->m_Registry.template get<T>(entityID);
+        return scene->GetRegistry().template get<T>(entityID);
     }
 
     template<typename T>
@@ -30,7 +30,7 @@ namespace HarmonyEngine::Entity {
         if(!ContainsComponent<T>(scene, entityID)) {
             Log::Error("Entity does not contain component!");
         }
-        scene->m_Registry.remove<T>(entityID);
+        scene->GetRegistry().remove<T>(entityID);
     }
 
 }
