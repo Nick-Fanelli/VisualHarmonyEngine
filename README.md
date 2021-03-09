@@ -42,7 +42,7 @@ git clone https://github.com/Nick-Fanelli/HarmonyEngine
 
 * Navigate to the playspace directory.
     ```shell
-    cd Playspace
+    cd HarmonyEditor
     ```
     
 * Run the Executable
