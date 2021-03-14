@@ -10,6 +10,8 @@
 // Render Layer
 // ================================================================================
 
+Scene* RenderLayer::s_Scene = nullptr;
+
 void RenderLayer::Initialize(Scene* scene) {
     s_Scene = scene;
     Renderer::OnCreate(&scene->GetCamera());

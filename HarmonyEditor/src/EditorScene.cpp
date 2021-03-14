@@ -18,7 +18,7 @@ static QuadRenderer* s_QuadRenderer;
 void EditorScene::OnCreate(GameContext* gameContext) {
     m_GameContext = gameContext;
 
-    RenderLayer::Initialize(this, gameContext);
+    RenderLayer::Initialize(this);
     ImGuiLayer::Initialize(gameContext);
 
     s_Entity = CreateGameObject();
