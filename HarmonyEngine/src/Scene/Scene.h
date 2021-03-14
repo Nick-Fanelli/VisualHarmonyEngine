@@ -37,6 +37,10 @@ namespace HarmonyEngine {
 
         const entt::registry& GetRegistry() const { return m_Registry; }
         entt::registry& GetRegistry() { return m_Registry; }
+
+        const OrthographicCamera& GetCamera() const { return m_Camera; }
+        OrthographicCamera& GetCamera() { return m_Camera; }
+
     };
 
     // ======================================================================================

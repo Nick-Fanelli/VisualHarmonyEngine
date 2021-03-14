@@ -4,11 +4,9 @@
 
 #include "EditorScene.h"
 
-#include "Hierarchy.h"
+#include "EditorLayers.h"
 
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include "Hierarchy.h"
 
 using namespace HarmonyEngine;
 
@@ -19,86 +17,35 @@ static QuadRenderer* s_QuadRenderer;
 
 void EditorScene::OnCreate(GameContext* gameContext) {
     m_GameContext = gameContext;
-    Renderer::OnCreate(&m_Camera);
 
-    const char* glsl_version = "#version 150";
-
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void) io;
-
-    ImGui::StyleColorsDark();
-    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-
-    ImGui_ImplGlfw_InitForOpenGL(gameContext->GetDisplay().GetWindowPointer(), true);
-    ImGui_ImplOpenGL3_Init(glsl_version);
+    RenderLayer::Initialize(this, gameContext);
+    ImGuiLayer::Initialize(gameContext);
 
     s_Entity = CreateGameObject();
-
     Entity::AddComponent<Transform>(this, s_Entity, glm::vec2(-0.5, -0.5));
     s_QuadRenderer = &Entity::AddComponent<QuadRenderer>(this, s_Entity, glm::vec4(1, 1, 1, 1));
 
     s_Hierarchy.AddGameObject(s_Entity);
 }
 
-void ShowRendererStatistics() {
-    ImGui::Begin("Renderer Statistics");
-
-    ImGui::Text("Batch Count: %zu", RendererStatistics::GetBatchCount());
-    ImGui::Text("Vertex Count: %zu", RendererStatistics::GetVertexCount());
-    ImGui::Text("Index Count: %zu", RendererStatistics::GetIndexCount());
-
-    ImGui::End();
-}
+//void ShowRendererStatistics() {
+//    ImGui::Begin("Renderer Statistics");
+//
+//    ImGui::Text("Batch Count: %zu", RendererStatistics::GetBatchCount());
+//    ImGui::Text("Vertex Count: %zu", RendererStatistics::GetVertexCount());
+//    ImGui::Text("Index Count: %zu", RendererStatistics::GetIndexCount());
+//
+//    ImGui::End();
+//}
 
 void EditorScene::Update(const float& deltaTime) {
-    // Start ImGui Frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
-    ShowRendererStatistics();
-    ImGui::ShowDemoWindow();
-
-//    ImGui::Begin("Inspector");
-//    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
-//    ImGui::End();
-
-    // Input/Movement
-
     if(Input::StandardInput.IsKeyUp(HARMONY_KEY_A)) Log::Info("A");
 
-    // Render Stuff
-#ifdef HARMONY_DEBUG_ENABLED
-    RendererStatistics::Start();
-#endif
-
-    Renderer::StartBatch();
-
-    auto quadRendererGroup = m_Registry.group<QuadRenderer>(entt::get<Transform>);
-    for(auto entity : quadRendererGroup) {
-        auto[quadRenderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);
-        Renderer::DrawQuad(transform.Position, transform.Scale, quadRenderer.Color);
-    }
-
-//    Renderer::DrawQuad(s_Quad, s_Color);
-
-    Renderer::EndBatch();
-
-#ifdef HARMONY_DEBUG_ENABLED
-    RendererStatistics::Stop();
-#endif
-
-    // End ImGui Frame
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    ImGuiLayer::RenderImGuiWindows();
+    RenderLayer::RenderScene();
 }
 
 void EditorScene::OnDestroy() {
-    // Clean-up ImGui
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    RenderLayer::CleanUp();
+    ImGuiLayer::CleanUp();
 }
