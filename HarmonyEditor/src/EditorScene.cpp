@@ -26,8 +26,11 @@ void EditorScene::OnCreate(GameContext* gameContext) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
+    (void) io;
 
     ImGui::StyleColorsDark();
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
 
     ImGui_ImplGlfw_InitForOpenGL(gameContext->GetDisplay().GetWindowPointer(), true);
     ImGui_ImplOpenGL3_Init(glsl_version);
@@ -57,6 +60,7 @@ void EditorScene::Update(const float& deltaTime) {
     ImGui::NewFrame();
 
     ShowRendererStatistics();
+    ImGui::ShowDemoWindow();
 
 //    ImGui::Begin("Inspector");
 //    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
