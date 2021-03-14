@@ -29,6 +29,24 @@ namespace HarmonyEngine {
         const glm::vec3& GetBackgroundColor() const { return m_BackgroundColor; }
         glm::vec3& GetBackgroundColor() { return m_BackgroundColor; }
 
+        glm::ivec2 GetSize() {
+            glm::ivec2 returnValue;
+            glfwGetWindowSize(m_Window, &returnValue.x, &returnValue.y);
+            return returnValue;
+        }
+
+        int GetWidth() {
+            int returnValue;
+            glfwGetWindowSize(m_Window, &returnValue, nullptr);
+            return returnValue;
+        }
+
+        int GetHeight() {
+            int returnValue;
+            glfwGetWindowSize(m_Window, nullptr, &returnValue);
+            return returnValue;
+        }
+
     private:
         void CleanUp();
 

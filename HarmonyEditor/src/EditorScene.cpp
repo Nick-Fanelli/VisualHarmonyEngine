@@ -25,8 +25,7 @@ void EditorScene::OnCreate(GameContext* gameContext) {
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-//    ImGuiIO& io = ImGui::GetIO();
-//    (void) io;
+    ImGuiIO& io = ImGui::GetIO();
 
     ImGui::StyleColorsDark();
 
