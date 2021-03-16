@@ -41,8 +41,8 @@ void EditorScene::OnCreate(GameContext* gameContext) {
 void EditorScene::Update(const float& deltaTime) {
     if(Input::StandardInput.IsKeyUp(HARMONY_KEY_A)) Log::Info("A");
 
-    ImGuiLayer::RenderImGuiWindows();
     RenderLayer::RenderScene();
+    ImGuiLayer::RenderImGuiWindows();
 }
 
 void EditorScene::OnDestroy() {
