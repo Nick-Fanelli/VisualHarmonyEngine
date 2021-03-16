@@ -4,8 +4,6 @@
 
 #include "EditorLayers.h"
 
-#include <imgui_internal.h>
-
 #include <Scene/Component.h>
 
 // ================================================================================
@@ -69,7 +67,6 @@ void ApplyDefaultTheme() {
     style.Colors[ImGuiCol_WindowBg]             = themeBackgroundColor;
     style.Colors[ImGuiCol_ChildBg]              = themeChildBackgroundColor;
     style.Colors[ImGuiCol_PopupBg]              = ImVec4(themeBackgroundColor.x, themeBackgroundColor.y, themeBackgroundColor.z, 0.94f);
-
 
     style.Colors[ImGuiCol_Border]                = themeBackgroundColor;
     style.Colors[ImGuiCol_BorderShadow]          = ImVec4(1.00f, 1.00f, 1.00f, 0.10f);

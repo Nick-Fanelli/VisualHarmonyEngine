@@ -1,6 +1,5 @@
 #include "Shader.h"
 
-#include <regex>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace HarmonyEngine {
