@@ -17,6 +17,8 @@ using namespace HarmonyEngine;
 
 struct ImGuiLayer {
 
+    static float s_Time;
+
     static void Initialize(GameContext* gameContextPtr);
     static void RenderImGuiWindows();
     static void CleanUp();

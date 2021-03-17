@@ -1,13 +1,16 @@
 #pragma once
 
+#include "harmonypch.h"
+
 #define GLEW_STATIC
 #include <GL/glew.h>
-#include <GLUT/glut.h>
 
+#include <GLUT/glut.h>
 #define GLFW_DLL
+
 #include <GLFW/glfw3.h>
 
-#include "harmonypch.h"
+#include <imgui.h>
 
 namespace HarmonyEngine {
 
@@ -33,6 +36,12 @@ namespace HarmonyEngine {
             glm::ivec2 returnValue;
             glfwGetWindowSize(m_Window, &returnValue.x, &returnValue.y);
             return returnValue;
+        }
+
+        ImVec2 GetImGuiSize() {
+            int x, y;
+            glfwGetWindowSize(m_Window, &x, &y);
+            return ImVec2(x, y);
         }
 
         int GetWidth() {

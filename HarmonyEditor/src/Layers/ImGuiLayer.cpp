@@ -4,6 +4,9 @@
 
 #include "ImGuiLayer.h"
 
+GameContext* s_GameContextPtr = nullptr;
+float ImGuiLayer::s_Time = 0.0f;
+
 void ApplyDefaultTheme() {
     ImGuiStyle& style = ImGui::GetStyle();
 
@@ -67,7 +70,7 @@ void ApplyDefaultTheme() {
 
     style.Colors[ImGuiCol_Tab]                    = ImLerp(style.Colors[ImGuiCol_Header],       style.Colors[ImGuiCol_TitleBgActive], 0.90f);
     style.Colors[ImGuiCol_TabHovered]             = style.Colors[ImGuiCol_HeaderHovered];
-    style.Colors[ImGuiCol_TabActive]              = themeAccentColor;
+    style.Colors[ImGuiCol_TabActive]              = themeChildBackgroundActiveColor;
     style.Colors[ImGuiCol_TabUnfocused]           = ImLerp(style.Colors[ImGuiCol_Tab],          style.Colors[ImGuiCol_TitleBg], 0.80f);
     style.Colors[ImGuiCol_TabUnfocusedActive]     = ImLerp(style.Colors[ImGuiCol_TabActive],    style.Colors[ImGuiCol_TitleBg], 0.40f);
 
@@ -75,12 +78,17 @@ void ApplyDefaultTheme() {
 
 void ImGuiLayer::Initialize(GameContext* gameContextPtr) {
 
+    s_GameContextPtr = gameContextPtr;
+
     const char* glsl_version = "#version 150";
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-    (void) io;
+
+    io.DisplaySize = ImVec2((float) gameContextPtr->GetDisplay().GetWidth(), (float) gameContextPtr->GetDisplay().GetHeight());
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+//    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     ApplyDefaultTheme();
 
@@ -90,7 +98,26 @@ void ImGuiLayer::Initialize(GameContext* gameContextPtr) {
 
     ImGui_ImplGlfw_InitForOpenGL(gameContextPtr->GetDisplay().GetWindowPointer(), true);
     ImGui_ImplOpenGL3_Init(glsl_version);
+}
 
+static bool s_Show = true;
+
+static void DrawDockSpace() {
+    int windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+            ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(s_GameContextPtr->GetDisplay().GetImGuiSize());
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+
+    ImGui::Begin("Dockspace", &s_Show, windowFlags);
+    ImGui::PopStyleVar(3);
+    ImGui::DockSpace(ImGui::GetID("Dockspace"));
+    ImGui::End();
 }
 
 void ImGuiLayer::RenderImGuiWindows() {
@@ -100,14 +127,16 @@ void ImGuiLayer::RenderImGuiWindows() {
     ImGui::NewFrame();
 
     // Do Stuff
+    DrawDockSpace();
     ImGui::ShowDemoWindow();
 
 //    ImGui::Begin("Inspector");
-////    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
+//    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
 //    ImGui::End();
 
     // End ImGui Frame
     ImGui::Render();
+    ImGui::UpdatePlatformWindows();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
