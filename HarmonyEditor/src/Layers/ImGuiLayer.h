@@ -1,10 +1,10 @@
 //
-// Created by Nick Fanelli on 3/14/21.
+// Created by Nick Fanelli on 3/16/21.
 //
 
 #pragma once
 
-#include "harmonypch.h"
+#include <harmonypch.h>
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -12,19 +12,8 @@
 #include <imgui_internal.h>
 
 #include <Core/GameContext.h>
-#include <Scene/Scene.h>
 
 using namespace HarmonyEngine;
-
-struct RenderLayer {
-
-    static Scene* s_Scene;
-
-    static void Initialize(Scene* scene);
-    static void RenderScene();
-    static void CleanUp();
-
-};
 
 struct ImGuiLayer {
 

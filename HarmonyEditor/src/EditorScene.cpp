@@ -4,9 +4,10 @@
 
 #include "EditorScene.h"
 
-#include "EditorLayers.h"
-
 #include "Hierarchy.h"
+
+#include "Layers/ImGuiLayer.h"
+#include "Layers/RenderLayer.h"
 
 using namespace HarmonyEngine;
 
