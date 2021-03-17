@@ -1,22 +1,12 @@
 *.DS_Store
 
 # Build Stuff
-HarmonyEngine/build/*
 build/
 
 # Binary Stuff
 *.o
 
-# CMake
-
-HarmonyEngine/CMakeCache.txt
-HarmonyEngine/CMakeFiles/
-HarmonyEngine/HarmonyEngine
-HarmonyEngine/Makefile
-HarmonyEngine/cmake_install.cmake
-
 # Clion
-
 cmake-build-debug/
 .idea/vcs.xml
 
