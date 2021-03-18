@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "harmonypch.h"
 #include "HarmonyEngine.h"
 
 namespace HarmonyEditor {
