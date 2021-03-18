@@ -31,6 +31,8 @@ namespace HarmonyEditor {
         style.Colors[ImGuiCol_PopupBg] = ImVec4(themeBackgroundColor.x, themeBackgroundColor.y, themeBackgroundColor.z,
                                                 0.94f);
 
+        style.Colors[ImGuiCol_DockingPreview] = themeAccentColor;
+        
         style.Colors[ImGuiCol_Border] = themeBackgroundColor;
         style.Colors[ImGuiCol_BorderShadow] = ImVec4(1.00f, 1.00f, 1.00f, 0.10f);
 
