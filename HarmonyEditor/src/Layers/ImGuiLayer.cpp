@@ -4,6 +4,8 @@
 
 #include "ImGuiLayer.h"
 
+#include "../Theme.h"
+
 namespace HarmonyEditor {
 
     static GameContext* s_GameContextPtr = nullptr;
@@ -12,76 +14,69 @@ namespace HarmonyEditor {
     static void ApplyDefaultTheme() {
         ImGuiStyle& style = ImGui::GetStyle();
 
-        ImVec4 themeTextColor = ImVec4(1, 1, 1, 1);
+        Theme::ThemeType themeType = Theme::ThemeType::Light;
 
-        ImVec4 themeBackgroundColor = ImVec4(0.235, 0.247, 0.254, 1);
-        ImVec4 themeChildBackgroundColor = ImVec4(0.169, 0.169, 0.169, 1);
-        ImVec4 themeChildBackgroundHoverColor = ImVec4(0.21, 0.21, 0.21, 1);
-        ImVec4 themeChildBackgroundActiveColor = ImVec4(0.23, 0.23, 0.23, 1);
+        Theme::ThemeData themeData = Theme::GetTheme(themeType);
 
-        ImVec4 themeSeparatorColor = ImVec4(0.3, 0.3, 0.3, 1);
-        ImVec4 themeSeparatorHoverColor = ImVec4(0.35, 0.35, 0.35, 1);
 
-        ImVec4 themeAccentColor = ImVec4(0.2705882353, 0.8196078431, 0.4156862745, 1);
-        ImVec4 themeAccentHoverColor = ImVec4(0.4, 0.9490196078, 0.5450980392, 1);
+        style.Colors[ImGuiCol_Text] = themeData.TextColor;
+        style.Colors[ImGuiCol_TextSelectedBg] = themeData.AccentColor;
 
-        style.Colors[ImGuiCol_Text] = themeTextColor;
-        style.Colors[ImGuiCol_TextDisabled] = ImVec4(0.60f, 0.60f, 0.60f, 1);
-        style.Colors[ImGuiCol_TextSelectedBg] = themeAccentColor;
+        float disableColor = themeType == Theme::ThemeType::Dark ? 0.6f : 0.4f;
+        style.Colors[ImGuiCol_TextDisabled] = ImVec4(disableColor, disableColor, disableColor, 1); // Todo: Become Dynamic
 
-        style.Colors[ImGuiCol_WindowBg] = themeBackgroundColor;
-        style.Colors[ImGuiCol_ChildBg] = themeBackgroundColor;
-        style.Colors[ImGuiCol_PopupBg] = ImVec4(themeBackgroundColor.x, themeBackgroundColor.y, themeBackgroundColor.z,
-                                                0.94f);
-        style.Colors[ImGuiCol_DockingPreview] = themeAccentColor;
+        style.Colors[ImGuiCol_WindowBg] = themeData.BackgroundColor;
+        style.Colors[ImGuiCol_ChildBg] = themeData.BackgroundColor;
+        style.Colors[ImGuiCol_PopupBg] = ImVec4(themeData.BackgroundColor.x, themeData.BackgroundColor.y, themeData.BackgroundColor.z, 0.94f);
+        style.Colors[ImGuiCol_DockingPreview] = themeData.AccentColor;
 
-        style.Colors[ImGuiCol_Separator] = themeSeparatorColor;
-        style.Colors[ImGuiCol_SeparatorActive] = themeSeparatorHoverColor;
-        style.Colors[ImGuiCol_SeparatorHovered] = themeSeparatorHoverColor;
+        style.Colors[ImGuiCol_Separator] = themeData.SeparatorColor;
+        style.Colors[ImGuiCol_SeparatorActive] = themeData.SeparatorHoverColor;
+        style.Colors[ImGuiCol_SeparatorHovered] = themeData.SeparatorHoverColor;
 
-        style.Colors[ImGuiCol_Border] = themeBackgroundColor;
+        style.Colors[ImGuiCol_Border] = themeData.BackgroundColor;
         style.Colors[ImGuiCol_BorderShadow] = ImVec4(1.00f, 1.00f, 1.00f, 0.10f);
 
-        style.Colors[ImGuiCol_FrameBg] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_FrameBgHovered] = themeChildBackgroundHoverColor;
-        style.Colors[ImGuiCol_FrameBgActive] = themeChildBackgroundActiveColor;
+        style.Colors[ImGuiCol_FrameBg] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_FrameBgHovered] = themeData.ChildBackgroundHoverColor;
+        style.Colors[ImGuiCol_FrameBgActive] = themeData.ChildBackgroundActiveColor;
 
-        style.Colors[ImGuiCol_TitleBg] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_TitleBgActive] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_TitleBgCollapsed] = themeBackgroundColor;
+        style.Colors[ImGuiCol_TitleBg] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_TitleBgActive] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_TitleBgCollapsed] = themeData.BackgroundColor;
 
-        style.Colors[ImGuiCol_MenuBarBg] = themeChildBackgroundColor;
+        style.Colors[ImGuiCol_MenuBarBg] = themeData.ChildBackgroundColor;
 
-        style.Colors[ImGuiCol_ScrollbarGrab] = themeBackgroundColor;
-        style.Colors[ImGuiCol_ScrollbarGrabHovered] = themeBackgroundColor;
-        style.Colors[ImGuiCol_ScrollbarBg] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_ScrollbarGrabActive] = themeChildBackgroundActiveColor;
+        style.Colors[ImGuiCol_ScrollbarGrab] = themeData.BackgroundColor;
+        style.Colors[ImGuiCol_ScrollbarGrabHovered] = themeData.BackgroundColor;
+        style.Colors[ImGuiCol_ScrollbarBg] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_ScrollbarGrabActive] = themeData.ChildBackgroundActiveColor;
 
-        style.Colors[ImGuiCol_CheckMark] = themeAccentColor;
+        style.Colors[ImGuiCol_CheckMark] = themeData.AccentColor;
 
-        style.Colors[ImGuiCol_SliderGrab] = themeBackgroundColor;
-        style.Colors[ImGuiCol_SliderGrabActive] = themeChildBackgroundHoverColor;
+        style.Colors[ImGuiCol_SliderGrab] = themeData.BackgroundColor;
+        style.Colors[ImGuiCol_SliderGrabActive] = themeData.ChildBackgroundHoverColor;
 
-        style.Colors[ImGuiCol_Button] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_ButtonHovered] = themeChildBackgroundHoverColor;
-        style.Colors[ImGuiCol_ButtonActive] = themeChildBackgroundActiveColor;
+        style.Colors[ImGuiCol_Button] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_ButtonHovered] = themeData.ChildBackgroundHoverColor;
+        style.Colors[ImGuiCol_ButtonActive] = themeData.ChildBackgroundActiveColor;
 
-        style.Colors[ImGuiCol_Header] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_HeaderHovered] = themeChildBackgroundHoverColor;
-        style.Colors[ImGuiCol_HeaderActive] = themeChildBackgroundActiveColor;
+        style.Colors[ImGuiCol_Header] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_HeaderHovered] = themeData.ChildBackgroundHoverColor;
+        style.Colors[ImGuiCol_HeaderActive] = themeData.ChildBackgroundActiveColor;
 
-        style.Colors[ImGuiCol_ResizeGrip] = themeChildBackgroundColor;
-        style.Colors[ImGuiCol_ResizeGripHovered] = themeChildBackgroundHoverColor;
-        style.Colors[ImGuiCol_ResizeGripActive] = themeChildBackgroundActiveColor;
+        style.Colors[ImGuiCol_ResizeGrip] = themeData.ChildBackgroundColor;
+        style.Colors[ImGuiCol_ResizeGripHovered] = themeData.ChildBackgroundHoverColor;
+        style.Colors[ImGuiCol_ResizeGripActive] = themeData.ChildBackgroundActiveColor;
 
-        style.Colors[ImGuiCol_PlotLines] = themeAccentColor;
-        style.Colors[ImGuiCol_PlotLinesHovered] = themeAccentHoverColor;
-        style.Colors[ImGuiCol_PlotHistogram] = themeAccentColor;
-        style.Colors[ImGuiCol_PlotHistogramHovered] = themeAccentHoverColor;
+        style.Colors[ImGuiCol_PlotLines] = themeData.AccentColor;
+        style.Colors[ImGuiCol_PlotLinesHovered] = themeData.AccentHoverColor;
+        style.Colors[ImGuiCol_PlotHistogram] = themeData.AccentColor;
+        style.Colors[ImGuiCol_PlotHistogramHovered] = themeData.AccentHoverColor;
 
         style.Colors[ImGuiCol_Tab] = ImLerp(style.Colors[ImGuiCol_Header], style.Colors[ImGuiCol_TitleBgActive], 0.90f);
         style.Colors[ImGuiCol_TabHovered] = style.Colors[ImGuiCol_HeaderHovered];
-        style.Colors[ImGuiCol_TabActive] = themeChildBackgroundActiveColor;
+        style.Colors[ImGuiCol_TabActive] = themeData.ChildBackgroundActiveColor;
         style.Colors[ImGuiCol_TabUnfocused] = ImLerp(style.Colors[ImGuiCol_Tab], style.Colors[ImGuiCol_TitleBg], 0.80f);
         style.Colors[ImGuiCol_TabUnfocusedActive] = ImLerp(style.Colors[ImGuiCol_TabActive],
                                                            style.Colors[ImGuiCol_TitleBg], 0.40f);
