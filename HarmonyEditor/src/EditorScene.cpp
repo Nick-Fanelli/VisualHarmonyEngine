@@ -9,25 +9,27 @@
 #include "Layers/ImGuiLayer.h"
 #include "Layers/RenderLayer.h"
 
-using namespace HarmonyEngine;
+namespace HarmonyEditor {
 
-static Hierarchy s_Hierarchy = Hierarchy();
-static entt::entity s_Entity;
+    using namespace HarmonyEngine;
 
-static QuadRenderer* s_QuadRenderer;
+    static Hierarchy s_Hierarchy = Hierarchy();
+    static entt::entity s_Entity;
 
-void EditorScene::OnCreate(GameContext* gameContext) {
-    m_GameContext = gameContext;
+    static QuadRenderer* s_QuadRenderer;
 
-    RenderLayer::Initialize(this);
-    ImGuiLayer::Initialize(gameContext);
+    void EditorScene::OnCreate(GameContext* gameContext) {
+        m_GameContext = gameContext;
 
-    s_Entity = CreateGameObject();
-    Entity::AddComponent<Transform>(this, s_Entity, glm::vec2(-0.5, -0.5));
-    s_QuadRenderer = &Entity::AddComponent<QuadRenderer>(this, s_Entity, glm::vec4(1, 1, 1, 1));
+        RenderLayer::Initialize(this);
+        ImGuiLayer::Initialize(gameContext);
 
-    s_Hierarchy.AddGameObject(s_Entity);
-}
+        s_Entity = CreateGameObject();
+        Entity::AddComponent<Transform>(this, s_Entity, glm::vec2(-0.5, -0.5));
+        s_QuadRenderer = &Entity::AddComponent<QuadRenderer>(this, s_Entity, glm::vec4(1, 1, 1, 1));
+
+        s_Hierarchy.AddGameObject(s_Entity);
+    }
 
 //void ShowRendererStatistics() {
 //    ImGui::Begin("Renderer Statistics");
@@ -39,14 +41,15 @@ void EditorScene::OnCreate(GameContext* gameContext) {
 //    ImGui::End();
 //}
 
-void EditorScene::Update(const float& deltaTime) {
-    if(Input::StandardInput.IsKeyUp(HARMONY_KEY_A)) Log::Info("A");
+    void EditorScene::Update(const float& deltaTime) {
+        if (Input::StandardInput.IsKeyUp(HARMONY_KEY_A)) Log::Info("A");
 
-    RenderLayer::RenderScene();
-    ImGuiLayer::RenderImGuiWindows();
-}
+        RenderLayer::RenderScene();
+        ImGuiLayer::RenderImGuiWindows();
+    }
 
-void EditorScene::OnDestroy() {
-    RenderLayer::CleanUp();
-    ImGuiLayer::CleanUp();
+    void EditorScene::OnDestroy() {
+        RenderLayer::CleanUp();
+        ImGuiLayer::CleanUp();
+    }
 }

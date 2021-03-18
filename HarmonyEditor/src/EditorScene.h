@@ -6,13 +6,16 @@
 
 #include "HarmonyEngine.h"
 
-using namespace HarmonyEngine;
+namespace HarmonyEditor {
 
-class EditorScene : public Scene {
+    using namespace HarmonyEngine;
 
-    virtual void OnCreate(GameContext* gameContext) override;
-    virtual void Update(const float& deltaTime) override;
-    virtual void OnDestroy() override;
+    class EditorScene : public Scene {
 
-};
+        virtual void OnCreate(GameContext* gameContext) override;
+        virtual void Update(const float& deltaTime) override;
+        virtual void OnDestroy() override;
 
+    };
+
+}

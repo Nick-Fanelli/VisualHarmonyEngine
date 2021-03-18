@@ -6,7 +6,9 @@
 
 #include "harmonypch.h"
 
-namespace HarmonyEngine {
+namespace HarmonyEditor {
+
+    using namespace HarmonyEngine;
 
     struct HierarchalNode {
 

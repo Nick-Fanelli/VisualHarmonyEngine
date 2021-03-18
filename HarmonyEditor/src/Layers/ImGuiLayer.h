@@ -13,14 +13,18 @@
 
 #include <Core/GameContext.h>
 
-using namespace HarmonyEngine;
+namespace HarmonyEditor {
 
-struct ImGuiLayer {
+    using namespace HarmonyEngine;
 
-    static float s_Time;
+    struct ImGuiLayer {
 
-    static void Initialize(GameContext* gameContextPtr);
-    static void RenderImGuiWindows();
-    static void CleanUp();
+        static float s_Time;
 
-};
+        static void Initialize(GameContext* gameContextPtr);
+        static void RenderImGuiWindows();
+        static void CleanUp();
+
+    };
+
+}

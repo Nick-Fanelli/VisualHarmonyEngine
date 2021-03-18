@@ -8,14 +8,18 @@
 
 #include <Scene/Scene.h>
 
-using namespace HarmonyEngine;
+namespace HarmonyEditor {
 
-struct RenderLayer {
+    using namespace HarmonyEngine;
 
-    static Scene* s_Scene;
+    struct RenderLayer {
 
-    static void Initialize(Scene* scene);
-    static void RenderScene();
-    static void CleanUp();
+        static Scene* s_Scene;
 
-};
+        static void Initialize(Scene* scene);
+        static void RenderScene();
+        static void CleanUp();
+
+    };
+
+}
