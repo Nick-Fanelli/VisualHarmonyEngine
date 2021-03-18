@@ -27,7 +27,7 @@ namespace HarmonyEditor {
         style.Colors[ImGuiCol_TextSelectedBg] = themeAccentColor;
 
         style.Colors[ImGuiCol_WindowBg] = themeBackgroundColor;
-        style.Colors[ImGuiCol_ChildBg] = themeChildBackgroundColor;
+        style.Colors[ImGuiCol_ChildBg] = themeBackgroundColor;
         style.Colors[ImGuiCol_PopupBg] = ImVec4(themeBackgroundColor.x, themeBackgroundColor.y, themeBackgroundColor.z,
                                                 0.94f);
 
