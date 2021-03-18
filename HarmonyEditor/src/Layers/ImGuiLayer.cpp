@@ -19,6 +19,9 @@ namespace HarmonyEditor {
         ImVec4 themeChildBackgroundHoverColor = ImVec4(0.21, 0.21, 0.21, 1);
         ImVec4 themeChildBackgroundActiveColor = ImVec4(0.23, 0.23, 0.23, 1);
 
+        ImVec4 themeSeparatorColor = ImVec4(0.3, 0.3, 0.3, 1);
+        ImVec4 themeSeparatorHoverColor = ImVec4(0.35, 0.35, 0.35, 1);
+
         ImVec4 themeAccentColor = ImVec4(0.2705882353, 0.8196078431, 0.4156862745, 1);
         ImVec4 themeAccentHoverColor = ImVec4(0.4, 0.9490196078, 0.5450980392, 1);
 
@@ -30,9 +33,12 @@ namespace HarmonyEditor {
         style.Colors[ImGuiCol_ChildBg] = themeBackgroundColor;
         style.Colors[ImGuiCol_PopupBg] = ImVec4(themeBackgroundColor.x, themeBackgroundColor.y, themeBackgroundColor.z,
                                                 0.94f);
-
         style.Colors[ImGuiCol_DockingPreview] = themeAccentColor;
-        
+
+        style.Colors[ImGuiCol_Separator] = themeSeparatorColor;
+        style.Colors[ImGuiCol_SeparatorActive] = themeSeparatorHoverColor;
+        style.Colors[ImGuiCol_SeparatorHovered] = themeSeparatorHoverColor;
+
         style.Colors[ImGuiCol_Border] = themeBackgroundColor;
         style.Colors[ImGuiCol_BorderShadow] = ImVec4(1.00f, 1.00f, 1.00f, 0.10f);
 
