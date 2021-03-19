@@ -1,6 +1,17 @@
 # HarmonyEngine
 
-## Getting Started | Cloning and Building the Project
+Easy to learn and use 2D game engine written in C++ with OpenGL.
+
+## Quick Links
+
+1. [Cloning and Building Project](#cloning-and-building-the-project)
+1. [Changelog](https://github.com/Nick-Fanelli/HarmonyEngine/blob/main/CHANGELOG.md)
+1. [Instructions for Building Changelog](#creating-the-auto-changelog)
+1. [How to Contribute](#how-to-contribute)
+
+---
+
+## Cloning and Building the Project
 
 1. [Mac Instructions](#getting-started-with-mac)
 1. [Windows Instructions](#getting-started-with-windows)
@@ -81,3 +92,9 @@ npm run release -- --release-as {TARGET_VERSION_TAG}
 ```shell
 git push --follow-tags
 ```
+
+---
+
+## How to Contribute
+
+Coming soon...
