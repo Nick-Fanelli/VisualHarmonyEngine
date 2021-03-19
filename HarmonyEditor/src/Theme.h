@@ -43,41 +43,39 @@ namespace HarmonyEditor {
             ThemeData(const ThemeData&) = default;
         };
 
-        enum ThemeType {
-            Light, Dark
-        };
+        static const char* s_ThemeType[] {"Dark", "Light"};
+        static int s_SelectedTheme = 0;
 
-        ThemeData GetTheme(const ThemeType& themeType) {
-            switch(themeType) {
-                case ThemeType::Light:
-                    static ThemeData themeDataLight = ThemeData(
-                            ImVec4(0, 0, 0, 1),
-                            ImVec4(1 - 0.235, 1 - 0.247, 1 - 0.254, 1),
-                            ImVec4(1 - 0.169, 1 - 0.169, 1 - 0.169, 1),
-                            ImVec4(1 - 0.21, 1 - 0.21, 1 - 0.21, 1),
-                            ImVec4(1 - 0.23, 1 - 0.23, 1 - 0.23, 1),
-                            ImVec4(1 - 0.3, 1 - 0.3, 1 - 0.3, 1),
-                            ImVec4(1 - 0.35, 1 - 0.35, 1 - 0.35, 1),
-                            ImVec4(0.2705882353, 0.8196078431, 0.4156862745, 1),
-                            ImVec4(0.4, 0.9490196078, 0.5450980392, 1)
-                            );
+        ThemeData GetTheme(const char* themeType) {
+            ThemeData themeData;
 
-                    return themeDataLight;
-                case ThemeType::Dark:
-                    static ThemeData themeDataDark = ThemeData(
-                            ImVec4(1, 1, 1, 1),
-                            ImVec4(0.235, 0.247, 0.254, 1),
-                            ImVec4(0.169, 0.169, 0.169, 1),
-                            ImVec4(0.21, 0.21, 0.21, 1),
-                            ImVec4(0.23, 0.23, 0.23, 1),
-                            ImVec4(0.3, 0.3, 0.3, 1),
-                            ImVec4(0.35, 0.35, 0.35, 1),
-                            ImVec4(0.2705882353, 0.8196078431, 0.4156862745, 1),
-                            ImVec4(0.4, 0.9490196078, 0.5450980392, 1)
-                            );
-
-                    return themeDataDark;
+            if(std::string(themeType) == std::string("Light")) {
+                themeData = ThemeData(
+                        ImVec4(0, 0, 0, 1),
+                        ImVec4(1 - 0.235, 1 - 0.247, 1 - 0.254, 1),
+                        ImVec4(1 - 0.169, 1 - 0.169, 1 - 0.169, 1),
+                        ImVec4(1 - 0.21, 1 - 0.21, 1 - 0.21, 1),
+                        ImVec4(1 - 0.23, 1 - 0.23, 1 - 0.23, 1),
+                        ImVec4(1 - 0.3, 1 - 0.3, 1 - 0.3, 1),
+                        ImVec4(1 - 0.35, 1 - 0.35, 1 - 0.35, 1),
+                        ImVec4(0.2705882353, 0.8196078431, 0.4156862745, 1),
+                        ImVec4(0.4, 0.9490196078, 0.5450980392, 1)
+                );
+            } else {
+                themeData = ThemeData(
+                        ImVec4(1, 1, 1, 1),
+                        ImVec4(0.235, 0.247, 0.254, 1),
+                        ImVec4(0.169, 0.169, 0.169, 1),
+                        ImVec4(0.21, 0.21, 0.21, 1),
+                        ImVec4(0.23, 0.23, 0.23, 1),
+                        ImVec4(0.3, 0.3, 0.3, 1),
+                        ImVec4(0.35, 0.35, 0.35, 1),
+                        ImVec4(0.2705882353, 0.8196078431, 0.4156862745, 1),
+                        ImVec4(0.4, 0.9490196078, 0.5450980392, 1)
+                );
             }
+
+            return themeData;
         }
 
     }

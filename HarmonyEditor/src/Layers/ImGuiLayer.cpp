@@ -11,23 +11,21 @@ namespace HarmonyEditor {
     static GameContext* s_GameContextPtr = nullptr;
     float ImGuiLayer::s_Time = 0.0f;
 
-    static void ApplyDefaultTheme() {
+    static void ApplySelectedTheme() {
         ImGuiStyle& style = ImGui::GetStyle();
 
-        Theme::ThemeType themeType = Theme::ThemeType::Light;
-
-        Theme::ThemeData themeData = Theme::GetTheme(themeType);
+        Theme::ThemeData themeData = Theme::GetTheme(Theme::s_ThemeType[Theme::s_SelectedTheme]);
 
 
         style.Colors[ImGuiCol_Text] = themeData.TextColor;
         style.Colors[ImGuiCol_TextSelectedBg] = themeData.AccentColor;
 
-        float disableColor = themeType == Theme::ThemeType::Dark ? 0.6f : 0.4f;
+        float disableColor = Theme::s_SelectedTheme == 0 ? 0.6f : 0.4f;
         style.Colors[ImGuiCol_TextDisabled] = ImVec4(disableColor, disableColor, disableColor, 1); // Todo: Become Dynamic
 
         style.Colors[ImGuiCol_WindowBg] = themeData.BackgroundColor;
         style.Colors[ImGuiCol_ChildBg] = themeData.BackgroundColor;
-        style.Colors[ImGuiCol_PopupBg] = ImVec4(themeData.BackgroundColor.x, themeData.BackgroundColor.y, themeData.BackgroundColor.z, 0.94f);
+        style.Colors[ImGuiCol_PopupBg] = ImVec4(themeData.ChildBackgroundColor.x, themeData.ChildBackgroundColor.y, themeData.ChildBackgroundColor.z, 0.8f);
         style.Colors[ImGuiCol_DockingPreview] = themeData.AccentColor;
 
         style.Colors[ImGuiCol_Separator] = themeData.SeparatorColor;
@@ -80,7 +78,6 @@ namespace HarmonyEditor {
         style.Colors[ImGuiCol_TabUnfocused] = ImLerp(style.Colors[ImGuiCol_Tab], style.Colors[ImGuiCol_TitleBg], 0.80f);
         style.Colors[ImGuiCol_TabUnfocusedActive] = ImLerp(style.Colors[ImGuiCol_TabActive],
                                                            style.Colors[ImGuiCol_TitleBg], 0.40f);
-
     }
 
     void ImGuiLayer::Initialize(GameContext* gameContextPtr) {
@@ -98,7 +95,7 @@ namespace HarmonyEditor {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 //    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-        ApplyDefaultTheme();
+        ApplySelectedTheme();
 
 //    ImGui::StyleColorsDark();
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 4);
@@ -107,8 +104,6 @@ namespace HarmonyEditor {
         ImGui_ImplGlfw_InitForOpenGL(gameContextPtr->GetDisplay().GetWindowPointer(), true);
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
-
-    static bool s_Show = true;
 
     static void DrawDockSpace() {
         int windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
@@ -122,9 +117,29 @@ namespace HarmonyEditor {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
+        static bool s_Show = true;
+
         ImGui::Begin("Dockspace", &s_Show, windowFlags);
         ImGui::PopStyleVar(3);
         ImGui::DockSpace(ImGui::GetID("Dockspace"));
+        ImGui::End();
+    }
+
+    static void DrawSettingPanel() {
+        ImGui::Begin("Settings");
+
+        ImGui::BeginChild("Settings Items");
+
+        if(ImGui::CollapsingHeader("Editor")) {
+
+            if(ImGui::Combo("Theme", &Theme::s_SelectedTheme, Theme::s_ThemeType, IM_ARRAYSIZE(Theme::s_ThemeType))) {
+                ApplySelectedTheme();
+            }
+
+        }
+
+        ImGui::EndChild();
+
         ImGui::End();
     }
 
@@ -137,6 +152,7 @@ namespace HarmonyEditor {
         // Do Stuff
         DrawDockSpace();
         ImGui::ShowDemoWindow();
+        DrawSettingPanel();
 
 //    ImGui::Begin("Inspector");
 //    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
