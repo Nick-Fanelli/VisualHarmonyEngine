@@ -51,7 +51,7 @@ namespace HarmonyEditor {
             switch(themeType) {
                 case ThemeType::Light:
                     static ThemeData themeDataLight = ThemeData(
-                            ImVec4(1 - 1, 1 - 1, 1 - 1, 1),
+                            ImVec4(0, 0, 0, 1),
                             ImVec4(1 - 0.235, 1 - 0.247, 1 - 0.254, 1),
                             ImVec4(1 - 0.169, 1 - 0.169, 1 - 0.169, 1),
                             ImVec4(1 - 0.21, 1 - 0.21, 1 - 0.21, 1),
