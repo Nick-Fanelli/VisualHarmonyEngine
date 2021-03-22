@@ -10,7 +10,9 @@
 namespace HarmonyEditor {
 
     static GameContext* s_GameContextPtr = nullptr;
+
     float ImGuiLayer::s_Time = 0.0f;
+    bool ImGuiLayer::s_DisplayDemoWindow = true;
 
     static void ApplySelectedTheme() {
         ImGuiStyle& style = ImGui::GetStyle();
@@ -152,10 +154,10 @@ namespace HarmonyEditor {
 
         // Do Stuff
         DrawDockSpace();
-        ImGui::ShowDemoWindow();
+        if(s_DisplayDemoWindow) ImGui::ShowDemoWindow();
         DrawSettingPanel();
 
-//        Menubar::DisplayMenubar();
+        Menubar::DisplayMenubar();
 
 //    ImGui::Begin("Inspector");
 //    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);

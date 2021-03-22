@@ -16,6 +16,7 @@ namespace HarmonyEditor {
     struct ImGuiLayer {
 
         static float s_Time;
+        static bool s_DisplayDemoWindow;
 
         static void Initialize(GameContext* gameContextPtr);
         static void RenderImGuiWindows();

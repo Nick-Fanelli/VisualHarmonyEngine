@@ -7,6 +7,10 @@
 #include <harmonypch.h>
 #include <imguipch.h>
 
+#include "Layers/ImGuiLayer.h"
+
+#define _WIN32 // For Testing
+
 namespace HarmonyEditor::Menubar {
 
 #ifdef _WIN32
@@ -15,18 +19,19 @@ namespace HarmonyEditor::Menubar {
 
         ImGui::BeginMainMenuBar();
 
-        if(ImGui::BeginMenu("File")) {
+        if(ImGui::BeginMenu("Window")) {
 
-            ImGui::MenuItem("Test");
+            if(ImGui::BeginMenu("Layout Windows")) {
+
+                if(ImGui::MenuItem("Demo Window", "", ImGuiLayer::s_DisplayDemoWindow))
+                    ImGuiLayer::s_DisplayDemoWindow = !ImGuiLayer::s_DisplayDemoWindow;
+
+                ImGui::EndMenu();
+            }
 
             ImGui::EndMenu();
+
         }
-
-        if(ImGui::BeginMenu("Edit")) {
-
-            ImGui::EndMenu();
-        }
-
 
         ImGui::EndMainMenuBar();
 
