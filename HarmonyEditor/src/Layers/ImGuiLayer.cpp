@@ -5,6 +5,7 @@
 #include "ImGuiLayer.h"
 
 #include "../Theme.h"
+#include "../MenuBar.h"
 
 namespace HarmonyEditor {
 
@@ -25,7 +26,7 @@ namespace HarmonyEditor {
 
         style.Colors[ImGuiCol_WindowBg] = themeData.BackgroundColor;
         style.Colors[ImGuiCol_ChildBg] = themeData.BackgroundColor;
-        style.Colors[ImGuiCol_PopupBg] = ImVec4(themeData.ChildBackgroundColor.x, themeData.ChildBackgroundColor.y, themeData.ChildBackgroundColor.z, 0.8f);
+        style.Colors[ImGuiCol_PopupBg] = ImVec4(themeData.ChildBackgroundColor.x, themeData.ChildBackgroundColor.y, themeData.ChildBackgroundColor.z, 1);
         style.Colors[ImGuiCol_DockingPreview] = themeData.AccentColor;
 
         style.Colors[ImGuiCol_Separator] = themeData.SeparatorColor;
@@ -153,6 +154,8 @@ namespace HarmonyEditor {
         DrawDockSpace();
         ImGui::ShowDemoWindow();
         DrawSettingPanel();
+
+//        Menubar::DisplayMenubar();
 
 //    ImGui::Begin("Inspector");
 //    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);

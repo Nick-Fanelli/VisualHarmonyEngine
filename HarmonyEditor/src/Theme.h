@@ -5,8 +5,7 @@
 #pragma once
 
 #include <harmonypch.h>
-
-#include <imgui.h>
+#include <imguipch.h>
 
 namespace HarmonyEditor {
 
