@@ -6,6 +6,6 @@
 
 namespace HarmonyEditor::Menubar {
 
-    void DisplayMenubar();
+    void DisplayMenubar(GLFWwindow* windowPtr);
 
 }

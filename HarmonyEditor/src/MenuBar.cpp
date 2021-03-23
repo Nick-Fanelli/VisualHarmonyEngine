@@ -4,18 +4,14 @@
 
 #include "MenuBar.h"
 
-#include <harmonypch.h>
 #include <imguipch.h>
 
 #include "Layers/ImGuiLayer.h"
 
-#define _WIN32 // For Testing
-
 namespace HarmonyEditor::Menubar {
 
-#ifdef _WIN32
 
-    void DisplayMenubar() {
+    void DisplayMenubar(GLFWwindow* windowPtr) {
 
         ImGui::BeginMainMenuBar();
 
@@ -36,15 +32,5 @@ namespace HarmonyEditor::Menubar {
         ImGui::EndMainMenuBar();
 
     }
-
-#elif defined __APPLE__
-
-    void DisplayMenubar() {
-
-
-
-    }
-
-#endif
 
 }

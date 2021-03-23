@@ -19,7 +19,6 @@ namespace HarmonyEditor {
 
         Theme::ThemeData themeData = Theme::GetTheme(Theme::s_ThemeType[Theme::s_SelectedTheme]);
 
-
         style.Colors[ImGuiCol_Text] = themeData.TextColor;
         style.Colors[ImGuiCol_TextSelectedBg] = themeData.AccentColor;
 
@@ -93,6 +92,12 @@ namespace HarmonyEditor {
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
 
+        ImFontConfig imFontConfig = ImFontConfig();
+        imFontConfig.OversampleH = 3;
+        imFontConfig.OversampleV = 3;
+
+        io.Fonts->AddFontFromFileTTF("/System/Library/Fonts/Helvetica.ttc", 13, &imFontConfig);
+
         io.DisplaySize = ImVec2((float) gameContextPtr->GetDisplay().GetWidth(),
                                 (float) gameContextPtr->GetDisplay().GetHeight());
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -109,9 +114,16 @@ namespace HarmonyEditor {
     }
 
     static void DrawDockSpace() {
+// Create MenuBar inside window only if not on Mac.
+//#ifdef __APPLE__
+//        int windowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+//                          ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+//                          ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+//#else
         int windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
                           ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
                           ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+//#endif
 
         ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
         ImGui::SetNextWindowSize(s_GameContextPtr->GetDisplay().GetImGuiSize());
@@ -157,7 +169,7 @@ namespace HarmonyEditor {
         if(s_DisplayDemoWindow) ImGui::ShowDemoWindow();
         DrawSettingPanel();
 
-        Menubar::DisplayMenubar();
+        Menubar::DisplayMenubar(s_GameContextPtr->GetDisplay().GetWindowPointer());
 
 //    ImGui::Begin("Inspector");
 //    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
