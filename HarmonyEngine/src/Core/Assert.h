@@ -6,9 +6,6 @@
 
 #include "harmonypch.h"
 
-// For release: COMMENT-OUT THIS LINE
-#define HARMONY_DEBUG_ENABLED
-
 #ifdef HARMONY_DEBUG_ENABLED
 
     #define HARMONY_ASSERT(msg) { Log::Error(msg); exit(-1); }

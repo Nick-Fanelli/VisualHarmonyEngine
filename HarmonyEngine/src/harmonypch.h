@@ -1,5 +1,8 @@
 #pragma once
 
+// For release: COMMENT-OUT THIS LINE
+#define HARMONY_DEBUG_ENABLED
+
 #include <iostream>
 #include <fstream>
 #include <functional>
