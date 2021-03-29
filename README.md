@@ -23,8 +23,9 @@ Easy to learn and use 2D game engine written in C++ with OpenGL.
 
 **1. Clone the Repository:** 
 ```shell
-git clone https://github.com/Nick-Fanelli/HarmonyEngine
+git clone https://github.com/Nick-Fanelli/HarmonyEngine --recursive
 ```
+***Note use flag --recursive when cloning repository to get access to all submodules***
 
 **2. Install the Dependencies:**
 
