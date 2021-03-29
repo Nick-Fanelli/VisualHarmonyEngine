@@ -16,4 +16,3 @@ file(GLOB_RECURSE SRC_FILES
 add_executable(HarmonyExecutable ${SRC_FILES})
 
 target_link_libraries(HarmonyExecutable LINK_PUBLIC HarmonyEngine)
-target_link_libraries(HarmonyExecutable LINK_PUBLIC ImGUI)

@@ -29,7 +29,8 @@ add_custom_target(link_target ALL
 
 target_include_directories(HarmonyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(HarmonyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(HarmonyEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/imgui)
+
+target_link_libraries(HarmonyEngine ImGUI)
 
 target_precompile_headers(HarmonyEngine PUBLIC "src/harmonypch.h")
 target_precompile_headers(HarmonyEngine PUBLIC "src/imguipch.h")
