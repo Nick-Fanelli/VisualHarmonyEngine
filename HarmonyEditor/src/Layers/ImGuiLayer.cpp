@@ -16,7 +16,11 @@ namespace HarmonyEditor {
     bool ImGuiLayer::s_DisplayDemoWindow = true;
 
     static void LoadSettings() {
-        auto data = Settings::Get("theme").get<std::string>();
+        auto data = Settings::Get("theme");
+        if(data == nullptr) {
+            Settings::SetAndSave("theme", "dark");
+            data = Settings::Get("theme");
+        }
 
         for(int i = 0; i < sizeof(Theme::s_ThemeType) / sizeof(Theme::s_ThemeType[0]); i++) {
             if(data == Theme::s_ThemeType[i]) {

@@ -8,11 +8,7 @@ namespace HarmonyEditor {
 
     using namespace HarmonyEngine;
 
-#ifdef __APPLE__
     static const char* s_SaveLocation = "HarmonySettings.json";
-#else
-    static const char* s_SaveLocation = "";
-#endif
 
     nlohmann::json Settings::s_JsonValue = nlohmann::json();
 
