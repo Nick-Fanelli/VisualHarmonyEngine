@@ -8,6 +8,14 @@ namespace HarmonyEngine {
 
     namespace FileUtils {
         std::string ReadFile(const char* filepath);
+        std::string ReadFile(const std::string& filepath);
+
+        void SaveFile(const char* filepath, const char* fileData);
+        void SaveFile(const char* filepath, const std::string& fileData);
+
+        void CreateFile(const char* filepath);
+
+        bool FileExists(const char* filepath);
     }
 
     namespace OpenGLUtils {

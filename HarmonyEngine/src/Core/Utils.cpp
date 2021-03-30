@@ -1,6 +1,6 @@
 #include "Utils.h"
 
-#define GLEW_STATIC
+#include <sys/stat.h>
 #include <GL/glew.h>
 
 namespace HarmonyEngine {
@@ -11,7 +11,7 @@ namespace HarmonyEngine {
 
     namespace FileUtils {
 
-        std::string ReadFile(std::string& filepath) {
+        std::string ReadFile(const std::string& filepath) {
             std::ifstream FileStream(filepath);
             std::string Result;
             std::string Line;
@@ -33,6 +33,29 @@ namespace HarmonyEngine {
             }
 
             return Result;
+        }
+
+        void SaveFile(const char* filepath, const char* fileData) {
+            std::ofstream fileStream;
+            fileStream.open(filepath);
+            fileStream << fileData << std::endl;
+            fileStream.close();
+        }
+
+        void SaveFile(const char* filepath, const std::string& fileData) {
+            std::ofstream fileStream;
+            fileStream.open(filepath);
+            fileStream << fileData << std::endl;
+            fileStream.close();
+        }
+
+        void CreateFile(const char* filepath) {
+            std::ofstream file { filepath };
+        }
+
+        bool FileExists(const char* filepath) {
+            struct stat buffer{};
+            return (stat (filepath, &buffer) == 0);
         }
 
     }

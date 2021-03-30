@@ -9,6 +9,8 @@
 #include "Layers/ImGuiLayer.h"
 #include "Layers/RenderLayer.h"
 
+#include "Settings.h"
+
 namespace HarmonyEditor {
 
     using namespace HarmonyEngine;
@@ -20,6 +22,8 @@ namespace HarmonyEditor {
 
     void EditorScene::OnCreate(GameContext* gameContext) {
         m_GameContext = gameContext;
+
+        Settings::LoadSettings();
 
         RenderLayer::Initialize(this);
         ImGuiLayer::Initialize(gameContext);

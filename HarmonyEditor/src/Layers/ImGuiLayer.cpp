@@ -6,6 +6,7 @@
 
 #include "../Theme.h"
 #include "../MenuBar.h"
+#include "../Settings.h"
 
 namespace HarmonyEditor {
 
@@ -13,6 +14,17 @@ namespace HarmonyEditor {
 
     float ImGuiLayer::s_Time = 0.0f;
     bool ImGuiLayer::s_DisplayDemoWindow = true;
+
+    static void LoadSettings() {
+        auto data = Settings::Get("theme").get<std::string>();
+
+        for(int i = 0; i < sizeof(Theme::s_ThemeType) / sizeof(Theme::s_ThemeType[0]); i++) {
+            if(data == Theme::s_ThemeType[i]) {
+                Theme::s_SelectedTheme = i;
+                break;
+            }
+        }
+    }
 
     static void ApplySelectedTheme() {
         ImGuiStyle& style = ImGui::GetStyle();
@@ -103,6 +115,8 @@ namespace HarmonyEditor {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 //    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
+        LoadSettings();
+
         ApplySelectedTheme();
 
 //    ImGui::StyleColorsDark();
@@ -148,6 +162,7 @@ namespace HarmonyEditor {
         if(ImGui::CollapsingHeader("Editor")) {
 
             if(ImGui::Combo("Theme", &Theme::s_SelectedTheme, Theme::s_ThemeType, IM_ARRAYSIZE(Theme::s_ThemeType))) {
+                Settings::SetAndSave("theme", Theme::s_ThemeType[Theme::s_SelectedTheme]);
                 ApplySelectedTheme();
             }
 
