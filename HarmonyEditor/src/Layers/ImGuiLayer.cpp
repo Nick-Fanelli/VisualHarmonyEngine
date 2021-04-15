@@ -124,8 +124,7 @@ namespace HarmonyEditor {
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
 
-//        io.DisplaySize = ImVec2((float) gameContextPtr->GetDisplay().GetWidth(),
-//                                (float) gameContextPtr->GetDisplay().GetHeight());
+        io.DisplaySize = gameContextPtr->GetDisplay().GetImGuiSize();
 
         LoadSettings();
 
@@ -138,8 +137,6 @@ namespace HarmonyEditor {
         ImGui_ImplGlfw_InitForOpenGL(gameContextPtr->GetDisplay().GetWindowPointer(), true);
         ImGui_ImplOpenGL3_Init(glsl_version);
     }
-
-    static bool s_DockspaceOpen = true;
 
     static void DrawDockSpace() {
 
@@ -167,7 +164,7 @@ namespace HarmonyEditor {
             windowFlags |= ImGuiWindowFlags_NoBackground;
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-        ImGui::Begin("Dockspace", &s_DockspaceOpen, windowFlags);
+        ImGui::Begin("Dockspace", &dockingEnabled, windowFlags);
         ImGui::PopStyleVar();
 
         if(optFullscreen)
