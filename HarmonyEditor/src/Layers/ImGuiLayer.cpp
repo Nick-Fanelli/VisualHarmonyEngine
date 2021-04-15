@@ -178,31 +178,6 @@ namespace HarmonyEditor {
         }
 
         ImGui::End();
-
-// Create MenuBar inside window only if not on Mac.
-//#ifdef __APPLE__
-//        int windowFlags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-//                          ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-//                          ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-//#else
-//        int windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-//                          ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-//                          ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-////#endif
-//
-//        ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
-//        ImGui::SetNextWindowSize(s_GameContextPtr->GetDisplay().GetImGuiSize());
-//
-//        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-//        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-//        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-//
-//        static bool s_Show = true;
-//
-//        ImGui::Begin("Dockspace", &s_Show, windowFlags);
-//        ImGui::PopStyleVar(3);
-//        ImGui::DockSpace(ImGui::GetID("Dockspace"));
-//        ImGui::End();
     }
 
     static void DrawSettingPanel() {
@@ -224,25 +199,14 @@ namespace HarmonyEditor {
         ImGui::End();
     }
 
-    void ImGuiLayer::RenderImGuiWindows() {
+    void ImGuiLayer::Begin() {
         // Start ImGui Frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+    }
 
-        // Do Stuff
-        DrawDockSpace();
-        if(s_DisplayDemoWindow) ImGui::ShowDemoWindow();
-        DrawSettingPanel();
-
-        Menubar::DisplayMenubar(s_GameContextPtr->GetDisplay().GetWindowPointer());
-
-//    ImGui::Begin("Inspector");
-//    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
-//    ImGui::End();
-
-        // End ImGui Frame
-
+    void ImGuiLayer::End() {
         ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize = s_GameContextPtr->GetDisplay().GetImGuiSize();
 
@@ -255,6 +219,18 @@ namespace HarmonyEditor {
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(previousContext);
         }
+    }
+
+    void ImGuiLayer::Render() {
+        DrawDockSpace();
+        if(s_DisplayDemoWindow) ImGui::ShowDemoWindow();
+        DrawSettingPanel();
+
+        Menubar::DisplayMenubar(s_GameContextPtr->GetDisplay().GetWindowPointer());
+
+//    ImGui::Begin("Inspector");
+//    ImGui::ColorEdit3("Quad Color", &s_QuadRenderer->Color.r, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB);
+//    ImGui::End();
     }
 
     void ImGuiLayer::CleanUp() {

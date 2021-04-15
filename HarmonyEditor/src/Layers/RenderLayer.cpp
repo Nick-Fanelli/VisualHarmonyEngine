@@ -15,24 +15,28 @@ namespace HarmonyEditor {
         Renderer::OnCreate(&scene->GetCamera());
     }
 
-    void RenderLayer::RenderScene() {
+    void RenderLayer::Begin() {
 #ifdef HARMONY_DEBUG_ENABLED
         RendererStatistics::Start();
 #endif
 
         Renderer::StartBatch();
+    }
 
-        auto quadRendererGroup = s_Scene->GetRegistry().group<QuadRenderer>(entt::get<Transform>);
-        for (auto entity : quadRendererGroup) {
-            auto[quadRenderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);
-            Renderer::DrawQuad(transform.Position, transform.Scale, quadRenderer.Color);
-        }
-
+    void RenderLayer::End() {
         Renderer::EndBatch();
 
 #ifdef HARMONY_DEBUG_ENABLED
         RendererStatistics::Stop();
 #endif
+    }
+
+    void RenderLayer::Render() {
+        auto quadRendererGroup = s_Scene->GetRegistry().group<QuadRenderer>(entt::get<Transform>);
+        for (auto entity : quadRendererGroup) {
+            auto[quadRenderer, transform] = quadRendererGroup.get<QuadRenderer, Transform>(entity);
+            Renderer::DrawQuad(transform.Position, transform.Scale, quadRenderer.Color);
+        }
     }
 
     void RenderLayer::CleanUp() {

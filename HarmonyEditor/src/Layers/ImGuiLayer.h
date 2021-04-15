@@ -18,8 +18,11 @@ namespace HarmonyEditor {
         static float s_Time;
         static bool s_DisplayDemoWindow;
 
+        static void Begin();
+        static void Render();
+        static void End();
+
         static void Initialize(GameContext* gameContextPtr);
-        static void RenderImGuiWindows();
         static void CleanUp();
 
     };

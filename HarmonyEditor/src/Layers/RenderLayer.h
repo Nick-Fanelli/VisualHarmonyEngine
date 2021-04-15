@@ -17,7 +17,11 @@ namespace HarmonyEditor {
         static Scene* s_Scene;
 
         static void Initialize(Scene* scene);
-        static void RenderScene();
+
+        static void Begin();
+        static void Render();
+        static void End();
+
         static void CleanUp();
 
     };

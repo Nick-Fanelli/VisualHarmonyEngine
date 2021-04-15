@@ -56,8 +56,13 @@ namespace HarmonyEditor {
 //        if(Input::StandardInput.IsKey(HARMONY_KEY_D))
 //            s_Transform->Position.x += s_PlayerSpeed * deltaTime;
 
-        ImGuiLayer::RenderImGuiWindows();
-        RenderLayer::RenderScene();
+        ImGuiLayer::Begin();
+        ImGuiLayer::Render();
+        ImGuiLayer::End();
+
+        RenderLayer::Begin();
+        RenderLayer::Render();
+        RenderLayer::End();
     }
 
     void EditorScene::OnDestroy() {
