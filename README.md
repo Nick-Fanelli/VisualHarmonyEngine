@@ -1,4 +1,4 @@
-# HarmonyEngine
+# Visual Harmony Engine
 
 Easy to learn and use 2D game engine written in C++ with OpenGL.
 
